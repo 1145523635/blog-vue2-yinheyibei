@@ -1,20 +1,32 @@
+<!--
+ * @Descripttion: 
+ * @Author: 银河以北
+ * @Date: 2021-06-10 12:07:39
+ * @LastEditors: 银河以北
+ * @LastEditTime: 2021-06-10 20:38:43
+-->
 <template>
   <div id="app">
-    <div id="nav">
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    </div> -->
+    <router-view />
   </div>
 </template>
 
 <style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: rgb(245, 246, 247);
 }
 
 #nav {
