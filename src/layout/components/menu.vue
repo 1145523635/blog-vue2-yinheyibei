@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-10 22:33:03
+ * @LastEditTime: 2021-06-11 12:45:48
 -->
 <template>
   <div class="app-container">
@@ -24,11 +24,11 @@
           </router-link>
         </div>
       </div>
-      <div class='user'>
+      <!-- <div class='user'>
          <div>
              <span>登录</span>
          </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -72,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 .app-container {
   display: flex;
-  width: 1180px;
+  width: 980px;
   height: 100%;
   .container {
     width: 100%;

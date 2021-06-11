@@ -3,13 +3,13 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-10 22:27:27
+ * @LastEditTime: 2021-06-11 12:43:49
 -->
 <template>
   <div class="app-contianer">
     <div class="contianer">
       <!-- 头部 -->
-      <div class="contianer-header"><Logo></Logo> <Menu></Menu></div>
+      <div class="contianer-header"><Logo></Logo> <Menu></Menu><Login></Login></div>
 
       <!-- 显示内容 -->
       <div class="contianer-main"><Main></Main></div>
@@ -21,6 +21,7 @@
 import Logo from "./components/logo.vue"; //引入logo
 import Menu from "./components/menu.vue"; //引入菜单
 import Main from "./components/main.vue"; //引入展示框
+import Login from "./components/login.vue"; //引入登录组件
 import Footer from "./components/footer.vue"; //引入版权
 export default {
   name: "Layout",
@@ -29,6 +30,7 @@ export default {
     Menu,
     Main,
     Footer,
+    Login
   },
 };
 </script>

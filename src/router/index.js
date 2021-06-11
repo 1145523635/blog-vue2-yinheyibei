@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-10 22:04:19
+ * @LastEditTime: 2021-06-11 21:50:12
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -17,18 +17,19 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/',
         component: Layout,
+        meta: { title: 'layout' },
         children: [{
             path: '/',
             name: 'Home',
+            meta: { title: 'Home' },
             component: Home,
         }, {
             path: '/about',
             name: 'About',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
+            meta: { title: 'About' },
+
             component: function() {
-                return import ( /* webpackChunkName: "about" */ '../views/About.vue')
+                return import ('../views/About.vue')
             }
         }]
     },
