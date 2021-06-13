@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 21:42:00
+ * @LastEditTime: 2021-06-13 22:44:11
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -14,6 +14,10 @@ import '@/router/permission' // 全局路由钩子
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
+
+//引入全局注册组件
+import Login from '@/components/index'
+Vue.use(Login);
 
 //引入md5加密方式
 import md5 from 'js-md5';

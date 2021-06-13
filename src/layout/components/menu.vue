@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 12:45:48
+ * @LastEditTime: 2021-06-12 16:43:04
 -->
 <template>
   <div class="app-container">
@@ -24,11 +24,6 @@
           </router-link>
         </div>
       </div>
-      <!-- <div class='user'>
-         <div>
-             <span>登录</span>
-         </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -52,7 +47,7 @@ export default {
         {
           id: 3,
           name: "闲言碎语",
-          path: "/about",
+          path: "/test",
         },
       ],
 

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 22:36:13
+ * @LastEditTime: 2021-06-13 22:48:37
  */
 
 //引入element-ui 提示框
@@ -18,6 +18,8 @@ import store from '@/store'
 // 白名单重定向
 const whiteList = ['/']
 
+import Vue from 'vue'
+
 
 //前置路由钩子
 router.beforeEach(async(to, from, next) => {
@@ -27,9 +29,6 @@ router.beforeEach(async(to, from, next) => {
 
     //token vuex
     const token = store.getters.token
-
-
-
 
     if (token) {
         //如果下一跳是登录页 但是存在token 直接跳首页
@@ -50,7 +49,6 @@ router.beforeEach(async(to, from, next) => {
                 try {
                     //调用vuex方法 在vuex发送异步请求
                     store.dispatch('GetInfo').then(res => {
-                        console.log(res);
                         next()
                     })
                 } catch (err) {
@@ -66,6 +64,7 @@ router.beforeEach(async(to, from, next) => {
         if (whiteList.includes(to.path)) {
             next()
         } else {
+            console.log(Vue)
             Message.error('请登录')
         }
     }

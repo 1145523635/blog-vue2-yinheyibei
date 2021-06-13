@@ -3,11 +3,14 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 22:34:16
+ * @LastEditTime: 2021-06-13 17:16:56
  */
 
 //引入登录方法
 import { login, getUserInfo } from "@/api/login/index";
+
+//设置token
+import { setToken } from '@/utils/auth'
 const user = {
     state: {
         //token
@@ -29,7 +32,6 @@ const user = {
     actions: {
         // 登录
         Login({ commit }, userInfo) {
-            console.log(userInfo)
             return new Promise((resolve, reject) => {
                 const data = { account: userInfo.account, password: userInfo.password }
                 login(data).then(response => {
@@ -38,7 +40,11 @@ const user = {
                         resolve(false)
                     }
                     const token = response.data
+                        //vuex存token
                     commit('SET_TOKEN', token)
+
+                    //本地存token
+                    setToken(token)
 
                     //成功登录
                     resolve(true)

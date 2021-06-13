@@ -3,14 +3,11 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-10 20:38:43
+ * @LastEditTime: 2021-06-12 17:00:01
 -->
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
+
     <router-view />
   </div>
 </template>

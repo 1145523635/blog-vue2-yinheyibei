@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-10 20:24:16
+ * @LastEditTime: 2021-06-12 19:44:45
 -->
 <template>
   <div class="app-contianer">
@@ -30,12 +30,14 @@ export default {
 .app-contianer {
   width: 200px;
   height: 100%;
+
   .contianer {
     width: 200%;
     height: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
+    background: #fff;
     .logo {
       .logo-img {
         width: 50px;

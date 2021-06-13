@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-10 22:21:28
+ * @LastEditTime: 2021-06-12 16:46:11
 -->
 <template>
   <div class="app-container">
@@ -24,6 +24,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-container {
-  width: 100%;
+  width: calc(100% - 300px);
 }
 </style>

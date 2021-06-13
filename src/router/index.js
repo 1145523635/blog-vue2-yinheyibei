@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 21:50:12
+ * @LastEditTime: 2021-06-12 16:23:33
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -19,19 +19,27 @@ const routes = [{
         component: Layout,
         meta: { title: 'layout' },
         children: [{
-            path: '/',
-            name: 'Home',
-            meta: { title: 'Home' },
-            component: Home,
-        }, {
-            path: '/about',
-            name: 'About',
-            meta: { title: 'About' },
-
-            component: function() {
-                return import ('../views/About.vue')
+                path: '/',
+                name: 'Home',
+                meta: { title: 'Home' },
+                component: Home,
+            }, {
+                path: '/about',
+                name: 'About',
+                meta: { title: 'About' },
+                component: function() {
+                    return import ('../views/About.vue')
+                }
+            },
+            {
+                path: '/test',
+                name: 'Test',
+                meta: { title: 'Test' },
+                component: function() {
+                    return import ('../views/Test.vue')
+                }
             }
-        }]
+        ]
     },
 
 ]
