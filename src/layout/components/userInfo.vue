@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-13 22:47:08
+ * @LastEditTime: 2021-06-15 14:25:06
 -->
 <template>
   <div class="app-container">
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     login() {
-      this.$loginPopup();
+      this.$Login();
     },
   },
 };

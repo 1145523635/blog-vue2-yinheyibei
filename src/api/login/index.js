@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 22:33:19
+ * @LastEditTime: 2021-06-15 19:24:05
  */
 import { request } from '@/utils/request'
 
@@ -33,5 +33,19 @@ export function getUserInfo() {
     return request({
         url: '/blog/getUserInfo',
         method: 'GET',
+    })
+}
+
+/**
+ * @Description: 用于前台用户退出登录 携带token即可
+ * @Author: 银河以北
+ * @Date: 2021-06-15 19:23:54
+ * @param {*}
+ * @return {*}
+ */
+export function logout() {
+    return request({
+        url: '/blog/userLogout',
+        method: 'POST',
     })
 }

@@ -3,11 +3,11 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-12 16:46:11
+ * @LastEditTime: 2021-06-15 22:03:53
 -->
 <template>
   <div class="app-container">
-    <transition name="fade-transform" mode="out-in">
+    <transition name="el-zoom-in-center" mode="out-in">
       <router-view :key="key" />
     </transition>
   </div>

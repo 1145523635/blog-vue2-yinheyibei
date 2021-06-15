@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-12 19:48:10
+ * @LastEditTime: 2021-06-15 21:23:54
 -->
 <template>
   <div class="app-contianer">
@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+// import { mapGetters } from "vuex";
 import Logo from "./components/logo.vue"; //引入logo
 import Menu from "./components/menu.vue"; //引入菜单
 import Main from "./components/main.vue"; //引入展示框
@@ -35,6 +36,21 @@ export default {
     Footer,
     Login,
     UserInfo,
+  },
+  created() {
+    // const a = this.userInfo;
+    // console.log(this.$store.getters.hasLogin);
+    // if (this.$store.getters.token) {
+    //   console.log(this.$store.getters.userInfo.user, "index");
+    //   //  this.userInfo = this.$store.state.user.info.user;
+    // }
+  },
+  computed: {
+    // 使用对象展开运算符将 getter 混入 computed 对象中
+    // ...mapGetters([
+    //   "userInfo",
+    //   // ...
+    // ]),
   },
 };
 </script>

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 21:37:05
+ * @LastEditTime: 2021-06-15 21:41:11
 -->
 <template>
   <div class="app-container">
@@ -35,6 +35,14 @@
                 <span>注册</span>
               </div>
             </div>
+            <div class="login-container" @click="toLogOut">
+              <div class="item-icon" style="background: #fef0f0">
+                <i class="el-icon-right" style="color: #f56c6c"></i>
+              </div>
+              <div class="item-title" style="color: #f56c6c">
+                <span>退出</span>
+              </div>
+            </div>
           </div>
         </div>
         <span style="line-height: 60px" slot="reference" @click="toLogin"
@@ -42,122 +50,61 @@
         >
       </el-popover>
     </div>
-
-    <!-- 登录 or 注册 -->
-    <el-dialog
-      :visible.sync="dialogLogin"
-      width="20%"
-      :before-close="handleClose"
-      :close-on-click-modal="false"
-    >
-      <div class="login-form">
-        <div class="form-title">
-          <div class="login">
-            <span>登录</span>
-          </div>
-          <div class="register">
-            <span>注册</span>
-          </div>
-        </div>
-        <div class="form">
-          <el-form
-            :model="loginForm"
-            :rules="loginRules"
-            status-icon
-            ref="loginForm"
-            label-width="0"
-            class="demo-ruleForm"
-          >
-            <el-form-item prop="name">
-              <el-input
-                type="text"
-                placeholder="用户名 or 邮箱"
-                v-model="loginForm.name"
-                autocomplete="off"
-                clearable
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input
-                type="password"
-                v-model="loginForm.password"
-                autocomplete="off"
-                placeholder="登录密码"
-                show-password
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" class="login-btn" @click="login"
-                >登录</el-button
-              >
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>
-//引入vuex方法
-import { mapActions } from "vuex";
 export default {
   name: "Login",
   data() {
     return {
-      //控制登录弹出框
-      dialogLogin: false,
-
-      //判断是注册还是登录
-      isLogin: true,
-
-      //登录表单
-      loginForm: {
-        name: "",
-        password: "",
-      },
-
-      //登录表单验证规则
-      loginRules: {
-        name: [
-          { required: true, message: "请输入用户名 or 邮箱", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "请输入登录密码", trigger: "blur" },
-        ],
-      },
+      isLogon: false,
+      userInfo: {},
     };
   },
-  created() {},
+  created() {
+    // this.userInfo = this.$store.state.user.info;
+    // console.log(this.$store.getters.userInfo.user, "index");
+    // if (true) {
+    // }
+    // if (this.$store.getters.token) {
+    //   console.log(this.$store.state.user.info);
+    //   this.userInfo = this.$store.state.user.info.user;
+    //   this.isLogon = true;
+    // } else {
+    //   this.isLogon = false;
+    // }
+    // console.log(this.$store.getters);
+  },
+
   methods: {
-    //将 `this.Login()` 映射为 `this.$store.dispatch('Login')`
-    ...mapActions(["Login"]),
     //点击登录
     toLogin() {
-      this.dialogLogin = true;
+      this.$Login();
     },
 
-    //登录
-    login() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          const { name, password } = this.loginForm;
-          const data = { account: name, password: this.$utils.md5(password) };
-          this.Login(data).then((res) => {
+    //点击退出登录
+    toLogOut() {
+      //从vuex获取用户名
+      const userName = this.$store.getters.userInfo.user.nickname;
+      const alertTitle = `你好！${userName}`;
+      const alertContainer = `<i style='color:red'>你确定要退出当前登陆吗？</i>`;
+      this.$alert(alertContainer, alertTitle, {
+        confirmButtonText: "确定",
+        roundButton: true,
+        showCancelButton: true,
+        dangerouslyUseHTMLString: true,
+        callback: () => {
+          this.$store.dispatch("Logout").then((res) => {
+            this.$router.push("/");
             if (res) {
-              this.dialogLogin = false;
-              this.$router.push({ path: "/" });
+              this.$message({
+                message: "成功退出，欢迎下次再来哦",
+                type: "success",
+              });
             }
           });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
+        },
       });
-    },
-
-    //弹出框关闭
-    handleClose() {
-      this.dialogLogin = false;
     },
   },
 };
@@ -201,36 +148,6 @@ export default {
       .item-title {
         font-size: 12px;
       }
-    }
-  }
-}
-.login-form {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  .form-title {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
-    .register::before {
-      content: "";
-      width: 4px;
-      height: 4px;
-      margin: 0 0.5em;
-      border-radius: 50%;
-      display: inline-block;
-      vertical-align: middle;
-      background: #2997f7;
-      opacity: 0.3;
-      vertical-align: 0.2em;
-    }
-  }
-  .form {
-    width: 100%;
-    .login-btn {
-      width: 100%;
     }
   }
 }

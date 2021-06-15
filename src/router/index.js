@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-12 16:23:33
+ * @LastEditTime: 2021-06-15 20:17:47
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -11,6 +11,12 @@ import Home from '../views/Home.vue'
 /* Layout */
 import Layout from '@/layout'
 
+
+//防止出现路由冗余
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 
 Vue.use(VueRouter)
 
