@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 21:41:11
+ * @LastEditTime: 2021-06-16 21:53:10
 -->
 <template>
   <div class="app-container">
@@ -45,37 +45,49 @@
             </div>
           </div>
         </div>
-        <span style="line-height: 60px" slot="reference" @click="toLogin"
-          >登录</span
-        >
+        <div slot="reference" style="height: 60px" @click="toLogin">
+          <span style="line-height: 60px" v-if="!isLogon && !hasUserIno"
+            >登录
+          </span>
+          <i
+            v-else-if="isLogon && !hasUserIno"
+            style="color: #00a2e3"
+            class="el-icon-loading"
+          ></i>
+          <span style="line-height: 60px" v-else-if="isLogon && hasUserIno">
+            {{ name }}
+          </span>
+        </div>
       </el-popover>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Login",
   data() {
     return {
       isLogon: false,
-      userInfo: {},
+      hasUserIno: false,
+      name: "登录",
     };
   },
   created() {
-    // this.userInfo = this.$store.state.user.info;
-    // console.log(this.$store.getters.userInfo.user, "index");
-    // if (true) {
-    // }
-    // if (this.$store.getters.token) {
-    //   console.log(this.$store.state.user.info);
-    //   this.userInfo = this.$store.state.user.info.user;
-    //   this.isLogon = true;
-    // } else {
-    //   this.isLogon = false;
-    // }
-    // console.log(this.$store.getters);
+    if (this.token) {
+      this.isLogon = true;
+    }
   },
-
+  computed: {
+    ...mapGetters(["userInfo", "token"]),
+  },
+  watch: {
+    //监听用户信息的获取
+    userInfo(newVal) {
+      this.hasUserIno = true;
+      this.name = newVal.user.nickname;
+    },
+  },
   methods: {
     //点击登录
     toLogin() {

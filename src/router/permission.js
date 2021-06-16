@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 22:27:32
+ * @LastEditTime: 2021-06-16 15:30:00
  */
 
 //引入element-ui 提示框
@@ -36,9 +36,7 @@ router.beforeEach(async(to, from, next) => {
     // 开始进度条
     NProgress.start()
 
-
-    console.log(store.getters.userInfo)
-        // 设置页面标题
+    // 设置页面标题
     document.title = to.meta.title
 
     //token cookie
@@ -67,7 +65,6 @@ router.beforeEach(async(to, from, next) => {
                     // //调用vuex方法 在vuex发送异步请求
                     store.dispatch('GetInfo').then(res => {
                         if (res.code == 200) {
-                            console.log(store.getters.userInfo)
                             next('/')
                             NProgress.done()
                         } else {
