@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-16 15:30:00
+ * @LastEditTime: 2021-06-20 22:51:36
  */
 
 //引入element-ui 提示框
@@ -26,8 +26,10 @@ import { getToken } from '@/utils/auth' // get token from cookie
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
-    // 白名单重定向
-const whiteList = ['/', '/about', '/test']
+
+// 白名单重定向
+// const whiteList = ['/', '/about', '/test']
+const whiteList = ['/', '/about']
 
 
 
@@ -44,43 +46,40 @@ router.beforeEach(async(to, from, next) => {
 
 
     if (token) {
-        //如果下一跳是登录页 但是存在token 直接跳首页
-        if (to.path === '/login') {
-            next({ path: '/' })
+        //用户信息 vuex
+        const userInfo = store.getters.userInfo
+        console.log('存在token');
+        //如果存在用户信息
+        if (userInfo) {
+            console.log('有用户信息');
+            //直接放过页面
+            next()
+            NProgress.done()
         } else {
-            //如果下一跳不是登录页，但是存在token，判断有没有用户信息
+            //如果不存在用户信息 则要去获取用户信息
+            try {
 
-            //用户信息 vuex
-            const userInfo = store.getters.userInfo
+                console.log('没有用户信息');
 
-            //如果存在用户信息
-            if (userInfo) {
-                //直接放过页面
-                next()
-                NProgress.done()
-            } else {
-                //如果不存在用户信息 则要去获取用户信息
-                try {
+                //! 调用vuex方法 在vuex发送异步请求
+                store.dispatch('GetInfo').then(res => {
+                    if (res.code == 200) {
+                        next('/')
+                        NProgress.done()
+                    } else {
+                        Message.error('获取信息发送错误')
+                    }
 
-                    // //调用vuex方法 在vuex发送异步请求
-                    store.dispatch('GetInfo').then(res => {
-                        if (res.code == 200) {
-                            next('/')
-                            NProgress.done()
-                        } else {
-                            Message.error('获取信息发送错误')
-                        }
-
-                    })
-                } catch (err) {
-                    //如果在获取途中发生错误 ，直接跳登录页
-                    console.log(err)
-                }
+                })
+            } catch (err) {
+                //如果在获取途中发生错误 ，直接跳登录页
+                console.log(err)
             }
+
         }
 
-        next()
     } else {
+        console.log('不存在token');
         //判断下一跳再不在白名单里面
         if (whiteList.includes(to.path)) {
             next()

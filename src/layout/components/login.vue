@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-16 21:53:10
+ * @LastEditTime: 2021-06-20 22:49:17
 -->
 <template>
   <div class="app-container">
@@ -46,17 +46,30 @@
           </div>
         </div>
         <div slot="reference" style="height: 60px" @click="toLogin">
-          <span style="line-height: 60px" v-if="!isLogon && !hasUserIno"
+          <!-- 登录信息 -->
+          <span style="line-height: 60px" v-if="!isLogon && !hasUserInfo"
             >登录
           </span>
+          <!-- 获取用户信息 缓存登录图标 -->
           <i
-            v-else-if="isLogon && !hasUserIno"
-            style="color: #00a2e3"
+            v-else-if="isLogon && !hasUserInfo"
+            style="color: #00a2e3; line-height: 60px"
             class="el-icon-loading"
           ></i>
-          <span style="line-height: 60px" v-else-if="isLogon && hasUserIno">
-            {{ name }}
-          </span>
+          <!-- 展示登录信息 -->
+          <div v-else-if="isLogon && hasUserInfo" class="user-info">
+            <div style="margin-right: 10px">
+              <el-avatar
+                size="medium"
+                :src="$utils.imgUrl(hasUserInfo.user.avatar_url)"
+              ></el-avatar>
+            </div>
+            <div>
+              <span style="line-height: 60px">
+                {{ name }}
+              </span>
+            </div>
+          </div>
         </div>
       </el-popover>
     </div>
@@ -69,11 +82,12 @@ export default {
   data() {
     return {
       isLogon: false,
-      hasUserIno: false,
+      hasUserInfo: false,
       name: "登录",
     };
   },
   created() {
+    console.log(this.$store.state);
     if (this.token) {
       this.isLogon = true;
     }
@@ -84,8 +98,13 @@ export default {
   watch: {
     //监听用户信息的获取
     userInfo(newVal) {
-      this.hasUserIno = true;
-      this.name = newVal.user.nickname;
+      this.hasUserInfo = true;
+      this.name = newVal.user && ewVal.user.nickname;
+    },
+    token(newToken) {
+      if (newToken) {
+        this.isLogon = true;
+      }
     },
   },
   methods: {
@@ -123,7 +142,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-container {
-  width: 200px;
+  width: 300px;
   display: flex;
   justify-content: center;
   .container {
@@ -132,6 +151,12 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    .user-info {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
   }
 }
 .panel {
