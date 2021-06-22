@@ -61,6 +61,8 @@ router.beforeEach(async(to, from, next) => {
 
                 console.log('没有用户信息');
 
+
+
                 //! 调用vuex方法 在vuex发送异步请求 凑一个gitee记录
                 store.dispatch('GetInfo').then(res => {
                     if (res.code == 200) {
