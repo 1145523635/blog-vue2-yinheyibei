@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-21 21:04:09
+ * @LastEditTime: 2021-06-23 08:43:06
  */
 
 //引入element-ui 提示框
@@ -60,8 +60,6 @@ router.beforeEach(async(to, from, next) => {
             try {
 
                 console.log('没有用户信息');
-
-
 
                 //! 调用vuex方法 在vuex发送异步请求 凑一个gitee记录
                 store.dispatch('GetInfo').then(res => {
