@@ -67,6 +67,7 @@ router.beforeEach(async(to, from, next) => {
                     } else {
                         Message.error('获取信息发送错误')
                     }
+                    
                 })
 
             } catch (err) {
