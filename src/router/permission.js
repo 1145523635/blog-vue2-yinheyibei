@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-26 21:59:18
+ * @LastEditTime: 2021-06-28 08:52:43
  */
 
 //引入element-ui 提示框
@@ -67,7 +67,9 @@ router.beforeEach(async(to, from, next) => {
                     } else {
                         Message.error('获取信息发送错误')
                     }
-                    
+
+
+
                 })
 
             } catch (err) {
