@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-29 09:03:07
+ * @LastEditTime: 2021-06-30 21:15:26
  */
 
 //引入element-ui 提示框
@@ -74,6 +74,7 @@ router.beforeEach(async(to, from, next) => {
                 //如果在获取途中发生错误 ，直接跳登录页
                 console.log(err)
             }
+
 
         }
 
