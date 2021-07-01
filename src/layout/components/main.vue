@@ -24,6 +24,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-container {
-  width: calc(100% - 300px);
+  width: 100%;
 }
 </style>

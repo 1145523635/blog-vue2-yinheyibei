@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 15:44:08
+ * @LastEditTime: 2021-07-01 22:08:06
 -->
 <template>
   <div class="app-container">
@@ -40,7 +40,11 @@
                 <span>注册</span>
               </div>
             </div>
-            <div class="login-container" v-show="isLogon && hasUserInfo">
+            <div
+              @click="toUserInfo"
+              class="login-container"
+              v-show="isLogon && hasUserInfo"
+            >
               <div class="item-icon" style="background: #e9f4fe">
                 <i class="el-icon-user" style="color: #2997f7"></i>
               </div>
@@ -141,7 +145,11 @@ export default {
   methods: {
     //点击登录
     toLogin() {
-      this.$Login();
+      if (this.isLogon && this.hasUserInfo) {
+        return;
+      } else {
+        this.$Login();
+      }
     },
 
     //点击退出登录
@@ -167,6 +175,11 @@ export default {
           });
         },
       });
+    },
+
+    //跳去个人用户界面
+    toUserInfo() {
+      this.$router.push("/user");
     },
   },
 };

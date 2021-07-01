@@ -1,9 +1,9 @@
 <!--
- * @Descripttion: 
+ * @Descripttion: 当前layout模块存在用户信息模块
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-16 16:04:04
+ * @LastEditTime: 2021-07-01 22:13:56
 -->
 <template>
   <div class="app-contianer">
@@ -14,7 +14,12 @@
       </div>
 
       <!-- 显示内容 -->
-      <div class="contianer-main"><Main></Main><UserInfo></UserInfo></div>
+      <div class="contianer-main">
+        <div class='main'><Main></Main></div>
+        <div>
+          <UserInfo></UserInfo>
+        </div>
+      </div>
       <div class="container-footer"><Footer></Footer></div>
     </div>
   </div>
@@ -27,7 +32,7 @@ import Login from "./components/login.vue"; //引入登录组件
 import Footer from "./components/footer.vue"; //引入版权
 import UserInfo from "./components/userInfo.vue"; //引入版权
 export default {
-  name: "Layout",
+  name: "LayoutUserInfo",
   components: {
     Logo,
     Menu,
@@ -70,6 +75,9 @@ export default {
       width: 1200px;
       min-height: calc(100vh - 60px);
       display: flex;
+      .main{
+         width: calc(100% - 300px);
+      }
     }
     .container-footer {
       width: 100%;
