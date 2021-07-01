@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 14:25:06
+ * @LastEditTime: 2021-07-01 16:06:32
 -->
 <template>
   <div class="app-container">
@@ -21,7 +21,11 @@
         <!-- 用户头像 -->
         <div class="user-avatar">
           <div class="avatar">
-            <img class="avatar-img" :src="userInfoAvatar" alt="" />
+            <img
+              class="avatar-img"
+              :src="$utils.imgUrl(userInfoAvatar, isNetImg)"
+              alt="用户头像"
+            />
           </div>
         </div>
         <!-- 用户名称 -->
@@ -35,10 +39,22 @@
             icon="el-icon-right"
             size="mini"
             @click="login"
+            v-show="!havaUserInfo"
             >登录</el-button
           >
-          <el-button type="success" icon="el-icon-user" size="mini"
+          <el-button
+            type="success"
+            icon="el-icon-user"
+            size="mini"
+            v-show="!havaUserInfo"
             >注册</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-star-off"
+            size="mini"
+            v-show="havaUserInfo"
+            >个人中心</el-button
           >
         </div>
       </div>
@@ -46,17 +62,51 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "UserInfo",
   data() {
     return {
+      //用户背景
       userInfoBackground: require("@/assets/user/userInfo.png"),
+
+      //用户默认头像
       userInfoAvatar: require("@/assets/user/user-avatar.png"),
+
+      //判断是否是本地图片
+      isNetImg: true,
+
+      //判断是否存在用户信息 || 用户登录
+      havaUserInfo: false,
     };
   },
+  created() {
+    if (this.userInfo && this.userInfo.user.avatar_url != undefined) {
+      this.havaUserInfo = true;
+      this.isNetImg = false;
+      this.userInfoAvatar = this.userInfo.user.avatar_url;
+    }
+  },
+
   methods: {
     login() {
       this.$Login();
+    },
+  },
+  computed: {
+    ...mapGetters(["userInfo"]),
+  },
+  watch: {
+    userInfo(newVal) {
+      if (newVal) {
+        this.isNetImg = false;
+        this.havaUserInfo = true;
+        this.userInfoAvatar = newVal.user.avatar_url;
+      } else {
+        this.isNetImg = true;
+        this.havaUserInfo = false;
+        this.userInfoAvatar = require("@/assets/user/user-avatar.png");
+      }
     },
   },
 };

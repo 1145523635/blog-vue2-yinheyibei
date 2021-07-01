@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-30 21:15:26
+ * @LastEditTime: 2021-07-01 14:45:36
  */
 
 //引入element-ui 提示框
@@ -44,7 +44,6 @@ router.beforeEach(async(to, from, next) => {
     //token cookie
     const token = getToken()
 
-
     if (token) {
         //用户信息 vuex
         const userInfo = store.getters.userInfo
@@ -67,17 +66,12 @@ router.beforeEach(async(to, from, next) => {
                     } else {
                         Message.error('获取信息发送错误')
                     }
-
                 })
-
             } catch (err) {
                 //如果在获取途中发生错误 ，直接跳登录页
                 console.log(err)
             }
-
-
         }
-
     } else {
         console.log('不存在token');
         //判断下一跳再不在白名单里面
@@ -85,11 +79,8 @@ router.beforeEach(async(to, from, next) => {
             next()
             NProgress.done()
         } else {
-
             Message.error('请登录')
             LoginBox.install();
         }
     }
-
-
 })

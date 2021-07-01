@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-20 22:49:17
+ * @LastEditTime: 2021-07-01 15:44:08
 -->
 <template>
   <div class="app-container">
@@ -16,10 +16,15 @@
       >
         <div class="panel" slot="">
           <div class="login-title">
-            <h6>登录方式</h6>
+            <h6 v-if="!isLogon && !hasUserInfo">登录方式</h6>
+            <h6 v-else>{{ name }}</h6>
           </div>
           <div class="login-item">
-            <div class="login-container" @click="toLogin">
+            <div
+              class="login-container"
+              @click="toLogin"
+              v-show="!isLogon && !hasUserInfo"
+            >
               <div class="item-icon" style="background: #e9f4fe">
                 <i class="el-icon-user" style="color: #2997f7"></i>
               </div>
@@ -27,7 +32,7 @@
                 <span>登录</span>
               </div>
             </div>
-            <div class="login-container">
+            <div class="login-container" v-show="!isLogon && !hasUserInfo">
               <div class="item-icon" style="background: #eefaf0">
                 <i class="el-icon-plus" style="color: #18a52a"></i>
               </div>
@@ -35,7 +40,19 @@
                 <span>注册</span>
               </div>
             </div>
-            <div class="login-container" @click="toLogOut">
+            <div class="login-container" v-show="isLogon && hasUserInfo">
+              <div class="item-icon" style="background: #e9f4fe">
+                <i class="el-icon-user" style="color: #2997f7"></i>
+              </div>
+              <div class="item-title" style="color: #2997f7">
+                <span>个人中心</span>
+              </div>
+            </div>
+            <div
+              class="login-container"
+              @click="toLogOut"
+              v-show="isLogon && hasUserInfo"
+            >
               <div class="item-icon" style="background: #fef0f0">
                 <i class="el-icon-right" style="color: #f56c6c"></i>
               </div>
@@ -59,10 +76,7 @@
           <!-- 展示登录信息 -->
           <div v-else-if="isLogon && hasUserInfo" class="user-info">
             <div style="margin-right: 10px">
-              <el-avatar
-                size="medium"
-                :src="$utils.imgUrl(hasUserInfo.user.avatar_url)"
-              ></el-avatar>
+              <el-avatar size="medium" :src="$utils.imgUrl(avatar)"></el-avatar>
             </div>
             <div>
               <span style="line-height: 60px">
@@ -84,10 +98,16 @@ export default {
       isLogon: false,
       hasUserInfo: false,
       name: "登录",
+      avatar: undefined,
     };
   },
   created() {
-    console.log(this.$store.state);
+    //页面刷新时判断有没有用户信息 用来控制头像显示
+    if (this.userInfo && this.userInfo.user.nickname != undefined) {
+      this.avatar = this.userInfo.user.avatar_url;
+      this.name = this.userInfo.user.nickname;
+      this.hasUserInfo = true;
+    }
     if (this.token) {
       this.isLogon = true;
     }
@@ -98,12 +118,23 @@ export default {
   watch: {
     //监听用户信息的获取
     userInfo(newVal) {
-      this.hasUserInfo = true;
-      this.name = newVal.user && ewVal.user.nickname;
+      if (newVal) {
+        this.hasUserInfo = true;
+        this.name = newVal.user && newVal.user.nickname;
+        this.avatar = newVal.user && newVal.user.avatar_url;
+      } else {
+        this.hasUserInfo = false;
+        this.name = "登录";
+        this.avatar = undefined;
+      }
     },
+
+    //监听token
     token(newToken) {
       if (newToken) {
         this.isLogon = true;
+      } else {
+        this.isLogon = false;
       }
     },
   },
@@ -177,12 +208,14 @@ export default {
       margin: 5px;
       cursor: pointer;
       .item-icon {
+        width: 25px;
         font-size: 20px;
         border-radius: 50%;
         padding: 5px;
         overflow: hidden;
       }
       .item-title {
+        text-align: center;
         font-size: 12px;
       }
     }

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 22:28:50
+ * @LastEditTime: 2021-07-01 15:20:40
 -->
 <template>
   <el-dialog
@@ -79,6 +79,7 @@ export default {
   data() {
     return {
       show: false,
+
       //登录表单
       loginForm: {
         name: "yinheyibei",
@@ -96,15 +97,19 @@ export default {
       },
     };
   },
-  created() {},
+
   methods: {
-    login() {
+    async login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           const { name, password } = this.loginForm;
           const data = { account: name, password: this.$utils.md5(password) };
-
           store.dispatch("Login", data).then((res) => {
+            //判断有没有用户信息
+            if (!store.state.user.info) {
+              //获取用户信息
+              store.dispatch("GetInfo");
+            }
             if (res) {
               this.show = false;
               router.push("/");
