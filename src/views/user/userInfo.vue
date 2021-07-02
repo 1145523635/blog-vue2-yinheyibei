@@ -3,12 +3,12 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 22:46:59
+ * @LastEditTime: 2021-07-02 23:00:06
 -->
 <template>
   <div class="app-container">
     <div class="container">
-      <!-- 正上方永不背景图 -->
+      <!-- 正上方用户背景图 -->
       <div class="user-cover">
         <img class="cover-img" :src="userCover" alt="用户背景图" />
         <!-- 用户基本信息 -->
@@ -31,7 +31,31 @@
       </div>
 
       <!-- 菜单导航 -->
-      <div class="menu-link"></div>
+      <div class="menu-link">
+        <div class="link-item">
+          <div class="item">
+            <router-link tag="span" :to="'/userInfo/release'">发布</router-link>
+          </div>
+          <div class="item">
+            <router-link tag="span" :to="'/userInfo/collection'">收藏</router-link>
+          </div>
+          <div class="item">
+            <router-link tag="span" :to="'/userInfo/comment'">评论</router-link>
+          </div>
+          <div class="item">
+            <router-link tag="span" :to="'/userInfo/follow'">关注</router-link>
+          </div>
+          <div class="item">
+            <router-link tag="span" :to="'/userInfo/personal'">个人资料</router-link>
+          </div>
+        </div>
+      </div>
+      <!-- 子级路由展示 -->
+      <div class="router-view">
+        <transition name="el-zoom-in-center" mode="out-in">
+          <router-view :key="key"></router-view>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -50,10 +74,12 @@ export default {
   },
   created() {
     this.userInfos = this.userInfo.user;
-    console.log(this.userInfos);
   },
   computed: {
     ...mapGetters(["userInfo"]),
+    key() {
+      return this.$route.path;
+    },
   },
 };
 </script>
@@ -71,7 +97,7 @@ export default {
       width: 100%;
       height: 370px;
       background: white;
-      border-radius: 20px;
+      border-radius: 10px;
       overflow: hidden;
       position: relative;
       .cover-img {
@@ -102,6 +128,35 @@ export default {
           color: #ffffff;
         }
       }
+    }
+    .menu-link {
+      width: 100%;
+      display: flex;
+      height: 50px;
+      background: #ffffff;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      align-items: center;
+      .link-item {
+        display: flex;
+        align-items: center;
+        .item {
+          margin-left: 10px;
+          margin-right: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+    .router-view {
+      width: 100%;
+      height: 500px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #ffffff;
+      margin-bottom: 20px;
     }
   }
 }
