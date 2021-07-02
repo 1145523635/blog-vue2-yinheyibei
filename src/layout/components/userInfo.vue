@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 16:06:32
+ * @LastEditTime: 2021-07-02 22:14:27
 -->
 <template>
   <div class="app-container">
@@ -54,6 +54,7 @@
             icon="el-icon-star-off"
             size="mini"
             v-show="havaUserInfo"
+            @click="toUserInfo"
             >个人中心</el-button
           >
         </div>
@@ -91,6 +92,9 @@ export default {
   methods: {
     login() {
       this.$Login();
+    },
+    toUserInfo() {
+      this.$router.push("/user");
     },
   },
   computed: {
