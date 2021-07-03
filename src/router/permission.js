@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 22:34:32
+ * @LastEditTime: 2021-07-03 21:50:12
  */
 
 //引入element-ui 提示框
@@ -43,25 +43,21 @@ router.beforeEach(async(to, from, next) => {
 
     //token cookie
     const token = getToken()
-
     if (token) {
         //用户信息 vuex
         const userInfo = store.getters.userInfo
-            // console.log('存在token');
             //如果存在用户信息
         if (userInfo) {
-            // console.log('有用户信息');
             //直接放过页面
             next()
             NProgress.done()
         } else {
             //如果不存在用户信息 则要去获取用户信息
             try {
-                // console.log('没有用户信息');
-                //! 调用vuex方法 在vuex发送异步请求 凑一个gitee记录
+                //调用vuex方法 在vuex发送异步请求 凑一个gitee记录
                 store.dispatch('GetInfo').then(res => {
                     if (res.code == 200) {
-                        next('/')
+                        next()
                         NProgress.done()
                     } else {
                         Message.error('获取信息发送错误')

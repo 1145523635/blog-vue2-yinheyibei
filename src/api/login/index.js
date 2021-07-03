@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 19:24:05
+ * @LastEditTime: 2021-07-03 22:15:29
  */
 import { request } from '@/utils/request'
 
@@ -47,5 +47,21 @@ export function logout() {
     return request({
         url: '/blog/userLogout',
         method: 'POST',
+    })
+}
+
+
+/**
+ * @Description: 用户前端用户注册获取验证码
+ * @Author: 银河以北
+ * @Date: 2021-07-03 22:15:20
+ * @param {*} data
+ * @return {*}
+ */
+export function getRegisterCode(data) {
+    return request({
+        url: '/blog/getRegisterCode',
+        method: 'POST',
+        data
     })
 }

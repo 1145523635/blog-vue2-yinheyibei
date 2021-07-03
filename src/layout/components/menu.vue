@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-12 16:43:04
+ * @LastEditTime: 2021-07-03 14:43:43
 -->
 <template>
   <div class="app-container">
@@ -52,9 +52,17 @@ export default {
       ],
 
       //活动路由
-      activeMenu: 1,
+      activeMenu: 0,
       activePath: "/",
     };
+  },
+  created() {
+    const sonMenu = ["Personal", "Collection", "Comment", "Follow", "Release"];
+    if (sonMenu.includes(this.$route.name)) {
+      this.activePath = undefined;
+    } else {
+      this.activePath = this.$route.path;
+    }
   },
   watch: {
     //监听路由 动态改变样式

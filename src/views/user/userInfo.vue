@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-02 23:00:06
+ * @LastEditTime: 2021-07-03 16:23:55
 -->
 <template>
   <div class="app-container">
@@ -34,19 +34,41 @@
       <div class="menu-link">
         <div class="link-item">
           <div class="item">
-            <router-link tag="span" :to="'/userInfo/release'">发布</router-link>
+            <router-link tag="div" :to="{ name: 'Release' }"
+              ><span style="margin-right: 5px"
+                ><i class="el-icon-document-checked"></i
+              ></span>
+              发布</router-link
+            >
           </div>
           <div class="item">
-            <router-link tag="span" :to="'/userInfo/collection'">收藏</router-link>
+            <router-link tag="div" :to="{ name: 'Collection' }"
+              ><span style="margin-right: 5px"
+                ><i class="el-icon-star-off"></i></span
+              >收藏</router-link
+            >
           </div>
           <div class="item">
-            <router-link tag="span" :to="'/userInfo/comment'">评论</router-link>
+            <router-link tag="div" :to="{ name: 'Comment' }"
+              ><span style="margin-right: 5px">
+                <i class="el-icon-chat-dot-round"></i
+              ></span>
+              评论</router-link
+            >
           </div>
           <div class="item">
-            <router-link tag="span" :to="'/userInfo/follow'">关注</router-link>
+            <router-link tag="div" :to="{ name: 'Follow' }"
+              ><span style="margin-right: 5px">
+                <i class="el-icon-view"></i></span
+              >关注</router-link
+            >
           </div>
           <div class="item">
-            <router-link tag="span" :to="'/userInfo/personal'">个人资料</router-link>
+            <router-link tag="div" :to="{ name: 'Personal' }"
+              ><span style="margin-right: 5px">
+                <i class="el-icon-user"></i></span
+              >个人资料</router-link
+            >
           </div>
         </div>
       </div>
@@ -144,9 +166,23 @@ export default {
         display: flex;
         align-items: center;
         .item {
-          margin-left: 10px;
-          margin-right: 10px;
+          width: 100px;
           cursor: pointer;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 20px;
+          background-color: #ffffff;
+          color: #4e5358;
+        }
+        // 活动路由样式
+        .router-link-exact-active {
+          width: 100px;
+          cursor: pointer;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 20px;
+          background-color: #00a2e3;
+          color: #ffffff;
         }
       }
     }

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 22:15:44
+ * @LastEditTime: 2021-07-02 22:29:53
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -29,16 +29,17 @@ Vue.use(VueRouter)
 
 const routes = [{
         path: '/',
-        name: 'index',
+        name: 'Yinheyibei',
         component: LayoutUserInfo,
         meta: { title: 'layoutUserInfo' },
+        redirect: '/',
         children: [{
                 path: '/',
                 name: 'Home',
                 meta: { title: '首页' },
                 component: Home,
             }, {
-                path: '/about',
+                path: 'about',
                 name: 'About',
                 meta: { title: '关于' },
                 component: function() {
@@ -46,7 +47,7 @@ const routes = [{
                 }
             },
             {
-                path: '/test',
+                path: 'test',
                 name: 'Test',
                 meta: { title: '测试' },
                 component: function() {
@@ -66,12 +67,45 @@ const routes = [{
             path: '/userInfo',
             name: 'UserINfo',
             meta: { title: '用户信息' },
+            redirect: '/userInfo/release',
             component: () =>
-                import ('@/views/user/userInfo.vue')
+                import ('@/views/user/userInfo.vue'),
+            children: [{
+                    path: 'personal',
+                    name: 'Personal',
+                    meta: { title: '个人资料' },
+                    component: () =>
+                        import ('@/views/user/userPages/personal.vue'),
+                }, {
+                    path: 'collection',
+                    name: 'Collection',
+                    meta: { title: '用户收藏' },
+                    component: () =>
+                        import ('@/views/user/userPages/collection.vue'),
+                }, {
+                    path: 'comment',
+                    name: 'Comment',
+                    meta: { title: '用户评论' },
+                    component: () =>
+                        import ('@/views/user/userPages/comment.vue'),
+                },
+                {
+                    path: 'follow',
+                    name: 'Follow',
+                    meta: { title: '用户关注' },
+                    component: () =>
+                        import ('@/views/user/userPages/follow.vue'),
+                },
+                {
+                    path: 'release',
+                    name: 'Release',
+                    meta: { title: '用户发布' },
+                    component: () =>
+                        import ('@/views/user/userPages/release.vue'),
+                }
+            ]
         }]
-
     }
-
 ]
 
 const router = new VueRouter({

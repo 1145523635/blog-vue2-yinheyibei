@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 22:13:56
+ * @LastEditTime: 2021-07-02 22:24:24
 -->
 <template>
   <div class="app-contianer">
@@ -15,7 +15,7 @@
 
       <!-- 显示内容 -->
       <div class="contianer-main">
-        <div class='main'><Main></Main></div>
+        <div class="main"><Main></Main></div>
         <div>
           <UserInfo></UserInfo>
         </div>
@@ -69,14 +69,19 @@ export default {
         display: flex;
         justify-content: space-around;
         align-items: center;
+        position: fixed;
+        top: 0;
+        z-index: 99999;
+        background: #ffffff;
+        opacity: 0.9;
       }
     }
     .contianer-main {
       width: 1200px;
       min-height: calc(100vh - 60px);
       display: flex;
-      .main{
-         width: calc(100% - 300px);
+      .main {
+        width: calc(100% - 300px);
       }
     }
     .container-footer {
