@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 19:57:32
+ * @LastEditTime: 2021-07-04 20:56:39
  */
 
 //引入axios 对其进行分装
@@ -22,7 +22,6 @@ export function request(config) {
         baseURL: baseSetting.baseURL,
         timeout: 5000
     })
-
 
     //请求拦截
     instance.interceptors.request.use(config => {
