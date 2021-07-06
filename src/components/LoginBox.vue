@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-03 22:21:36
+ * @LastEditTime: 2021-07-06 22:41:09
 -->
 <template>
   <el-dialog
@@ -37,11 +37,11 @@
           label-width="0"
           class="demo-ruleForm"
         >
-          <el-form-item prop="name">
+          <el-form-item prop="email">
             <el-input
-              type="text"
-              placeholder="用户名 or 邮箱"
-              v-model="loginForm.name"
+              type="email"
+              placeholder="请输入邮箱"
+              v-model="loginForm.email"
               autocomplete="off"
               clearable
               size="small "
@@ -145,13 +145,13 @@ export default {
       show: false,
       //登录表单
       loginForm: {
-        name: "yinheyibei",
+        email: "1145523635@qq.com",
         password: "123456",
       },
 
       //登录表单验证规则
       loginRules: {
-        name: [
+        email: [
           { required: true, message: "请输入用户名 or 邮箱", trigger: "blur" },
         ],
         password: [
@@ -179,8 +179,8 @@ export default {
     async login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          const { name, password } = this.loginForm;
-          const data = { account: name, password: this.$utils.md5(password) };
+          const { email, password } = this.loginForm;
+          const data = { email, password: this.$utils.md5(password) };
           store.dispatch("Login", data).then((res) => {
             //判断有没有用户信息
             if (!store.state.user.info) {

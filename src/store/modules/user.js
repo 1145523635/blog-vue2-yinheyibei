@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 20:21:11
+ * @LastEditTime: 2021-07-06 22:41:27
  */
 
 //引入登录方法
@@ -33,7 +33,7 @@ const user = {
         // 登录
         Login({ commit }, userInfo) {
             return new Promise((resolve, reject) => {
-                const data = { account: userInfo.account, password: userInfo.password }
+                const data = { email: userInfo.email, password: userInfo.password }
                 login(data).then(response => {
                     //登录时发生错误
                     if (!response) {
