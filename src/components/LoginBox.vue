@@ -1,9 +1,9 @@
 <!--
- * @Descripttion: 全局登录or注册组件
+ * @Descripttion: 全局登录and注册组件
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-06 22:41:09
+ * @LastEditTime: 2021-07-07 22:51:46
 -->
 <template>
   <el-dialog
@@ -68,12 +68,13 @@
           </el-form-item>
         </el-form>
       </div>
+      <!-- 注册表单 -->
       <div class="register-form" v-else>
         <el-form
           :model="registerForm"
           :rules="registerRules"
           status-icon
-          ref="loginForm"
+          ref="registerForm"
           label-width="0"
           class="demo-ruleForm"
         >
@@ -81,13 +82,13 @@
             <el-input
               type="text"
               placeholder="请输入邮箱"
-              v-model="registerForm.name"
+              v-model="registerForm.email"
               autocomplete="off"
               clearable
               size="small "
             ></el-input>
           </el-form-item>
-          <el-form-item prop="email">
+          <el-form-item prop="code">
             <el-input
               size="small"
               placeholder="请输入验证码"
@@ -100,17 +101,17 @@
               >
             </el-input>
           </el-form-item>
-          <el-form-item prop="email">
+          <el-form-item prop="password">
             <el-input
               type="password"
               placeholder="请输入密码"
-              v-model="registerForm.possword"
+              v-model="registerForm.password"
               autocomplete="off"
               clearable
               size="small "
             ></el-input>
           </el-form-item>
-          <el-form-item prop="email">
+          <el-form-item prop="againPossword">
             <el-input
               type="password"
               placeholder="请确认密码"
@@ -121,7 +122,11 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" size="small" class="login-btn"
+            <el-button
+              type="success"
+              size="small"
+              class="login-btn"
+              @click="registerUser"
               >注册</el-button
             >
           </el-form-item>
@@ -141,6 +146,15 @@ import store from "@/store";
 import router from "@/router";
 export default {
   data() {
+    const validateAgainPassword = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else if (value !== this.registerForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       show: false,
       //登录表单
@@ -152,10 +166,17 @@ export default {
       //登录表单验证规则
       loginRules: {
         email: [
-          { required: true, message: "请输入用户名 or 邮箱", trigger: "blur" },
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          {
+            pattern:
+              /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*\.[a-z]{2,}$/,
+            message: "请正确输入邮箱格式",
+            trigger: "blur",
+          },
         ],
         password: [
           { required: true, message: "请输入登录密码", trigger: "blur" },
+          { min: 6, max: 12, message: "密码长度在6到12位哦~", trigger: "blur" },
         ],
       },
 
@@ -171,7 +192,30 @@ export default {
       },
 
       //注册表单验证规则
-      registerRules: {},
+      registerRules: {
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          {
+            pattern:
+              /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*\.[a-z]{2,}$/,
+            message: "请正确输入邮箱格式",
+            trigger: "blur",
+          },
+        ],
+        code: [
+          { required: true, message: "请输入验证码", trigger: "blur" },
+          { min: 6, max: 6, message: "验证码长度为6哦~", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "请输入登录密码", trigger: "blur" },
+          { min: 6, max: 12, message: "密码长度在6到12位哦~", trigger: "blur" },
+        ],
+        againPossword: [
+          { required: true, message: "请输入登录密码", trigger: "blur" },
+          { validator: validateAgainPassword, trigger: "blur" },
+          { min: 6, max: 12, message: "密码长度在6到12位哦~", trigger: "blur" },
+        ],
+      },
     };
   },
 
@@ -201,7 +245,6 @@ export default {
 
     //切换表单
     changeTable(fromName) {
-      console.log(fromName);
       if (fromName === "login") {
         this.showLoginFrom = true;
       } else {
@@ -211,9 +254,22 @@ export default {
 
     //获取二维码
     getCode() {
-      const data = Object.assign({}, this.registerForm);
-      getRegisterCode(data).then((res) => {
-        console.log(res);
+      //只验证一个字段 email 有没有
+
+      this.$refs.registerForm.validateField("email", (validate) => {
+        if (!validate) {
+          const data = { email: this.registerForm.email };
+          getRegisterCode(data).then((res) => {
+            console.log(res);
+          });
+        }
+      });
+    },
+
+    //用户注册
+    registerUser() {
+      this.$refs.registerForm.validate((validate) => {
+        console.log(validate);
       });
     },
   },

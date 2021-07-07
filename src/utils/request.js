@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-04 20:56:39
+ * @LastEditTime: 2021-07-07 22:42:12
  */
 
 //引入axios 对其进行分装
@@ -54,10 +54,18 @@ export function request(config) {
 function handleCode(response) {
     //500拦截
     if (response.data.code === 500) {
+        let message = '传参错误'
+        if (typeof response.data.data == 'string') {
+            message = response.data.data
+        }
+        if (response.data.data instanceof Object) {
+            message = '传参错误'
+        }
+
         Notification({
             type: 'error',
             title: '错误',
-            message: '参数异常'
+            message
         })
         return false
     }
