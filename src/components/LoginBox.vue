@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-07 22:51:46
+ * @LastEditTime: 2021-07-08 22:53:51
 -->
 <template>
   <el-dialog
@@ -185,7 +185,7 @@ export default {
 
       //注册表单
       registerForm: {
-        email: undefined,
+        email: "3627629185@qq.com",
         code: undefined,
         password: undefined,
         againPassword: undefined,
@@ -255,12 +255,18 @@ export default {
     //获取二维码
     getCode() {
       //只验证一个字段 email 有没有
-
       this.$refs.registerForm.validateField("email", (validate) => {
         if (!validate) {
           const data = { email: this.registerForm.email };
           getRegisterCode(data).then((res) => {
             console.log(res);
+            if (res.data == "true") {
+              this.$notify({
+                title: "邮件发送成功",
+                message: "请在邮箱内查看验证码，验证码有效时间为10分钟！",
+                type: "success",
+              });
+            }
           });
         }
       });
