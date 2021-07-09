@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-08 22:53:51
+ * @LastEditTime: 2021-07-09 10:21:23
 -->
 <template>
   <el-dialog
@@ -15,7 +15,7 @@
   >
     <div slot="title">
       <div class="dialogTitle">
-        <span :class="{ 'login-title': showLoginFrom }">登录</span> or
+        <span :class="{ 'login-title': showLoginFrom }">登录</span> and
         <span :class="{ 'register-form': !showLoginFrom }">注册</span>
       </div>
     </div>
@@ -62,6 +62,7 @@
               type="primary"
               size="small"
               class="login-btn"
+              :loading="loginLoading"
               @click="login"
               >登录</el-button
             >
@@ -78,6 +79,16 @@
           label-width="0"
           class="demo-ruleForm"
         >
+          <el-form-item prop="nickname">
+            <el-input
+              type="text"
+              placeholder="请输入用户名"
+              v-model="registerForm.nickname"
+              autocomplete="off"
+              clearable
+              size="small "
+            ></el-input>
+          </el-form-item>
           <el-form-item prop="email">
             <el-input
               type="text"
@@ -95,9 +106,14 @@
               v-model="registerForm.code"
             >
               <template slot="append"
-                ><div style="cursor: pointer" @click="getCode">
-                  获取验证码
-                </div></template
+                ><el-button
+                  :loading="getCodeLoading"
+                  style="cursor: pointer"
+                  @click="getCode"
+                >
+                  <span v-if="!getCodeLoading">获取验证码</span>
+                  <span v-else>获取中...</span>
+                </el-button></template
               >
             </el-input>
           </el-form-item>
@@ -126,6 +142,7 @@
               type="success"
               size="small"
               class="login-btn"
+              :loading="registerLoading"
               @click="registerUser"
               >注册</el-button
             >
@@ -137,7 +154,7 @@
 </template>
 
 <script>
-import { getRegisterCode } from "@/api/login/index";
+import { getRegisterCode, userRegister } from "@/api/login/index";
 
 //引入vuex
 import store from "@/store";
@@ -162,6 +179,15 @@ export default {
         email: "1145523635@qq.com",
         password: "123456",
       },
+
+      //登录按钮loading状态
+      loginLoading: false,
+
+      //注册按钮loading状态
+      registerLoading: false,
+
+      //获取邮箱验证码状态
+      getCodeLoading: false,
 
       //登录表单验证规则
       loginRules: {
@@ -189,10 +215,15 @@ export default {
         code: undefined,
         password: undefined,
         againPassword: undefined,
+        nickname: undefined,
       },
 
       //注册表单验证规则
       registerRules: {
+        nickname: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 3, max: 12, message: "用户名长度在3到12之间哦~", trigger: "blur" },
+        ],
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
           {
@@ -223,6 +254,7 @@ export default {
     async login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
+          this.loginLoading = true;
           const { email, password } = this.loginForm;
           const data = { email, password: this.$utils.md5(password) };
           store.dispatch("Login", data).then((res) => {
@@ -234,6 +266,7 @@ export default {
             if (res) {
               this.show = false;
               router.push("/");
+              this.loginLoading = false;
             }
           });
         } else {
@@ -256,11 +289,12 @@ export default {
     getCode() {
       //只验证一个字段 email 有没有
       this.$refs.registerForm.validateField("email", (validate) => {
+        this.getCodeLoading = true;
         if (!validate) {
           const data = { email: this.registerForm.email };
           getRegisterCode(data).then((res) => {
-            console.log(res);
             if (res.data == "true") {
+              this.getCodeLoading = false;
               this.$notify({
                 title: "邮件发送成功",
                 message: "请在邮箱内查看验证码，验证码有效时间为10分钟！",
@@ -275,7 +309,23 @@ export default {
     //用户注册
     registerUser() {
       this.$refs.registerForm.validate((validate) => {
-        console.log(validate);
+        if (validate) {
+          this.registerLoading = true;
+          const data = Object.assign({}, this.registerForm);
+          data.password = this.$utils.md5(data.password); //密码md5加密
+          delete data.againPossword; //删除确认密码
+          userRegister(data).then((res) => {
+            this.registerLoading = false;
+            if (res.code == 200) {
+              this.showLoginFrom = true;
+              this.$notify({
+                title: "注册成功！",
+                message: "你以成功进行注册，现在可以进行登录啦！",
+                type: "success",
+              });
+            }
+          });
+        }
       });
     },
   },

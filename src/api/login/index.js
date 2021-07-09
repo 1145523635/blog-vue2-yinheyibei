@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-03 22:15:29
+ * @LastEditTime: 2021-07-09 09:00:12
  */
 import { request } from '@/utils/request'
 
@@ -55,12 +55,27 @@ export function logout() {
  * @Description: 用户前端用户注册获取验证码
  * @Author: 银河以北
  * @Date: 2021-07-03 22:15:20
- * @param {*} data
+ * @param {*} data 邮箱email
  * @return {*}
  */
 export function getRegisterCode(data) {
     return request({
         url: '/blog/getRegisterCode',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ * @Description: 前台用户获取邮箱验证码进行注册
+ * @Author: 银河以北
+ * @Date: 2021-07-09 08:59:05
+ * @param {*} data  邮箱emial 验证码code 密码password
+ * @return {*}
+ */
+export function userRegister(data) {
+    return request({
+        url: '/blog/userRegister',
         method: 'POST',
         data
     })

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-07 22:42:12
+ * @LastEditTime: 2021-07-09 09:18:22
  */
 
 //引入axios 对其进行分装
@@ -40,8 +40,10 @@ export function request(config) {
         if (response.data.code === 200) {
             return response.data
         }
+
         //自定义异常拦截
-        handleCode(response);
+        return handleCode(response);
+
     }, err => {
         console.log(err)
     })
@@ -67,7 +69,10 @@ function handleCode(response) {
             title: '错误',
             message
         })
-        return false
+        return {
+            code: 500,
+            data: message
+        };
     }
     //账号密码错误拦截
     if (response.data.code === 40001) {
@@ -77,7 +82,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.data
         })
-        return false
+        return {
+            code: 40001,
+            data: response.data.data
+        }
     }
 
     //账号冻结
@@ -87,7 +95,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.data
         })
-        return false
+        return {
+            code: 40002,
+            data: response.data.data
+        }
     }
 
     //账号多点登录（跳入登录页）
@@ -97,7 +108,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.msg
         })
-        return false
+        return {
+            code: 10005,
+            data: response.data.data
+        }
     }
     //登录过期
     if (response.data.code === 10003) {
@@ -106,7 +120,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.msg
         })
-        return false
+        return {
+            code: 10003,
+            data: response.data.data
+        }
     }
 
     //授权token不存在
@@ -117,13 +134,19 @@ function handleCode(response) {
             message: response.data.msg
         })
 
-        return false
+        return {
+            code: 10004,
+            data: response.data.data
+        }
     }
     Notification({
         type: 'error',
         title: '错误',
         message: response.data.message
     })
-    return false
+    return {
+        code: 99999,
+        data: response.data.data
+    }
 
 }

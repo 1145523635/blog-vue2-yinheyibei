@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-02 22:05:11
+ * @LastEditTime: 2021-07-09 10:27:01
 -->
 <template>
   <div class="app-container">
@@ -126,6 +126,7 @@ export default {
         this.hasUserInfo = true;
         this.name = newVal.user && newVal.user.nickname;
         this.avatar = newVal.user && newVal.user.avatar_url;
+        
       } else {
         this.hasUserInfo = false;
         this.name = "登录";
