@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-02 22:24:24
+ * @LastEditTime: 2021-07-12 17:09:11
 -->
 <template>
   <div class="app-contianer">
@@ -71,7 +71,7 @@ export default {
         align-items: center;
         position: fixed;
         top: 0;
-        z-index: 99999;
+ 
         background: #ffffff;
         opacity: 0.9;
       }

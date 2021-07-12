@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-09 10:27:01
+ * @LastEditTime: 2021-07-12 16:47:15
 -->
 <template>
   <div class="app-container">
@@ -32,7 +32,11 @@
                 <span>登录</span>
               </div>
             </div>
-            <div class="login-container" v-show="!isLogon && !hasUserInfo">
+            <div
+              class="login-container"
+              @click="toRegister"
+              v-show="!isLogon && !hasUserInfo"
+            >
               <div class="item-icon" style="background: #eefaf0">
                 <i class="el-icon-plus" style="color: #18a52a"></i>
               </div>
@@ -126,7 +130,6 @@ export default {
         this.hasUserInfo = true;
         this.name = newVal.user && newVal.user.nickname;
         this.avatar = newVal.user && newVal.user.avatar_url;
-        
       } else {
         this.hasUserInfo = false;
         this.name = "登录";
@@ -149,8 +152,13 @@ export default {
       if (this.isLogon && this.hasUserInfo) {
         return;
       } else {
-        this.$Login();
+        this.$Login("login");
       }
+    },
+
+    //点击登录
+    toRegister() {
+      this.$Login("registe");
     },
 
     //点击退出登录

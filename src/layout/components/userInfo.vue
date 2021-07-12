@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-02 22:14:27
+ * @LastEditTime: 2021-07-12 16:43:53
 -->
 <template>
   <div class="app-container">
@@ -46,6 +46,7 @@
             type="success"
             icon="el-icon-user"
             size="mini"
+            @click="register"
             v-show="!havaUserInfo"
             >注册</el-button
           >
@@ -91,7 +92,11 @@ export default {
 
   methods: {
     login() {
-      this.$Login();
+      this.$Login("login");
+    },
+
+    register() {
+      this.$Login("register");
     },
     toUserInfo() {
       this.$router.push("/user");

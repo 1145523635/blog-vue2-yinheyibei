@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-09 10:21:23
+ * @LastEditTime: 2021-07-12 17:07:01
 -->
 <template>
   <el-dialog
@@ -28,7 +28,7 @@
           <span :class="{ 'register-form ': !showLoginFrom }">注册</span>
         </div>
       </div>
-      <div class="form" v-if="showLoginFrom">
+      <div class="form" v-show="showLoginFrom">
         <el-form
           :model="loginForm"
           :rules="loginRules"
@@ -70,7 +70,7 @@
         </el-form>
       </div>
       <!-- 注册表单 -->
-      <div class="register-form" v-else>
+      <div class="register-form" v-show="!showLoginFrom">
         <el-form
           :model="registerForm"
           :rules="registerRules"
@@ -177,7 +177,7 @@ export default {
       //登录表单
       loginForm: {
         email: "1145523635@qq.com",
-        password: "123456",
+        password: "",
       },
 
       //登录按钮loading状态
@@ -222,7 +222,12 @@ export default {
       registerRules: {
         nickname: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 3, max: 12, message: "用户名长度在3到12之间哦~", trigger: "blur" },
+          {
+            min: 3,
+            max: 12,
+            message: "用户名长度在3到12之间哦~",
+            trigger: "blur",
+          },
         ],
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
@@ -251,7 +256,7 @@ export default {
   },
 
   methods: {
-    async login() {
+    login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loginLoading = true;
@@ -286,15 +291,15 @@ export default {
     },
 
     //获取二维码
-    getCode() {
+    async getCode() {
       //只验证一个字段 email 有没有
       this.$refs.registerForm.validateField("email", (validate) => {
         this.getCodeLoading = true;
         if (!validate) {
           const data = { email: this.registerForm.email };
           getRegisterCode(data).then((res) => {
+            this.getCodeLoading = false;
             if (res.data == "true") {
-              this.getCodeLoading = false;
               this.$notify({
                 title: "邮件发送成功",
                 message: "请在邮箱内查看验证码，验证码有效时间为10分钟！",
@@ -327,6 +332,13 @@ export default {
           });
         }
       });
+    },
+  },
+
+  watch: {
+    showLoginFrom() {
+      this.$refs.registerForm.resetFields();
+      this.$refs.loginForm.resetFields();
     },
   },
 };
