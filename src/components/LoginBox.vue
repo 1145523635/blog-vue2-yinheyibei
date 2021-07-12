@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-12 17:07:01
+ * @LastEditTime: 2021-07-12 21:57:20
 -->
 <template>
   <el-dialog
@@ -293,17 +293,21 @@ export default {
     //获取二维码
     async getCode() {
       //只验证一个字段 email 有没有
-      this.$refs.registerForm.validateField("email", (validate) => {
-        this.getCodeLoading = true;
-        if (!validate) {
-          const data = { email: this.registerForm.email };
-          getRegisterCode(data).then((res) => {
-            this.getCodeLoading = false;
-            if (res.data == "true") {
-              this.$notify({
-                title: "邮件发送成功",
-                message: "请在邮箱内查看验证码，验证码有效时间为10分钟！",
-                type: "success",
+      this.$refs.registerForm.validateField("nickname", (havaName) => {
+        if (!havaName) {
+          this.$refs.registerForm.validateField("email", (validate) => {
+            this.getCodeLoading = true;
+            if (!validate) {
+              const data = { email: this.registerForm.email };
+              getRegisterCode(data).then((res) => {
+                this.getCodeLoading = false;
+                if (res.data == "true") {
+                  this.$notify({
+                    title: "邮件发送成功",
+                    message: "请在邮箱内查看验证码，验证码有效时间为10分钟！",
+                    type: "success",
+                  });
+                }
               });
             }
           });
@@ -337,8 +341,12 @@ export default {
 
   watch: {
     showLoginFrom() {
-      this.$refs.registerForm.resetFields();
-      this.$refs.loginForm.resetFields();
+      if (this.$refs.registerForm) {
+        this.$refs.registerForm.resetFields();
+      }
+      if (this.$refs.loginForm) {
+        this.$refs.loginForm.resetFields();
+      }
     },
   },
 };
