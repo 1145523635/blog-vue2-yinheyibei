@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-12 21:57:20
+ * @LastEditTime: 2021-07-12 22:03:10
 -->
 <template>
   <el-dialog
@@ -298,7 +298,10 @@ export default {
           this.$refs.registerForm.validateField("email", (validate) => {
             this.getCodeLoading = true;
             if (!validate) {
-              const data = { email: this.registerForm.email };
+              const data = {
+                email: this.registerForm.email,
+                nickname: this.registerForm.nickname,
+              };
               getRegisterCode(data).then((res) => {
                 this.getCodeLoading = false;
                 if (res.data == "true") {
