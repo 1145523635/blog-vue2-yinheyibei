@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-03 16:23:55
+ * @LastEditTime: 2021-07-13 16:10:31
 -->
 <template>
   <div class="app-container">
@@ -64,7 +64,7 @@
             >
           </div>
           <div class="item">
-            <router-link tag="div" :to="{ name: 'Personal' }"
+            <router-link tag="div" id="personal" :to="{ name: 'Personal' }"
               ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span
               >个人资料</router-link
@@ -75,7 +75,7 @@
       <!-- 子级路由展示 -->
       <div class="router-view">
         <transition name="el-zoom-in-center" mode="out-in">
-          <router-view :key="key"></router-view>
+          <router-view></router-view>
         </transition>
       </div>
     </div>

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-02 22:29:53
+ * @LastEditTime: 2021-07-13 15:51:36
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -74,15 +74,37 @@ const routes = [{
                     path: 'personal',
                     name: 'Personal',
                     meta: { title: '个人资料' },
+                    redirect: '/userInfo/personal/baseSetting',
                     component: () =>
                         import ('@/views/user/userPages/personal.vue'),
-                }, {
+                    children: [{
+                            path: 'baseSetting',
+                            name: 'BaseSetting',
+                            meta: {
+                                title: '基本配置',
+                            },
+                            component: () =>
+                                import ('@/views/user/userPages/personal/baseSetting.vue')
+                        },
+                        {
+                            path: 'securitySetting',
+                            name: 'SecuritySetting',
+                            meta: {
+                                title: '安全配置',
+                            },
+                            component: () =>
+                                import ('@/views/user/userPages/personal/securitySetting.vue')
+                        }
+                    ]
+                },
+                {
                     path: 'collection',
                     name: 'Collection',
                     meta: { title: '用户收藏' },
                     component: () =>
                         import ('@/views/user/userPages/collection.vue'),
-                }, {
+                },
+                {
                     path: 'comment',
                     name: 'Comment',
                     meta: { title: '用户评论' },
