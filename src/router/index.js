@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-13 15:51:36
+ * @LastEditTime: 2021-07-20 00:29:19
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -82,6 +82,7 @@ const routes = [{
                             name: 'BaseSetting',
                             meta: {
                                 title: '基本配置',
+                                routerParent: "personal" //处理在子级页面渲染时 父级没有动态类名
                             },
                             component: () =>
                                 import ('@/views/user/userPages/personal/baseSetting.vue')
@@ -91,6 +92,7 @@ const routes = [{
                             name: 'SecuritySetting',
                             meta: {
                                 title: '安全配置',
+                                routerParent: "personal"
                             },
                             component: () =>
                                 import ('@/views/user/userPages/personal/securitySetting.vue')

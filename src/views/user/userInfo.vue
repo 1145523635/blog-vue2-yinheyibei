@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-13 16:10:31
+ * @LastEditTime: 2021-07-20 00:36:42
 -->
 <template>
   <div class="app-container">
@@ -64,7 +64,11 @@
             >
           </div>
           <div class="item">
-            <router-link tag="div" id="personal" :to="{ name: 'Personal' }"
+            <router-link
+              tag="div"
+              id="personal"
+              :class="{ 'router-link-exact-active': routePath == 'personal' }"
+              :to="{ name: 'Personal' }"
               ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span
               >个人资料</router-link
@@ -92,15 +96,24 @@ export default {
 
       //用户信息
       userInfos: {},
+
+      //确定当前要渲染的路径
+      routePath: "",
     };
   },
   created() {
     this.userInfos = this.userInfo.user;
+
+    this.routePath = this.$route.meta.routerParent;
   },
+  methods: {},
   computed: {
     ...mapGetters(["userInfo"]),
-    key() {
-      return this.$route.path;
+  },
+  watch: {
+    //监听路由
+    $route(toRouter) {
+      this.routePath = toRouter.meta.routerParent;
     },
   },
 };

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-02 21:01:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-13 15:55:05
+ * @LastEditTime: 2021-07-20 00:44:13
 -->
 <template>
   <div class="app-container">
@@ -11,18 +11,14 @@
       <!--左侧导航栏 -->
       <div class="left-link">
         <div class="link-item">
-          <p>
-            <router-link tag="span" :to="{ name: 'BaseSetting' }"
-              >基本配置</router-link
-            >
-          </p>
+          <router-link tag="div" :to="{ name: 'BaseSetting' }"
+            ><span>基本配置</span>
+          </router-link>
         </div>
         <div class="link-item">
-          <p>
-            <router-link tag="span" :to="{ name: 'SecuritySetting' }"
-              >安全配置</router-link
-            >
-          </p>
+          <router-link tag="div" :to="{ name: 'SecuritySetting' }"
+            ><span>安全配置</span></router-link
+          >
         </div>
       </div>
       <!-- 右侧展示信息 -->
@@ -62,14 +58,18 @@ export default {
       .link-item {
         width: 100%;
         height: 40px;
-        background: #e6f7ff;
         cursor: pointer;
-
-        p {
-          line-height: 40px;
-          text-align: right;
-          padding-right: 20px;
+        line-height: 40px;
+        text-align: right;
+        width: 100%;
+        // 活动路由样式
+        .router-link-exact-active {
           color: #1890ff;
+          background: #e6f7ff;
+          display: block;
+        }
+        span {
+          padding-right: 20px;
         }
       }
     }
