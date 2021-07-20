@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 14:32:44
+ * @LastEditTime: 2021-07-21 00:46:58
 -->
 <template>
   <el-dialog
@@ -223,8 +223,8 @@ export default {
         nickname: [
           { required: true, message: "请输入用户名", trigger: "blur" },
           {
-            min: 3,
-            max: 12,
+            min: 1,
+            max: 10,
             message: "用户名长度在3到12之间哦~",
             trigger: "blur",
           },

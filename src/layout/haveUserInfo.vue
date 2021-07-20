@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-12 21:58:15
+ * @LastEditTime: 2021-07-20 21:06:41
 -->
 <template>
   <div class="app-contianer">
@@ -72,13 +72,14 @@ export default {
         align-items: center;
         position: fixed;
         top: 0;
-
+      
         background: #ffffff;
         opacity: 0.9;
       }
     }
     .contianer-main {
       width: 1200px;
+     
       min-height: calc(100vh - 60px);
       display: flex;
       .main {

@@ -1,9 +1,9 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 用户登录 && 注册接口
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-09 09:00:12
+ * @LastEditTime: 2021-07-21 00:24:01
  */
 import { request } from '@/utils/request'
 

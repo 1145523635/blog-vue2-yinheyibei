@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 15:22:54
+ * @LastEditTime: 2021-07-21 00:35:43
  */
 
 //引入axios 对其进行分装
@@ -12,6 +12,13 @@ import axios from 'axios'
 //引入vuex 获取 token
 import store from '@/store'
 
+//引入路由进行跳转
+import router from '@/router'
+
+//设置token
+import { removeToken } from '@/utils/auth'
+
+//引入elemen-ui提示框
 import { Notification } from 'element-ui'
 
 //引入基本配置 获取基础请求路径
