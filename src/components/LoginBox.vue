@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-12 22:03:10
+ * @LastEditTime: 2021-07-20 14:32:44
 -->
 <template>
   <el-dialog
@@ -256,7 +256,7 @@ export default {
   },
 
   methods: {
-    login() {
+    async login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loginLoading = true;
@@ -269,9 +269,16 @@ export default {
               store.dispatch("GetInfo");
             }
             if (res) {
-              this.show = false;
-              router.push("/");
-              this.loginLoading = false;
+              setTimeout(() => {
+                this.$notify({
+                  title: "登录成功！",
+                  message: `欢迎回来，${store.state.user.info.user.nickname}`,
+                  type: "success",
+                });
+                this.show = false;
+                router.push("/");
+                this.loginLoading = false;
+              }, 1000);
             }
           });
         } else {

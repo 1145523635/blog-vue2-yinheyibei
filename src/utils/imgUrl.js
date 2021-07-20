@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-01 14:11:58
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 16:01:24
+ * @LastEditTime: 2021-07-20 16:22:02
  */
 
 import baseSetting from '@/config/defaultSettings' // 引入图片基本访问路径
@@ -17,7 +17,6 @@ import baseSetting from '@/config/defaultSettings' // 引入图片基本访问�
  * @return {*}
  */
 export function imgUrl(url, isNet = false) {
-
     //判断是否是本地图片
     if (isNet) {
         return url

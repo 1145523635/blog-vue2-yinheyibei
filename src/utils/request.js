@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-09 09:18:22
+ * @LastEditTime: 2021-07-20 15:22:54
  */
 
 //引入axios 对其进行分装
@@ -13,11 +13,13 @@ import axios from 'axios'
 import store from '@/store'
 
 import { Notification } from 'element-ui'
+
 //引入基本配置 获取基础请求路径
 import baseSetting from '@/config/defaultSettings'
 
 export function request(config) {
-    // 1.创建axios的实例
+
+    // 创建axios的实例
     const instance = axios.create({
         baseURL: baseSetting.baseURL,
         timeout: 5000
@@ -40,7 +42,6 @@ export function request(config) {
         if (response.data.code === 200) {
             return response.data
         }
-
         //自定义异常拦截
         return handleCode(response);
 
@@ -87,7 +88,6 @@ function handleCode(response) {
             data: response.data.data
         }
     }
-
     //账号冻结
     if (response.data.code === 40002) {
         Notification({

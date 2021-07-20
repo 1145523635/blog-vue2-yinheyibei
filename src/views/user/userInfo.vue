@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 00:36:42
+ * @LastEditTime: 2021-07-20 00:50:33
 -->
 <template>
   <div class="app-container">
@@ -71,7 +71,7 @@
               :to="{ name: 'Personal' }"
               ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span
-              >个人资料</router-link
+              >用户</router-link
             >
           </div>
         </div>
