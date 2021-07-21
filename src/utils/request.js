@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-21 00:35:43
+ * @LastEditTime: 2021-07-21 23:45:09
  */
 
 //引入axios 对其进行分装
@@ -69,7 +69,14 @@ function handleCode(response) {
             message = response.data.data
         }
         if (response.data.data instanceof Object) {
-            message = '传参错误'
+            if (Object.getOwnPropertyNames(response.data.data).length == 1) {
+                for (let key in response.data.data) {
+                    message = response.data.data[key]
+                }
+            } else {
+                message = '传参错误'
+            }
+
         }
 
         Notification({

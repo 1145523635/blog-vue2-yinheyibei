@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-21 00:46:58
+ * @LastEditTime: 2021-07-21 23:47:15
 -->
 <template>
   <el-dialog
@@ -127,11 +127,11 @@
               size="small "
             ></el-input>
           </el-form-item>
-          <el-form-item prop="againPossword">
+          <el-form-item prop="againPassword">
             <el-input
               type="password"
               placeholder="请确认密码"
-              v-model="registerForm.againPossword"
+              v-model="registerForm.againPassword"
               autocomplete="off"
               clearable
               size="small "
@@ -163,6 +163,7 @@ import store from "@/store";
 import router from "@/router";
 export default {
   data() {
+    /* 验证两次密码是否一致 */
     const validateAgainPassword = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
@@ -246,7 +247,7 @@ export default {
           { required: true, message: "请输入登录密码", trigger: "blur" },
           { min: 6, max: 12, message: "密码长度在6到12位哦~", trigger: "blur" },
         ],
-        againPossword: [
+        againPassword: [
           { required: true, message: "请输入登录密码", trigger: "blur" },
           { validator: validateAgainPassword, trigger: "blur" },
           { min: 6, max: 12, message: "密码长度在6到12位哦~", trigger: "blur" },
@@ -263,23 +264,25 @@ export default {
           const { email, password } = this.loginForm;
           const data = { email, password: this.$utils.md5(password) };
           store.dispatch("Login", data).then((res) => {
+            if (!res) {
+              this.loginLoading = false;
+              return;
+            }
             //判断有没有用户信息
             if (!store.state.user.info) {
               //获取用户信息
               store.dispatch("GetInfo");
             }
-            if (res) {
-              setTimeout(() => {
-                this.$notify({
-                  title: "登录成功！",
-                  message: `欢迎回来，${store.state.user.info.user.nickname}`,
-                  type: "success",
-                });
-                this.show = false;
-                router.push("/");
-                this.loginLoading = false;
-              }, 1000);
-            }
+            setTimeout(() => {
+              this.$notify({
+                title: "登录成功！",
+                message: `欢迎回来，${store.state.user.info.user.nickname}`,
+                type: "success",
+              });
+              this.show = false;
+              router.push("/");
+              this.loginLoading = false;
+            }, 1000);
           });
         } else {
           console.log("error submit!!");
@@ -331,8 +334,9 @@ export default {
         if (validate) {
           this.registerLoading = true;
           const data = Object.assign({}, this.registerForm);
-          data.password = this.$utils.md5(data.password); //密码md5加密
-          delete data.againPossword; //删除确认密码
+          //密码md5加密
+          data.password = this.$utils.md5(data.password); 
+          data.againPassword=this.$utils.md5(data.againPassword);
           userRegister(data).then((res) => {
             this.registerLoading = false;
             if (res.code == 200) {

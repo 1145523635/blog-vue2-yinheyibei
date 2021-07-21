@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-06 22:41:27
+ * @LastEditTime: 2021-07-21 23:28:17
  */
 
 //引入登录方法
@@ -35,9 +35,11 @@ const user = {
             return new Promise((resolve, reject) => {
                 const data = { email: userInfo.email, password: userInfo.password }
                 login(data).then(response => {
+
                     //登录时发生错误
-                    if (!response) {
+                    if (response.code !== 200) {
                         resolve(false)
+                        return
                     }
                     const token = response.data
 
