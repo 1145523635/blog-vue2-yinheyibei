@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-12 21:57:57
+ * @LastEditTime: 2021-07-23 12:17:12
 -->
 <template>
   <div class="app-container">
@@ -29,7 +29,9 @@
           </div>
         </div>
         <!-- 用户名称 -->
-        <div class="user-name"><span>银河以北</span></div>
+        <div class="user-name">
+          <span>{{ userNickname }}</span>
+        </div>
       </div>
       <!-- 用户登录 -->
       <div class="user-login">
@@ -78,6 +80,9 @@ export default {
       //判断是否是本地图片
       isNetImg: true,
 
+      //用户名
+      userNickname: "未登录",
+
       //判断是否存在用户信息 || 用户登录
       havaUserInfo: false,
     };
@@ -86,8 +91,10 @@ export default {
     if (this.userInfo && this.userInfo.user.avatar_url != undefined) {
       this.havaUserInfo = true;
       this.isNetImg = false;
+      this.userNickname = this.userInfo.user.nickname;
       this.userInfoAvatar = this.userInfo.user.avatar_url;
     }
+
   },
 
   methods: {
@@ -110,10 +117,12 @@ export default {
       if (newVal) {
         this.isNetImg = false;
         this.havaUserInfo = true;
+        this.userNickname = newVal.user.nickname;
         this.userInfoAvatar = newVal.user.avatar_url;
       } else {
         this.isNetImg = true;
         this.havaUserInfo = false;
+        this.userNickname = "未登录";
         this.userInfoAvatar = require("@/assets/user/user-avatar.png");
       }
     },
