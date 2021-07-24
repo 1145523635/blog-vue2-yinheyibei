@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 00:50:33
+ * @LastEditTime: 2021-07-24 23:31:12
 -->
 <template>
   <div class="app-container">
@@ -152,9 +152,12 @@ export default {
           width: 100px;
           height: 100px;
           overflow: hidden;
+          display: flex;
+          align-items: center;
           margin-right: 30px;
           .user-avatar-img {
             width: 100%;
+            min-height: 100px;
             border-radius: 50%;
           }
         }
@@ -201,7 +204,7 @@ export default {
     }
     .router-view {
       width: 100%;
-      height: 500px;
+      min-height: 500px;
       border-radius: 10px;
       overflow: hidden;
       background: #ffffff;

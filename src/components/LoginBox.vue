@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-21 23:47:15
+ * @LastEditTime: 2021-07-24 23:34:08
 -->
 <template>
   <el-dialog
@@ -54,6 +54,7 @@
               autocomplete="off"
               placeholder="登录密码"
               show-password
+              @keyup.enter.native="login"
               size="small"
             ></el-input>
           </el-form-item>
@@ -335,8 +336,8 @@ export default {
           this.registerLoading = true;
           const data = Object.assign({}, this.registerForm);
           //密码md5加密
-          data.password = this.$utils.md5(data.password); 
-          data.againPassword=this.$utils.md5(data.againPassword);
+          data.password = this.$utils.md5(data.password);
+          data.againPassword = this.$utils.md5(data.againPassword);
           userRegister(data).then((res) => {
             this.registerLoading = false;
             if (res.code == 200) {
