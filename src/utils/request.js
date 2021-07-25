@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-21 23:45:09
+ * @LastEditTime: 2021-07-25 20:01:16
  */
 
 //引入axios 对其进行分装
@@ -139,6 +139,7 @@ function handleCode(response) {
             data: response.data.data
         }
     }
+
 
     //授权token不存在
     if (response.data.code === 10004) {
