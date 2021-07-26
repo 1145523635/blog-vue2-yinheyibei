@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-03 14:43:43
+ * @LastEditTime: 2021-07-26 21:21:30
 -->
 <template>
   <div class="app-container">
@@ -42,12 +42,12 @@ export default {
         {
           id: 2,
           name: "代码编程",
-          path: "/about",
+          path: "/resources",
         },
         {
           id: 3,
           name: "闲言碎语",
-          path: "/test",
+          path: "/blogAbout",
         },
       ],
 

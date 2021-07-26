@@ -3,13 +3,16 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 20:11:44
+ * @LastEditTime: 2021-07-26 23:08:58
  */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/router/permission' // 全局路由钩子
+
+import 'animate.css'
+
 import { imgUrl } from '@/utils/imgUrl' // 导入自己处理图片路径的工具类
 
 

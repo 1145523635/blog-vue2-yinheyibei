@@ -3,11 +3,11 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-03 14:16:18
+ * @LastEditTime: 2021-07-26 21:11:02
 -->
 <template>
   <div class="app-container">
-    <transition name="el-zoom-in-center" mode="out-in">
+    <transition name="slide-fade" mode="out-in">
       <router-view />
     </transition>
   </div>
@@ -25,5 +25,16 @@ export default {
 <style lang="scss" scoped>
 .app-container {
   width: 100%;
+}
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

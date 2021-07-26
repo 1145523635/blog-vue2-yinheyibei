@@ -1,16 +1,20 @@
 <!--
  * @Descripttion: 
  * @Author: 银河以北
- * @Date: 2021-06-10 12:07:39
+ * @Date: 2021-07-26 21:21:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-15 15:45:36
+ * @LastEditTime: 2021-07-26 21:21:13
 -->
 <template>
-  <div class="home">home</div>
+  <div>模块开发中</div>
 </template>
 
 <script>
 export default {
-  name: "Home",
-};
+
+}
 </script>
+
+<style>
+
+</style>

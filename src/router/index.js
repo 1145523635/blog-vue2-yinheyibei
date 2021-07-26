@@ -3,11 +3,10 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 00:29:19
+ * @LastEditTime: 2021-07-26 21:40:13
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 
 /* Layout */
@@ -36,23 +35,22 @@ const routes = [{
         children: [{
                 path: '/',
                 name: 'Home',
-                meta: { title: '首页' },
-                component: Home,
+                meta: { title: '时光笔记' },
+                component: () =>
+                    import ('@/views/home/index.vue'),
             }, {
-                path: 'about',
-                name: 'About',
-                meta: { title: '关于' },
-                component: function() {
-                    return import ('../views/About.vue')
-                }
+                path: 'resources',
+                name: 'resources',
+                meta: { title: '编程资源' },
+                component: () =>
+                    import ('@/views/resources/index.vue')
             },
             {
-                path: 'test',
-                name: 'Test',
-                meta: { title: '测试' },
-                component: function() {
-                    return import ('../views/Test.vue')
-                }
+                path: 'blogAbout',
+                name: 'blogAbout',
+                meta: { title: '关于' },
+                component: () =>
+                    import ('@/views/blogAbout/index.vue')
             }
         ]
     },
@@ -129,6 +127,21 @@ const routes = [{
                 }
             ]
         }]
+    },
+
+    /* 404 */
+    {
+        path: '/404',
+        name: '404',
+        meta: {
+            title: '404'
+        },
+        component: () =>
+            import ('@/views/404/index.vue'),
+    },
+    {
+        path: '*',
+        redirect: '/404'
     }
 ]
 

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-03 21:50:12
+ * @LastEditTime: 2021-07-26 21:40:34
  */
 
 //引入element-ui 提示框
@@ -29,7 +29,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 // 白名单重定向
 // const whiteList = ['/', '/about', '/test']
-const whiteList = ['/', '/about']
+const whiteList = ['/', '/resources', '/404']
 
 
 

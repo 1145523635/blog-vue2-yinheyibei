@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-25 20:01:16
+ * @LastEditTime: 2021-07-26 22:16:42
  */
 
 //引入axios 对其进行分装
@@ -122,6 +122,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.msg
         })
+        removeToken()
+        store.commit('SET_TOKEN', null)
+        store.commit('SET_INFO', null)
+        router.replace('/')
         return {
             code: 10005,
             data: response.data.data
@@ -134,6 +138,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.msg
         })
+        removeToken()
+        store.commit('SET_TOKEN', null)
+        store.commit('SET_INFO', null)
+        router.replace('/')
         return {
             code: 10003,
             data: response.data.data
@@ -148,7 +156,10 @@ function handleCode(response) {
             title: '错误',
             message: response.data.msg
         })
-
+        removeToken()
+        store.commit('SET_TOKEN', null)
+        store.commit('SET_INFO', null)
+        router.replace('/')
         return {
             code: 10004,
             data: response.data.data

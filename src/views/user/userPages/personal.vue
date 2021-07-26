@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-02 21:01:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 00:44:13
+ * @LastEditTime: 2021-07-26 23:07:34
 -->
 <template>
   <div class="app-container">
@@ -23,8 +23,12 @@
       </div>
       <!-- 右侧展示信息 -->
       <div class="right-container">
-        <transition name="el-zoom-in-center" mode="out-in">
-          <router-view :key="key"></router-view>
+        <transition
+          mode="out-in"
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+        >
+          <router-view :key="key" />
         </transition>
       </div>
     </div>
