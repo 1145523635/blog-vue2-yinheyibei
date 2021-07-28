@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 21:11:02
+ * @LastEditTime: 2021-07-27 12:58:07
 -->
 <template>
   <div class="app-container">
@@ -27,10 +27,10 @@ export default {
   width: 100%;
 }
 .slide-fade-enter-active {
-  transition: all 0.3s ease;
+  transition: all 0.8s ease;
 }
 .slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter,
 .slide-fade-leave-to {

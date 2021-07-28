@@ -114,7 +114,6 @@ function handleCode(response) {
             data: response.data.data
         }
     }
-
     //账号多点登录（跳入登录页）
     if (response.data.code === 10005) {
         Notification({
@@ -147,8 +146,6 @@ function handleCode(response) {
             data: response.data.data
         }
     }
-
-
     //授权token不存在
     if (response.data.code === 10004) {
         Notification({
