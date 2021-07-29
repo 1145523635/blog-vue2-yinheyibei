@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 21:40:13
+ * @LastEditTime: 2021-07-29 19:29:35
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -31,9 +31,9 @@ const routes = [{
         name: 'Yinheyibei',
         component: LayoutUserInfo,
         meta: { title: 'layoutUserInfo' },
-        redirect: '/',
+        redirect: '/home',
         children: [{
-                path: '/',
+                path: 'home',
                 name: 'Home',
                 meta: { title: '时光笔记' },
                 component: () =>
@@ -51,6 +51,13 @@ const routes = [{
                 meta: { title: '关于' },
                 component: () =>
                     import ('@/views/blogAbout/index.vue')
+            },
+            {
+                path: 'release',
+                name: 'release',
+                meta: { title: '关于' },
+                component: () =>
+                    import ('@/views/release/index.vue')
             }
         ]
     },

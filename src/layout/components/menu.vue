@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 21:21:30
+ * @LastEditTime: 2021-07-29 19:28:14
 -->
 <template>
   <div class="app-container">
@@ -37,7 +37,7 @@ export default {
         {
           id: 1,
           name: "时光笔记",
-          path: "/",
+          path: "/home",
         },
         {
           id: 2,

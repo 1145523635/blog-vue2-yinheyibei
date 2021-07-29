@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-23 12:17:12
+ * @LastEditTime: 2021-07-29 19:43:00
 -->
 <template>
   <div class="app-container">
@@ -36,30 +36,39 @@
       <!-- 用户登录 -->
       <div class="user-login">
         <div class="login-btn">
-          <el-button
-            type="primary"
-            icon="el-icon-right"
-            size="mini"
-            @click="login"
-            v-show="!havaUserInfo"
-            >登录</el-button
-          >
-          <el-button
-            type="success"
-            icon="el-icon-user"
-            size="mini"
-            @click="register"
-            v-show="!havaUserInfo"
-            >注册</el-button
-          >
-          <el-button
-            type="primary"
-            icon="el-icon-star-off"
-            size="mini"
-            v-show="havaUserInfo"
-            @click="toUserInfo"
-            >个人中心</el-button
-          >
+          <div v-if="!havaUserInfo">
+            <el-button
+              type="primary"
+              icon="el-icon-right"
+              size="mini"
+              @click="login"
+              >登录</el-button
+            >
+            <el-button
+              type="success"
+              icon="el-icon-user"
+              size="mini"
+              @click="register"
+              >注册</el-button
+            >
+          </div>
+          <div v-else>
+            <el-button
+              type="primary"
+              icon="el-icon-star-off"
+              size="mini"
+              @click="toUserInfo"
+              >个人中心</el-button
+            >
+            <el-button
+              type="success"
+              icon="el-icon-document"
+              size="mini"
+              v-show="nowRoutePath"
+              @click="toWriteArticle"
+              >写文章</el-button
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -85,6 +94,9 @@ export default {
 
       //判断是否存在用户信息 || 用户登录
       havaUserInfo: false,
+
+      //当前路由  用来控制写文章按钮的显示、隐藏
+      nowRoutePath: true,
     };
   },
   created() {
@@ -94,7 +106,6 @@ export default {
       this.userNickname = this.userInfo.user.nickname;
       this.userInfoAvatar = this.userInfo.user.avatar_url;
     }
-
   },
 
   methods: {
@@ -107,6 +118,9 @@ export default {
     },
     toUserInfo() {
       this.$router.push("/user");
+    },
+    toWriteArticle() {
+      this.$router.push("/release");
     },
   },
   computed: {
@@ -125,6 +139,17 @@ export default {
         this.userNickname = "未登录";
         this.userInfoAvatar = require("@/assets/user/user-avatar.png");
       }
+    },
+    //监听路由 控制发布文章的显示 隐藏
+    $route: {
+      handler: function (to) {
+        if (to.path == "/release") {
+          this.nowRoutePath = false;
+        } else {
+          this.nowRoutePath = true;
+        }
+      },
+      immediate: true,
     },
   },
 };
@@ -171,6 +196,11 @@ export default {
           .avatar-img {
             width: 100%;
             height: 100%;
+            transition: 1s;
+            cursor: pointer;
+          }
+          .avatar-img:hover {
+            transform: rotate(360deg) scale(1.5);
           }
         }
       }

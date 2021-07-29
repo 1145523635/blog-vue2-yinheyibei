@@ -3,12 +3,12 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-01 16:11:54
+ * @LastEditTime: 2021-07-29 16:29:47
 -->
 <template>
   <div class="app-contianer">
-    <div class="contianer">
-      <div class="logo" @click="toHme">
+    <div class="contianer" @click="toHme">
+      <div class="logo">
         <img :src="logo" alt="银河以北~logo" class="logo-img" />
       </div>
       <div class="logo-title" @click="toHme"><h1>银河以北</h1></div>
