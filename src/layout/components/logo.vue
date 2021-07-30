@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-29 16:29:47
+ * @LastEditTime: 2021-07-31 01:08:14
 -->
 <template>
   <div class="app-contianer">
@@ -42,7 +42,7 @@ export default {
     display: flex;
     justify-content: start;
     align-items: center;
-    background: #fff;
+
 
     .logo {
       .logo-img {

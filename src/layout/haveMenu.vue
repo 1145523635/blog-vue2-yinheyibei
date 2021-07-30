@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 21:04:22
+ * @LastEditTime: 2021-07-31 01:11:13
 -->
 <template>
   <div class="app-contianer">
@@ -40,7 +40,6 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  background: rgb(245, 246, 247);
   .contianer {
     width: 100%;
     display: flex;
@@ -65,8 +64,8 @@ export default {
         position: fixed;
         top: 0;
         z-index: 99999;
-        background: #ffffff;
-        opacity: 0.9;
+        backdrop-filter: saturate(180%) blur(20px);
+        background-color: rgba(255, 255, 255, 0.82);
       }
     }
     .contianer-main {
