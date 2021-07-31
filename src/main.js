@@ -16,6 +16,10 @@ import 'animate.css'
 
 import { imgUrl } from '@/utils/imgUrl' // 导入自己处理图片路径的工具类
 
+//音乐播放器全局注册
+import APlayer from "@moefe/vue-aplayer";
+Vue.use(APlayer);
+
 //引入element-ui库
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

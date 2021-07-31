@@ -3,16 +3,56 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-30 20:37:13
+ * @LastEditTime: 2021-07-31 20:38:23
 -->
 <template>
   <div id="app">
     <transition name="slide-fade" mode="out-in">
       <router-view />
     </transition>
+    <!-- 音乐播放器 -->
+    <aplayer
+      :audio="audio"
+      @update:volume="onListHide"
+      :autoplay="true"
+      :lrcType="3"
+      fixed
+    />
   </div>
 </template>
-
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      audio: [
+        {
+          name: "七里香",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/index.flac",
+        },
+        {
+          name: "东风破",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/indexs.flac",
+          // cover: 'https://p1.music.126.net/AUGVPQ_rVrngDH9ocQrn3Q==/109951163613037822.jpg?param=300y300', // prettier-ignore
+          // lrc: "https://cdn.moefe.org/music/lrc/kyoukiranbu.lrc",
+        },
+      ],
+    };
+  },
+  computed: {
+    key() {
+      return this.$route.path;
+    },
+  },
+  methods: {
+    onListHide() {
+      console.log("xx");
+    },
+  },
+};
+</script>
 <style lang="scss">
 * {
   padding: 0;

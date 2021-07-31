@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-30 20:14:05
+ * @LastEditTime: 2021-07-31 20:29:51
 -->
 <template>
   <div class="app-container">
@@ -15,6 +15,9 @@
 <script>
 export default {
   name: "Main",
+  data() {
+    return {};
+  },
   computed: {
     key() {
       return this.$route.path;

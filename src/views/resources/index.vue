@@ -3,14 +3,20 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 21:17:59
+ * @LastEditTime: 2021-07-31 20:35:26
 -->
 <template>
-  <div>模块开发中....</div>
+  <div></div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Resources",
+  created() {},
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style>
