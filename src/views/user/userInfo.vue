@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 22:35:20
+ * @LastEditTime: 2021-07-31 23:15:05
 -->
 <template>
   <div class="app-container">
@@ -64,11 +64,7 @@
             >
           </div>
           <div class="item">
-            <router-link
-              tag="div"
-              id="personal"
-              :class="{ 'router-link-exact-active': routePath == 'personal' }"
-              :to="{ name: 'Personal' }"
+            <router-link tag="div" id="personal" :to="{ name: 'Personal' }"
               ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span
               >用户</router-link
@@ -97,25 +93,16 @@ export default {
       //用户信息
       userInfos: {},
 
-      //确定当前要渲染的路径
-      routePath: "",
     };
   },
   created() {
     this.userInfos = this.userInfo.user;
-
-    this.routePath = this.$route.meta.routerParent;
   },
   methods: {},
   computed: {
     ...mapGetters(["userInfo"]),
   },
-  watch: {
-    //监听路由
-    $route(toRouter) {
-      this.routePath = toRouter.meta.routerParent;
-    },
-  },
+
 };
 </script>
 <style lang="scss" scoped>
@@ -192,6 +179,15 @@ export default {
         }
         // 活动路由样式
         .router-link-exact-active {
+          width: 100px;
+          cursor: pointer;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 20px;
+          background-color: #00a2e3;
+          color: #ffffff;
+        }
+        .router-link-active {
           width: 100px;
           cursor: pointer;
           height: 30px;
