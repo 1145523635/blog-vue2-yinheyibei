@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-31 20:38:23
+ * @LastEditTime: 2021-08-01 14:15:51
 -->
 <template>
   <div id="app">
@@ -17,6 +17,7 @@
       :autoplay="true"
       :lrcType="3"
       fixed
+      float
     />
   </div>
 </template>
@@ -29,12 +30,140 @@ export default {
         {
           name: "七里香",
           artist: "jay",
-          url: "https://ljk.ganfanwang.cn/static/index.flac",
+          url: "https://ljk.ganfanwang.cn/static/music/index.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "她的睫毛",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/她的睫毛.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "晴天",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/晴天.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "以父之名",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/以父之名.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "本草纲目",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/本草纲目.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "菊花台",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/菊花台.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "断了的弦",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/断了的弦.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "彩虹",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/彩虹.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "听妈妈的话",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/听妈妈的话.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "千里之外",
+          artist: "jay、费玉清",
+          url: "https://ljk.ganfanwang.cn/static/music/千里之外.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "甜甜的",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/甜甜的.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "兰亭序",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/兰亭序.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "青花瓷",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/青花瓷.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "说好的幸福呢",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/说好的幸福呢.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "霍元甲",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/霍元甲.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "花海",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/花海.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "给我一首歌的时间",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/给我一首歌的时间.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "稻香",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/稻香.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "红尘客栈",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/红尘客栈.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "乌克丽丽",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/乌克丽丽.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "明明就",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/明明就.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "退后",
+          artist: "jay",
+          url: "https://ljk.ganfanwang.cn/static/music/退后.flac",
+          theme: this.randomColor(),
         },
         {
           name: "东风破",
           artist: "jay",
-          url: "https://ljk.ganfanwang.cn/static/indexs.flac",
+          url: "https://ljk.ganfanwang.cn/static/music/indexs.flac",
+          theme: this.randomColor(),
           // cover: 'https://p1.music.126.net/AUGVPQ_rVrngDH9ocQrn3Q==/109951163613037822.jpg?param=300y300', // prettier-ignore
           // lrc: "https://cdn.moefe.org/music/lrc/kyoukiranbu.lrc",
         },
@@ -49,6 +178,9 @@ export default {
   methods: {
     onListHide() {
       console.log("xx");
+    },
+    randomColor() {
+      return `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
     },
   },
 };

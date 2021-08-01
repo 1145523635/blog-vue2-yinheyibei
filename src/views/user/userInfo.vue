@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-31 23:15:05
+ * @LastEditTime: 2021-08-01 19:49:53
 -->
 <template>
   <div class="app-container">
@@ -13,19 +13,32 @@
         <img class="cover-img" :src="userCover" alt="用户背景图" />
         <!-- 用户基本信息 -->
         <div class="user-info">
-          <!-- 用户头像 -->
-          <div class="user-avatar">
-            <img
-              class="user-avatar-img"
-              :src="$utils.imgUrl(userInfos.avatar_url)"
-              alt=""
-            />
+          <div class="user-info-container">
+            <!-- 用户头像 -->
+            <div class="user-avatar">
+              <img
+                class="user-avatar-img"
+                :src="$utils.imgUrl(userInfos.avatar_url)"
+                alt=""
+              />
+            </div>
+            <!-- 用户姓名 -->
+            <div class="user-name">
+              <h2>{{ userInfos.nickname }}</h2>
+              <p>文章<span>1</span> | 评论 <span>2</span></p>
+              <p>这家伙很懒，什么都没有写...</p>
+            </div>
           </div>
-          <!-- 用户姓名 -->
-          <div class="user-name">
-            <h2>{{ userInfos.nickname }}</h2>
-            <p>文章<span>1</span> | 评论 <span>2</span></p>
-            <p>这家伙很懒，什么都没有写...</p>
+
+          <!-- 发表文章按钮 -->
+          <div class="btn">
+            <el-button
+              type="primary"
+              icon="el-icon-document"
+              size="mini"
+              @click="toWriteArticle"
+              >写文章</el-button
+            >
           </div>
         </div>
       </div>
@@ -92,17 +105,19 @@ export default {
 
       //用户信息
       userInfos: {},
-
     };
   },
   created() {
     this.userInfos = this.userInfo.user;
   },
-  methods: {},
+  methods: {
+    toWriteArticle() {
+      this.$router.push("/release");
+    },
+  },
   computed: {
     ...mapGetters(["userInfo"]),
   },
-
 };
 </script>
 <style lang="scss" scoped>
@@ -127,30 +142,35 @@ export default {
         height: 100%;
       }
       .user-info {
-        width: 100%;
+        width: calc(100% - 40px);
         height: 170px;
         position: absolute;
         bottom: 0;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
-        padding: 20px;
-        .user-avatar {
-          width: 100px;
-          height: 100px;
-          overflow: hidden;
+        margin: 20px;
+        .user-info-container {
           display: flex;
+          justify-content: flex-start;
           align-items: center;
-          margin-right: 30px;
-          .user-avatar-img {
-            width: 100%;
-            min-height: 100px;
-            border-radius: 50%;
+          .user-avatar {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            margin-right: 30px;
+            .user-avatar-img {
+              width: 100%;
+              min-height: 100px;
+              border-radius: 50%;
+            }
           }
-        }
-        .user-name {
-          text-align: left;
-          color: #ffffff;
+          .user-name {
+            text-align: left;
+            color: #ffffff;
+          }
         }
       }
     }
