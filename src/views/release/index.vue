@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-01 22:33:39
+ * @LastEditTime: 2021-08-03 23:40:27
 -->
 <template>
   <div class="app-container">
@@ -12,6 +12,7 @@
       <div class="article-title">
         <input
           type="text"
+          v-model="articleForm.article_title"
           @mouseover="mouseover"
           @mouseleave="mouseleave"
           placeholder="请输入文章标题"
@@ -22,10 +23,12 @@
       <!-- 富文编辑器 -->
       <div class="mark-down">
         <mavonEditor
-          ref="editor"
+          ref="md"
+          v-model="articleForm.article_content"
           :subfield="false"
-          v-model="articleForm.doc"
-          @save="saveDoc"
+          :scrollStyle="true"
+          @imgAdd="mdImsAdd"
+          @change="saveMd"
         />
       </div>
       <!-- 选项文章选项 -->
@@ -36,7 +39,7 @@
               ><div>
                 <el-form-item label="文章分类">
                   <el-select
-                    v-model="articleForm.classificationId"
+                    v-model="articleForm.article_classification"
                     size="mini"
                     style="width: 100%"
                     clearable
@@ -56,7 +59,7 @@
               ><div>
                 <el-form-item label="文章专题">
                   <el-select
-                    v-model="articleForm.specialId"
+                    v-model="articleForm.article_special"
                     size="mini"
                     style="width: 100%"
                     multiple
@@ -77,7 +80,7 @@
               ><div>
                 <el-form-item label="文章标签">
                   <el-select
-                    v-model="articleForm.labelId"
+                    v-model="articleForm.article_label"
                     size="mini"
                     style="width: 100%"
                     multiple
@@ -97,6 +100,21 @@
           </el-row>
         </el-form>
       </div>
+      <!-- 提交保存按钮 -->
+      <div class="btn-container">
+        <div class="btn">
+          <el-button type="info" icon="el-icon-document-checked" size="medium"
+            >保存</el-button
+          >
+          <el-button
+            type="primary"
+            @click="saveData"
+            icon="el-icon-circle-check"
+            size="medium"
+            >提交</el-button
+          >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -105,7 +123,15 @@
 //引入markdown富文本编辑器
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
-import { getArticleReleaseOption } from "@/api/article/releaseArticle";
+
+//md需要上传图片 所以引入我们对axios的封装 request
+import { request } from "@/utils/request";
+
+import defaultSettings from "@/config/defaultSettings.js";
+import {
+  getArticleReleaseOption,
+  blogUserReleaseContent,
+} from "@/api/article/releaseArticle";
 export default {
   name: "Release",
   components: {
@@ -114,10 +140,11 @@ export default {
   data() {
     return {
       articleForm: {
-        doc: "",
-        classificationId: "", //文章分类ID
-        specialId: "", //文章专题ID
-        labelId: "", //文章标签ID
+        article_title: "", //文章标题
+        article_content: "", //文章主题内容
+        article_classification: "", //文章分类ID
+        article_special: "", //文章专题ID
+        article_label: "", //文章标签ID
       },
 
       //文章分类选项 （单选）
@@ -143,8 +170,66 @@ export default {
         this.labelOptions = res.data.label;
       });
     },
-    saveDoc(markdown, html) {
-      this.docs = html;
+
+    /**
+     *提交文章数据
+     */
+    saveData() {
+      if (this.articleForm.article_title == "") {
+        this.$message.error("你不会忘记了文章标题吧！");
+        return;
+      } else if (this.articleForm.article_content == "") {
+        this.$message.error("文章内容不能为空呀！");
+        return;
+      } else if (this.articleForm.article_classification == "") {
+        this.$message.error("记得选择文章分类哦！");
+        return;
+      }
+      const data = Object.assign({}, this.articleForm);
+      blogUserReleaseContent(data).then((res) => {
+        if (res) {
+          this.$notify({
+            title: "成功",
+            message: "你的文章已提交至后台管理员审核，请耐心等待！",
+            type: "success",
+          });
+        }
+      });
+    },
+
+    /**
+     * 保存md文件
+     */
+    saveMd(value) {
+      this.articleForm.article_content = value;
+    },
+
+    /**
+     * md文件上传图片时的事件
+     */
+    mdImsAdd(pos, $file) {
+      //封装图片数据格式
+      let formdata = new FormData();
+      formdata.append("file", $file);
+      formdata.append("module", defaultSettings.articleTag);
+
+      //封装请求数据
+      const data = {
+        url: defaultSettings.uploadImgUrl,
+        method: "POST",
+        data: formdata,
+      };
+
+      console.log(defaultSettings.baseImg);
+      request(data).then((res) => {
+        if (res.code == 200) {
+          //获取后端返回的图片路径
+          const mdImgUrl = this.$utils.imgUrl(res.data.img_path);
+          console.log(mdImgUrl);
+          //替换md文章中的图片路径
+          this.$refs.md.$img2Url(pos, mdImgUrl);
+        }
+      });
     },
 
     //鼠标移入输入框
@@ -211,6 +296,20 @@ export default {
       background: #fff;
       border-radius: 5px;
       margin-bottom: 10px;
+    }
+    .btn-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      background: #fff;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      .btn {
+        width: 200px;
+        display: flex;
+        justify-content: space-around;
+      }
     }
   }
 }

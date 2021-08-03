@@ -76,9 +76,7 @@ function handleCode(response) {
             } else {
                 message = '传参错误'
             }
-
         }
-
         Notification({
             type: 'error',
             title: '错误',

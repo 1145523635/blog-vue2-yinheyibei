@@ -20,3 +20,18 @@ export function getArticleReleaseOption() {
         method: 'GET',
     })
 }
+
+/**
+ * @Description: 前台用户发布自己文章
+ * @Author: 银河以北
+ * @Date: 2021-08-03 00:59:12
+ * @param {*} data
+ * @return {*}
+ */
+export function blogUserReleaseContent(data) {
+    return request({
+        url: '/blog/article/blogUserReleaseContent',
+        method: 'POST',
+        data
+    })
+}
