@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-03 23:40:27
+ * @LastEditTime: 2021-08-04 22:41:02
 -->
 <template>
   <div class="app-container">
@@ -29,6 +29,7 @@
           :scrollStyle="true"
           @imgAdd="mdImsAdd"
           @change="saveMd"
+          style="height:100%"
         />
       </div>
       <!-- 选项文章选项 -->
@@ -103,14 +104,14 @@
       <!-- 提交保存按钮 -->
       <div class="btn-container">
         <div class="btn">
-          <el-button type="info" icon="el-icon-document-checked" size="medium"
+          <el-button type="info" icon="el-icon-document-checked" size="small"
             >保存</el-button
           >
           <el-button
             type="primary"
             @click="saveData"
             icon="el-icon-circle-check"
-            size="medium"
+            size="small"
             >提交</el-button
           >
         </div>
@@ -139,6 +140,7 @@ export default {
   },
   data() {
     return {
+      //表单数据
       articleForm: {
         article_title: "", //文章标题
         article_content: "", //文章主题内容
@@ -155,6 +157,9 @@ export default {
 
       //文章标签选项 （多选）
       labelOptions: [],
+
+      //md文件图片资源
+      img_file: {},
     };
   },
   created() {
@@ -174,7 +179,11 @@ export default {
     /**
      *提交文章数据
      */
-    saveData() {
+    async saveData() {
+      //设置延迟时间
+      const MDImgsLength = Object.keys(this.img_file).length;
+      await this.uploadMdImgs();
+
       if (this.articleForm.article_title == "") {
         this.$message.error("你不会忘记了文章标题吧！");
         return;
@@ -188,6 +197,12 @@ export default {
       const data = Object.assign({}, this.articleForm);
       blogUserReleaseContent(data).then((res) => {
         if (res) {
+          this.articleForm.article_title = "";
+          this.articleForm.article_content = "";
+          this.articleForm.article_classification = "";
+          this.articleForm.article_label = "";
+          this.articleForm.article_special = "";
+          this.$router.push("/userInfo/release");
           this.$notify({
             title: "成功",
             message: "你的文章已提交至后台管理员审核，请耐心等待！",
@@ -208,6 +223,8 @@ export default {
      * md文件上传图片时的事件
      */
     mdImsAdd(pos, $file) {
+      this.img_file[pos] = $file;
+      return;
       //封装图片数据格式
       let formdata = new FormData();
       formdata.append("file", $file);
@@ -220,7 +237,6 @@ export default {
         data: formdata,
       };
 
-      console.log(defaultSettings.baseImg);
       request(data).then((res) => {
         if (res.code == 200) {
           //获取后端返回的图片路径
@@ -230,6 +246,28 @@ export default {
           this.$refs.md.$img2Url(pos, mdImgUrl);
         }
       });
+    },
+
+    /**
+     * 上传图片路径
+     */
+
+    async uploadMdImgs() {;
+      for (let pos in this.img_file) {
+        let formdata = new FormData();
+        formdata.append("file", this.img_file[pos]);
+        formdata.append("module", defaultSettings.articleTag);
+        const data = {
+          url: defaultSettings.uploadImgUrl,
+          method: "POST",
+          data: formdata,
+        };
+        const res = await request(data);
+        //获取后端返回的图片路径
+        const mdImgUrl = this.$utils.imgUrl(res.data.img_path);
+        //替换md文章中的图片路径
+        this.$refs.md.$img2Url(pos, mdImgUrl);
+      }
     },
 
     //鼠标移入输入框
@@ -285,7 +323,7 @@ export default {
 
     .mark-down {
       width: 100%;
-      z-index: 0;
+      z-index: 100;
       max-height: 500px;
       overflow: hidden;
       margin-bottom: 10px;
