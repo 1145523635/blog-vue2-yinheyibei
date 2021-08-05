@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-04 22:41:02
+ * @LastEditTime: 2021-08-06 00:03:41
 -->
 <template>
   <div class="app-container">
@@ -29,77 +29,101 @@
           :scrollStyle="true"
           @imgAdd="mdImsAdd"
           @change="saveMd"
-          style="height:100%"
+          style="height: 100%"
         />
       </div>
       <!-- 选项文章选项 -->
       <div class="article-option">
-        <el-form ref="form" :model="articleForm">
-          <el-row type="flex" class="row-bg" justify="space-around">
-            <el-col :span="7"
-              ><div>
-                <el-form-item label="文章分类">
-                  <el-select
-                    v-model="articleForm.article_classification"
-                    size="mini"
-                    style="width: 100%"
-                    clearable
-                    placeholder="请选择当前文章的类型"
-                  >
-                    <el-option
-                      v-for="item in classificationOptions"
-                      :key="item.id"
-                      :label="item.classification_name"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item></div
-            ></el-col>
-            <el-col :span="7"
-              ><div>
-                <el-form-item label="文章专题">
-                  <el-select
-                    v-model="articleForm.article_special"
-                    size="mini"
-                    style="width: 100%"
-                    multiple
-                    clearable
-                    placeholder="请选择当前文章的专题"
-                  >
-                    <el-option
-                      v-for="item in specialOptions"
-                      :key="item.id"
-                      :label="item.special_name"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item></div
-            ></el-col>
-            <el-col :span="7"
-              ><div>
-                <el-form-item label="文章标签">
-                  <el-select
-                    v-model="articleForm.article_label"
-                    size="mini"
-                    style="width: 100%"
-                    multiple
-                    clearable
-                    placeholder="请选择当前文章的标签"
-                  >
-                    <el-option
-                      v-for="item in labelOptions"
-                      :key="item.id"
-                      :label="item.label_name"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item></div
-            ></el-col>
-          </el-row>
-        </el-form>
+        <div class="article-form" style="margin-right: 10px">
+          <el-form ref="form" :model="articleForm">
+            <el-form-item label="文章分类">
+              <el-select
+                v-model="articleForm.article_classification"
+                size="mini"
+                style="width: 100%"
+                clearable
+                placeholder="请选择当前文章的类型"
+              >
+                <el-option
+                  v-for="item in classificationOptions"
+                  :key="item.id"
+                  :label="item.classification_name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="文章专题">
+              <el-select
+                v-model="articleForm.article_special"
+                size="mini"
+                style="width: 100%"
+                multiple
+                clearable
+                placeholder="请选择当前文章的专题"
+              >
+                <el-option
+                  v-for="item in specialOptions"
+                  :key="item.id"
+                  :label="item.special_name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="文章标签">
+              <el-select
+                v-model="articleForm.article_label"
+                size="mini"
+                style="width: 100%"
+                multiple
+                clearable
+                placeholder="请选择当前文章的标签"
+              >
+                <el-option
+                  v-for="item in labelOptions"
+                  :key="item.id"
+                  :label="item.label_name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="article-form">
+          <el-form>
+            <el-form-item label="文章封面">
+              <el-upload
+                class="upload-demo"
+                drag
+                :action="action"
+                :headers="headers"
+                :data="uploadData"
+                :multiple="false"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+              >
+                <div v-if="articleForm.cover_img_url == ''">
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">
+                    将图片拖到此处，或<em>点击上传</em>
+                  </div>
+                </div>
+                <div v-else>
+                  <el-image
+                    :src="$utils.imgUrl(articleForm.cover_img_url)"
+                  ></el-image>
+                </div>
+
+                <div class="el-upload__tip" slot="tip">
+                  只能上传jpg/png文件，且不超过5M
+                </div>
+              </el-upload>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
       <!-- 提交保存按钮 -->
       <div class="btn-container">
@@ -128,6 +152,8 @@ import "mavon-editor/dist/css/index.css";
 //md需要上传图片 所以引入我们对axios的封装 request
 import { request } from "@/utils/request";
 
+import baseSetting from "@/config/defaultSettings"; // 引入全局基本配置
+
 import defaultSettings from "@/config/defaultSettings.js";
 import {
   getArticleReleaseOption,
@@ -146,7 +172,9 @@ export default {
         article_content: "", //文章主题内容
         article_classification: "", //文章分类ID
         article_special: "", //文章专题ID
-        article_label: "", //文章标签ID
+        article_label: [], //文章标签ID
+        cover_img_id: [], //封面ID
+        cover_img_url: "", //封面路
       },
 
       //文章分类选项 （单选）
@@ -160,6 +188,11 @@ export default {
 
       //md文件图片资源
       img_file: {},
+
+      // 组件上传额外参数
+      uploadData: {
+        module: "md",
+      },
     };
   },
   created() {
@@ -181,7 +214,6 @@ export default {
      */
     async saveData() {
       //设置延迟时间
-      const MDImgsLength = Object.keys(this.img_file).length;
       await this.uploadMdImgs();
 
       if (this.articleForm.article_title == "") {
@@ -192,6 +224,9 @@ export default {
         return;
       } else if (this.articleForm.article_classification == "") {
         this.$message.error("记得选择文章分类哦！");
+        return;
+      } else if (this.articleForm.cover_img_url == "") {
+        this.$message.error("记得上传文章封面哦！");
         return;
       }
       const data = Object.assign({}, this.articleForm);
@@ -251,8 +286,7 @@ export default {
     /**
      * 上传图片路径
      */
-
-    async uploadMdImgs() {;
+    async uploadMdImgs() {
       for (let pos in this.img_file) {
         let formdata = new FormData();
         formdata.append("file", this.img_file[pos]);
@@ -270,12 +304,60 @@ export default {
       }
     },
 
+    //封面上传成后
+    handleAvatarSuccess(response) {
+      if (response.code == 200) {
+        this.articleForm.cover_img_id = response.data.id;
+        this.articleForm.cover_img_url = response.data.img_path;
+        this.$notify({
+          title: "封面上传成功",
+          message: "你的封面已经上传成功，记得点击保存按钮哦！",
+          type: "success",
+        });
+      }
+    },
+
+    //封面上传之前
+    beforeAvatarUpload(file) {
+      const regs = /.+?(\.jpg|\.png|\.jpeg|\.PNG|\.JPG)/g;
+      const isImg = regs.test(file.name);
+      const isLt5M = file.size / 1024 < 5000;
+      if (!isImg) {
+        this.$notify.error({
+          title: "文件格式错误",
+          message: "请上传jpg或者png格式图片",
+        });
+        return false;
+      }
+      if (!isLt5M) {
+        this.$notify.error({
+          title: "文件大小错误",
+          message: "图片不能大于5M！",
+        });
+        return false;
+      }
+    },
+
     //鼠标移入输入框
     mouseover() {
       this.$refs["split-line"].classList.add("split-line-active");
     },
     mouseleave() {
       this.$refs["split-line"].classList.remove("split-line-active");
+    },
+  },
+
+  computed: {
+    // 动态拼接上传路径
+    action() {
+      return baseSetting.baseURL + baseSetting.uploadImgUrl;
+    },
+
+    // 设置请求头参数 token
+    headers() {
+      return {
+        Authorization: this.$store.getters.token,
+      };
     },
   },
 };
@@ -330,10 +412,19 @@ export default {
     }
     .article-option {
       width: 100%;
-      padding: 10px;
-      background: #fff;
-      border-radius: 5px;
       margin-bottom: 10px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: top;
+      .article-form {
+        width: 50%;
+        padding: 10px;
+        background: #fff;
+        border-radius: 5px;
+        .upload-demo {
+          width: 100%;
+        }
+      }
     }
     .btn-container {
       width: 100%;

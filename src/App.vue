@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-01 14:15:51
+ * @LastEditTime: 2021-08-05 20:43:07
 -->
 <template>
   <div id="app">
@@ -199,18 +199,6 @@ export default {
   background: rgb(245, 246, 247);
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 .slide-fade-enter-active {
   transition: all 0.8s ease;
 }
