@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-24 23:28:48
+ * @LastEditTime: 2021-08-06 19:40:04
 -->
 <template>
   <div class="app-container">
@@ -181,10 +181,11 @@ export default {
   },
 
   methods: {
-    init() {
-      getBlogUserInfo().then((res) => {
-        this.userForm = res.data;
-      });
+    async init() {
+      const data = await getBlogUserInfo;
+      // await  getBlogUserInfo().then((res) => {
+      //     this.userForm = res.data;
+      //   });
     },
     /* 保存数据 */
     saveData() {
