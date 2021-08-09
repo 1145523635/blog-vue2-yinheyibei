@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-06 15:26:13
+ * @LastEditTime: 2021-08-09 23:15:40
 -->
 <template>
   <div id="app">
@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
-console.log(process.env.NODE_ENV);
 export default {
   name: "App",
   data() {

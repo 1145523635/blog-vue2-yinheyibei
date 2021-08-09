@@ -3,26 +3,26 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-29 19:28:14
+ * @LastEditTime: 2021-08-09 23:29:21
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <div class="menu-list">
-        <div
+        <router-link
+          :to="item.path"
           v-for="(item, index) in menuList"
           :key="index"
-          @mouseover="activeMenu = item.id"
-          @mouseleave="activeMenu = 0"
+          tag="div"
+          class="menu-item"
           :class="{
             'active-menu': activeMenu == item.id || activePath == item.path,
           }"
-          class="menu-item"
+          @mouseover="activeMenu = item.id"
+          @mouseleave="activeMenu = 0"
         >
-          <router-link :to="item.path" tag="span">
-            <span>{{ item.name }}</span>
-          </router-link>
-        </div>
+          <span>{{ item.name }}</span>
+        </router-link>
       </div>
     </div>
   </div>

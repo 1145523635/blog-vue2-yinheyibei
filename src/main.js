@@ -3,13 +3,17 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-29 19:51:20
+ * @LastEditTime: 2021-08-09 23:17:31
  */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/router/permission' // 全局路由钩子
+
+//给vuex设置token
+import { getToken } from '@/utils/auth'
+store.commit('SET_TOKEN', getToken())
 
 //animate动画库
 import 'animate.css'
@@ -37,6 +41,8 @@ Vue.prototype.$utils = {
     md5,
     imgUrl
 };
+
+
 
 Vue.config.productionTip = false
 

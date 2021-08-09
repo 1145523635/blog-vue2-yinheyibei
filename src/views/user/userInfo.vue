@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-01 19:49:53
+ * @LastEditTime: 2021-08-09 23:32:20
 -->
 <template>
   <div class="app-container">
@@ -47,7 +47,7 @@
       <div class="menu-link">
         <div class="link-item">
           <div class="item">
-            <router-link tag="div" :to="{ name: 'Release' }"
+            <router-link tag="div" :to="{ name: 'ReleaseList' }"
               ><span style="margin-right: 5px"
                 ><i class="el-icon-document-checked"></i
               ></span>

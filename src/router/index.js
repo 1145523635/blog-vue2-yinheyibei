@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-29 19:29:35
+ * @LastEditTime: 2021-08-09 23:03:57
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -72,7 +72,7 @@ const routes = [{
             path: '/userInfo',
             name: 'UserINfo',
             meta: { title: '用户信息' },
-            redirect: '/userInfo/release',
+            redirect: '/userInfo/releaseList',
             component: () =>
                 import ('@/views/user/userInfo.vue'),
             children: [{
@@ -81,7 +81,7 @@ const routes = [{
                     meta: { title: '个人资料' },
                     redirect: '/userInfo/personal/baseSetting',
                     component: () =>
-                        import ('@/views/user/userPages/personal.vue'),
+                        import ('@/views/user/userPages/personal/index.vue'),
                     children: [{
                             path: 'baseSetting',
                             name: 'BaseSetting',
@@ -126,11 +126,11 @@ const routes = [{
                         import ('@/views/user/userPages/follow.vue'),
                 },
                 {
-                    path: 'release',
-                    name: 'Release',
+                    path: 'releaseList',
+                    name: 'ReleaseList',
                     meta: { title: '用户发布' },
                     component: () =>
-                        import ('@/views/user/userPages/release.vue'),
+                        import ('@/views/user/userPages/release/index.vue'),
                 }
             ]
         }]

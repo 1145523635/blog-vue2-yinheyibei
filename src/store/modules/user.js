@@ -10,11 +10,11 @@
 import { login, getUserInfo, logout } from "@/api/login/index";
 
 //设置token
-import { setToken, getToken, removeToken } from '@/utils/auth'
+import { setToken, removeToken } from '@/utils/auth'
 const user = {
     state: {
-        //token cookie
-        token: getToken(),
+        //token 
+        token: undefined,
 
         //用户信息
         info: undefined

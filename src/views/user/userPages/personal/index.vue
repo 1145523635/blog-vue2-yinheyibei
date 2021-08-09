@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-02 21:01:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-26 23:07:34
+ * @LastEditTime: 2021-08-09 23:50:19
 -->
 <template>
   <div class="app-container">
@@ -51,7 +51,9 @@ export default {
 <style lang="scss" scoped>
 .app-container {
   width: 100%;
+  height: 100%;
   .container {
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: flex-start;
