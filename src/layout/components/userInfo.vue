@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-29 19:43:00
+ * @LastEditTime: 2021-08-11 00:25:37
 -->
 <template>
   <div class="app-container">
@@ -100,6 +100,7 @@ export default {
     };
   },
   created() {
+
     if (this.userInfo && this.userInfo.user.avatar_url != undefined) {
       this.havaUserInfo = true;
       this.isNetImg = false;

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-02 21:01:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-09 23:50:19
+ * @LastEditTime: 2021-08-10 21:16:37
 -->
 <template>
   <div class="app-container">
@@ -28,7 +28,9 @@
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut"
         >
-          <router-view :key="key" />
+          <keep-alive>
+            <router-view :key="key" />
+          </keep-alive>
         </transition>
       </div>
     </div>

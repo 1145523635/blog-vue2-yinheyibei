@@ -18,7 +18,10 @@ store.commit('SET_TOKEN', getToken())
 //animate动画库
 import 'animate.css'
 
+//引入md5加密方式
+import md5 from 'js-md5';
 import { imgUrl } from '@/utils/imgUrl' // 导入自己处理图片路径的工具类
+import { getPastTimes } from "@/utils/time"; //时间处理类
 
 //音乐播放器全局注册
 import APlayer from "@moefe/vue-aplayer";
@@ -33,13 +36,13 @@ Vue.use(ElementUI);
 import { LoginBox } from '@/components/index'
 Vue.prototype.$Login = LoginBox.install;
 
-//引入md5加密方式
-import md5 from 'js-md5';
+
 
 //把自定义的工具类挂载在vue实例上
 Vue.prototype.$utils = {
     md5,
-    imgUrl
+    imgUrl,
+    getPastTimes
 };
 
 

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-10 00:05:16
+ * @LastEditTime: 2021-08-11 00:34:43
 -->
 <template>
   <div class="app-container">
@@ -24,12 +24,78 @@
           </p>
         </div>
       </div>
+      <div class="right-container">
+        <div class="not-data" v-if="articleList.length == 0">
+          <div class="img-container">
+            <img width="100%" :src="notDataImg" :alt="notDataImg" />
+          </div>
+        </div>
+        <div class="article-container" v-else>
+          <div
+            class="article-item"
+            v-for="(item, index) in articleList"
+            :key="index"
+          >
+            <div class="article-img">
+              <img
+                width="100%"
+                height="100%"
+                :src="$utils.imgUrl(item.cover_img_url)"
+                alt=""
+              />
+            </div>
+            <div class="article-title">
+              <h4>{{ item.article_title }}</h4>
+            </div>
+            <div class="article-tage">
+              <el-tag size="mini" effect="dark" class="item-tag"
+                ><i class="el-icon-folder-opened"></i>
+                {{ item.getArticleClassification.classification_name }}</el-tag
+              >
+              <el-tag
+                size="mini"
+                type="success"
+                effect="dark"
+                class="item-tag"
+                v-for="(value, key) in item.special"
+                ><i class="el-icon-collection-tag"></i>
+                {{ value.special_name }}</el-tag
+              >
+              <el-tag
+                size="mini"
+                type="info"
+                class="item-tag"
+                v-for="(value, key) in item.label"
+                ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag
+              >
+            </div>
+            <div class="article-time">
+              <div class="time">
+                <span>{{ $utils.getPastTimes(item.create_time) }}</span>
+              </div>
+              <div class="other">
+                <span class="other-item"
+                  ><i class="el-icon-chat-dot-square"></i> 0</span
+                >
+                <span class="other-item"
+                  ><i class="el-icon-view"></i> {{ item.browse_num }}</span
+                >
+                <span class="other-item"
+                  ><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getArticleReleaseOption } from "@/api/article/releaseArticle";
 import { getArticleTypeList } from "@/api/article/articleList";
+
 export default {
   name: "ReleaseList",
   data() {
@@ -45,10 +111,28 @@ export default {
 
       //当前文章类型
       activeArticleType: 0,
+
+      //文章数据
+      articleList: [],
+
+      //页面选项配置参数
+      configData: {
+        //文章分类
+        classification: [],
+
+        //文章专题
+        special: [],
+
+        //文章标签
+        label: [],
+      },
+      //没有数据图片
+      notDataImg: require("@/assets/notData/notData.png"),
     };
   },
   created() {
     this.init();
+    // this.getConfigData();
   },
   methods: {
     /**
@@ -57,7 +141,16 @@ export default {
     init() {
       const query = { status: this.activeArticleType };
       getArticleTypeList(query).then((res) => {
-        console.log(res);
+        this.articleList = res.data;
+      });
+    },
+
+    /**
+     * 页面配置参数
+     */
+    getConfigData() {
+      getArticleReleaseOption().then((res) => {
+        this.configData = Object.assign({}, res.data);
       });
     },
     /**
@@ -67,6 +160,11 @@ export default {
       if (id != this.activeArticleType) {
         this.activeArticleType = id;
       }
+    },
+  },
+  watch: {
+    activeArticleType() {
+      this.init();
     },
   },
 };
@@ -100,6 +198,115 @@ export default {
         }
         span {
           padding-right: 20px;
+        }
+      }
+    }
+    .right-container {
+      width: calc(100% - 200px);
+      background-color: #f5f6f7;
+      .article-container {
+        width: 100%;
+        margin: 10px;
+        margin-top: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: top;
+        flex-wrap: wrap;
+        .article-item {
+          padding: 10px;
+          width: 250px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          background: #fff;
+          border-radius: 5px;
+          overflow: hidden;
+          transition: 0.5s;
+          .article-img {
+            width: 100%;
+            height: 150px;
+            border-radius: 5px;
+            overflow: hidden;
+          }
+          .article-title {
+            width: 100%;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            text-align: left;
+            height: 60px;
+            h4 {
+              margin-top: 10px;
+            }
+          }
+          .article-title:hover {
+            color: #3390ff;
+          }
+          .article-tage {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            overflow-x: auto;
+            &::-webkit-scrollbar {
+              height: 4px;
+            }
+            &::-webkit-scrollbar-thumb {
+              background-color: rgba(144, 147, 153, 0.3);
+              border-radius: 2px;
+            }
+            &::-webkit-scrollbar-track {
+              background-color: #f0f2f5;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+              background-color: rgba(144, 147, 153, 0.6);
+            }
+            &::-webkit-scrollbar-thumb:active {
+              background-color: rgba(144, 147, 153, 0.9);
+            }
+            .item-tag {
+              margin-right: 3px;
+            }
+          }
+          .article-time {
+            margin-top: 10px;
+            font-size: 12px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            .time::before {
+              position: relative;
+              content: " ";
+              display: inline-block;
+              width: 5px;
+              height: 5px;
+              background-color: #409eff;
+              border-radius: 50%;
+              margin-right: 5px;
+              top: -1px;
+            }
+            .other-item {
+              margin-right: 5px;
+            }
+          }
+        }
+        .article-item:hover {
+          box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.22),
+            0 0 6px rgba(0, 0, 0, 0.14);
+        }
+      }
+      .not-data {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background-color: #fff;
+        justify-content: center;
+        align-content: center;
+        .img-container {
+          width: 400px;
         }
       }
     }

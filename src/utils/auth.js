@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-13 16:25:13
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-21 00:30:26
+ * @LastEditTime: 2021-08-10 20:59:41
  */
 import Cookies from 'js-cookie'
 
@@ -15,9 +15,9 @@ export function getToken() {
 }
 
 
-//设置token
+//设置token 过期时间是7天
 export function setToken(token) {
-    return Cookies.set(TokenKey, token)
+    return Cookies.set(TokenKey, token, { expires: 7 })
 }
 
 

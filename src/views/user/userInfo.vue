@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-09 23:32:20
+ * @LastEditTime: 2021-08-10 21:15:19
 -->
 <template>
   <div class="app-container">
@@ -88,7 +88,9 @@
       <!-- 子级路由展示 -->
       <div class="router-view">
         <transition name="el-zoom-in-center" mode="out-in">
-          <router-view></router-view>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
         </transition>
       </div>
     </div>

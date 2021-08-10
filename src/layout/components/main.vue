@@ -3,12 +3,14 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-31 20:29:51
+ * @LastEditTime: 2021-08-10 21:16:55
 -->
 <template>
   <div class="app-container">
     <transition name="slide-fade" mode="out-in">
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </transition>
   </div>
 </template>
