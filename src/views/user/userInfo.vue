@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-10 21:15:19
+ * @LastEditTime: 2021-08-11 20:45:01
 -->
 <template>
   <div class="app-container">
@@ -74,6 +74,13 @@
               ><span style="margin-right: 5px">
                 <i class="el-icon-view"></i></span
               >关注</router-link
+            >
+          </div>
+          <div class="item">
+            <router-link tag="div" :to="{ name: 'articleNews' }"
+              ><span style="margin-right: 5px">
+                <i class="el-icon-news"></i></span
+              >消息</router-link
             >
           </div>
           <div class="item">

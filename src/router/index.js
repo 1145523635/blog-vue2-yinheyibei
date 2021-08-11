@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-09 23:03:57
+ * @LastEditTime: 2021-08-11 15:58:02
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -17,6 +17,11 @@ import LayoutUserInfo from '@/layout/haveUserInfo'
 
 import LayoutUserMenu from '@/layout/haveMenu'
 
+/**
+ * 引入两个模块的路由
+ */
+import { layoutUserInfo } from './modules/layoutUserInfo'
+import { layoutUserMenu } from './modules/layoutUserMenu'
 
 //防止出现路由冗余
 const originalPush = VueRouter.prototype.push
@@ -32,34 +37,7 @@ const routes = [{
         component: LayoutUserInfo,
         meta: { title: 'layoutUserInfo' },
         redirect: '/home',
-        children: [{
-                path: 'home',
-                name: 'Home',
-                meta: { title: '时光笔记' },
-                component: () =>
-                    import ('@/views/home/index.vue'),
-            }, {
-                path: 'resources',
-                name: 'resources',
-                meta: { title: '编程资源' },
-                component: () =>
-                    import ('@/views/resources/index.vue')
-            },
-            {
-                path: 'blogAbout',
-                name: 'blogAbout',
-                meta: { title: '关于' },
-                component: () =>
-                    import ('@/views/blogAbout/index.vue')
-            },
-            {
-                path: 'release',
-                name: 'release',
-                meta: { title: '关于' },
-                component: () =>
-                    import ('@/views/release/index.vue')
-            }
-        ]
+        children: layoutUserInfo
     },
     {
         path: '/user',
@@ -68,72 +46,7 @@ const routes = [{
         redirect: '/userInfo',
         component: LayoutUserMenu,
         meta: { title: 'layoutMenu' },
-        children: [{
-            path: '/userInfo',
-            name: 'UserINfo',
-            meta: { title: '用户信息' },
-            redirect: '/userInfo/releaseList',
-            component: () =>
-                import ('@/views/user/userInfo.vue'),
-            children: [{
-                    path: 'personal',
-                    name: 'Personal',
-                    meta: { title: '个人资料' },
-                    redirect: '/userInfo/personal/baseSetting',
-                    component: () =>
-                        import ('@/views/user/userPages/personal/index.vue'),
-                    children: [{
-                            path: 'baseSetting',
-                            name: 'BaseSetting',
-                            meta: {
-                                title: '基本配置',
-                                routerParent: "personal" //处理在子级页面渲染时 父级没有动态类名
-                            },
-                            component: () =>
-                                import ('@/views/user/userPages/personal/baseSetting.vue')
-                        },
-                        {
-                            path: 'securitySetting',
-                            name: 'SecuritySetting',
-                            meta: {
-                                title: '安全配置',
-                                routerParent: "personal"
-                            },
-                            component: () =>
-                                import ('@/views/user/userPages/personal/securitySetting.vue')
-                        }
-                    ]
-                },
-                {
-                    path: 'collection',
-                    name: 'Collection',
-                    meta: { title: '用户收藏' },
-                    component: () =>
-                        import ('@/views/user/userPages/collection.vue'),
-                },
-                {
-                    path: 'comment',
-                    name: 'Comment',
-                    meta: { title: '用户评论' },
-                    component: () =>
-                        import ('@/views/user/userPages/comment.vue'),
-                },
-                {
-                    path: 'follow',
-                    name: 'Follow',
-                    meta: { title: '用户关注' },
-                    component: () =>
-                        import ('@/views/user/userPages/follow.vue'),
-                },
-                {
-                    path: 'releaseList',
-                    name: 'ReleaseList',
-                    meta: { title: '用户发布' },
-                    component: () =>
-                        import ('@/views/user/userPages/release/index.vue'),
-                }
-            ]
-        }]
+        children: layoutUserMenu
     },
 
     /* 404 */

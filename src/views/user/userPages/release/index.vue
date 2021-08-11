@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 00:34:43
+ * @LastEditTime: 2021-08-11 16:33:01
 -->
 <template>
   <div class="app-container">
@@ -36,7 +36,7 @@
             v-for="(item, index) in articleList"
             :key="index"
           >
-            <div class="article-img">
+            <div class="article-img" @click="toReadArticle(item)">
               <img
                 width="100%"
                 height="100%"
@@ -44,7 +44,7 @@
                 alt=""
               />
             </div>
-            <div class="article-title">
+            <div class="article-title" @click="toReadArticle(item)">
               <h4>{{ item.article_title }}</h4>
             </div>
             <div class="article-tage">
@@ -153,6 +153,14 @@ export default {
         this.configData = Object.assign({}, res.data);
       });
     },
+
+    /**
+     * 去阅读文章
+     */
+    toReadArticle({ id }) {
+      this.$router.push({ name: "readArticle", query: { id } });
+    },
+
     /**
      * 改变菜单
      */

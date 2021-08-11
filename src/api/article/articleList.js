@@ -21,3 +21,18 @@ export function getArticleTypeList(data) {
         params: data
     })
 }
+
+/**
+ * @Description: 前台用户阅读文章内容
+ * @Author: 银河以北
+ * @Date: 2021-08-11 16:40:30
+ * @param {*} data
+ * @return {*}
+ */
+export function readArticleContent(data) {
+    return request({
+        url: '/blog/article/readArticleContent',
+        method: 'GET',
+        params: data
+    })
+}

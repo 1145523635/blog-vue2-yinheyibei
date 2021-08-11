@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-07 00:53:18
+ * @LastEditTime: 2021-08-11 20:28:50
 -->
 <template>
   <div class="app-container">
@@ -29,7 +29,7 @@
           :scrollStyle="true"
           @imgAdd="mdImsAdd"
           @change="saveMd"
-          style="height: 100%"
+          style="height: 100%; z-index: 1"
         />
       </div>
       <!-- 选项文章选项 -->
