@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 20:28:50
+ * @LastEditTime: 2021-08-15 14:06:16
 -->
 <template>
   <div class="app-container">
@@ -237,7 +237,7 @@ export default {
           this.articleForm.article_classification = "";
           this.articleForm.article_label = "";
           this.articleForm.article_special = "";
-          this.$router.push("/userInfo/release");
+          this.$router.push("/userInfo/releaseList");
           this.$notify({
             title: "成功",
             message: "你的文章已提交至后台管理员审核，请耐心等待！",

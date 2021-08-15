@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 16:33:01
+ * @LastEditTime: 2021-08-15 14:47:06
 -->
 <template>
   <div class="app-container">
@@ -83,18 +83,67 @@
                 <span class="other-item"
                   ><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span
                 >
+                <el-dropdown
+                  v-show="activeArticleType == 2 || activeArticleType == 3"
+                  style="margin-left: 20px"
+                  size="mini"
+                >
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-setting"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item @click.native="articleAppeal(item)">
+                      申诉</el-dropdown-item
+                    >
+                  </el-dropdown-menu>
+                </el-dropdown>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- 申诉弹出框 -->
+    <el-dialog
+      :visible.sync="appealShow"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <template slot="title">
+        <div class="appeal-title">
+          关于对文章的<span>{{ appealArticleTitle }}</span
+          >申诉内容
+        </div>
+      </template>
+      <div class="appeal-container">
+        <p>请输入申诉内容：</p>
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 10 }"
+          placeholder="请输入内容"
+          v-model="appealForm.appealContainer"
+          maxlength="450"
+          show-word-limit
+        >
+        </el-input>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleClose" size="mini">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="saveData()"
+          size="mini"
+          :loading="btnLoading"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getArticleReleaseOption } from "@/api/article/releaseArticle";
-import { getArticleTypeList } from "@/api/article/articleList";
+import { getArticleTypeList, appealArticle } from "@/api/article/articleList";
 
 export default {
   name: "ReleaseList",
@@ -128,6 +177,21 @@ export default {
       },
       //没有数据图片
       notDataImg: require("@/assets/notData/notData.png"),
+
+      //弹出框控制变量
+      appealShow: false,
+
+      //申诉文章标题
+      appealArticleTitle: "",
+
+      //申诉内容
+      appealForm: {
+        id: "",
+        appealContainer: "",
+      },
+
+      //按钮加载状态
+      btnLoading: false,
     };
   },
   created() {
@@ -143,6 +207,42 @@ export default {
       getArticleTypeList(query).then((res) => {
         this.articleList = res.data;
       });
+    },
+
+    /**
+     * 提交申诉内容
+     */
+    saveData() {
+      this.btnLoading = true;
+      if (this.appealForm.appealContainer == "") {
+        this.$message.error("请输入申诉内容！");
+        this.btnLoading = false;
+        return;
+      }
+      const data = {
+        article_id: this.appealForm.id,
+        reason: this.appealForm.appealContainer,
+      };
+      appealArticle(data).then((res) => {
+        this.btnLoading = false;
+        if (res.code == 200) {
+          this.$notify({
+            title: "成功",
+            message: "你的申诉已提交至后台管理员审核，请耐心等待1到3个工作日！",
+            type: "success",
+          });
+        }
+        this.handleClose();
+      });
+    },
+
+    /**
+     * 点击下拉菜单(申诉)
+     */
+    articleAppeal(item) {
+      this.appealForm.id = item.id;
+      this.appealArticleTitle = item.article_title;
+      this.appealShow = true;
     },
 
     /**
@@ -168,6 +268,14 @@ export default {
       if (id != this.activeArticleType) {
         this.activeArticleType = id;
       }
+    },
+
+    /**
+     * 弹出框关闭回调
+     */
+    handleClose() {
+      this.appealContainer = "";
+      this.appealShow = false;
     },
   },
   watch: {
@@ -197,12 +305,19 @@ export default {
         cursor: pointer;
         line-height: 40px;
         text-align: right;
-        width: 100%;
+        position: relative;
         // 活动路由样式
         .router-link-exact-active {
           color: #1890ff;
           background: #e6f7ff;
           display: block;
+        }
+        .router-link-exact-active::after {
+          content: " ";
+          width: 2px;
+          height: 40px;
+          background: #409eff;
+          position: absolute;
         }
         span {
           padding-right: 20px;
@@ -231,6 +346,7 @@ export default {
           border-radius: 5px;
           overflow: hidden;
           transition: 0.5s;
+          margin-right: 10px;
           .article-img {
             width: 100%;
             height: 150px;
@@ -317,6 +433,23 @@ export default {
           width: 400px;
         }
       }
+    }
+  }
+  .appeal-title {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    span {
+      color: #409eff;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+  .appeal-container {
+    width: 100%;
+    text-align: left;
+    p {
+      margin-bottom: 5px;
     }
   }
 }

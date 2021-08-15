@@ -36,3 +36,19 @@ export function readArticleContent(data) {
         params: data
     })
 }
+
+
+/**
+ * @Description: 前台用户申诉自己的文章
+ * @Author: 银河以北
+ * @Date: 2021-08-15 14:36:47
+ * @param {*} data
+ * @return {*}
+ */
+export function appealArticle(data) {
+    return request({
+        url: '/blog/article/appealArticle',
+        method: 'POST',
+        data
+    })
+}

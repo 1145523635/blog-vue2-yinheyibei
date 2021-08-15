@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-02 21:01:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-10 21:16:37
+ * @LastEditTime: 2021-08-14 14:23:45
 -->
 <template>
   <div class="app-container">
@@ -69,12 +69,19 @@ export default {
         cursor: pointer;
         line-height: 40px;
         text-align: right;
-        width: 100%;
+        position: relative;
         // 活动路由样式
         .router-link-exact-active {
           color: #1890ff;
           background: #e6f7ff;
           display: block;
+        }
+        .router-link-exact-active::after {
+          content: " ";
+          width: 2px;
+          height: 40px;
+          background: #409eff;
+          position: absolute;
         }
         span {
           padding-right: 20px;
