@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-15 14:47:06
+ * @LastEditTime: 2021-08-16 00:54:50
 -->
 <template>
   <div class="app-container">
@@ -258,7 +258,7 @@ export default {
      * 去阅读文章
      */
     toReadArticle({ id }) {
-      this.$router.push({ name: "readArticle", query: { id } });
+      this.$router.push({ name: "ReadArticle", query: { id } });
     },
 
     /**

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:51:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-07 00:20:43
+ * @LastEditTime: 2021-08-16 00:09:56
  */
 
 //引入axios 对其进行分装
@@ -23,6 +23,10 @@ import { Notification } from 'element-ui'
 
 //引入基本配置 获取基础请求路径
 import baseSetting from '@/config/defaultSettings'
+
+//引入全局登录框
+import { LoginBox } from '@/components/index'
+
 
 export function request(config) {
 
@@ -160,6 +164,7 @@ function handleCode(response) {
         store.commit('SET_TOKEN', null)
         store.commit('SET_INFO', null)
         router.replace('/')
+
         return {
             code: 10004,
             data: response.data.data

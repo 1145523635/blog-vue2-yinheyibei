@@ -77,7 +77,7 @@
             >
           </div>
           <div class="item">
-            <router-link tag="div" :to="{ name: 'articleNews' }"
+            <router-link tag="div" :to="{ name: 'ArticleNews' }"
               ><span style="margin-right: 5px">
                 <i class="el-icon-news"></i></span
               >消息</router-link

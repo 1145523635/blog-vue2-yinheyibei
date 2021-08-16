@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 00:25:37
+ * @LastEditTime: 2021-08-15 19:35:09
 -->
 <template>
   <div class="app-container">
@@ -163,7 +163,7 @@ export default {
   justify-content: center;
   .contaier {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     height: 500px;
     background: #fff;

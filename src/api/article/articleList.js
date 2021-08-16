@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function getArticleTypeList(data) {
     return request({
-        url: '/blog/article/getArticleTypeList',
+        url: '/blog/article/verify/getArticleTypeList',
         method: 'GET',
         params: data
     })
@@ -31,7 +31,7 @@ export function getArticleTypeList(data) {
  */
 export function readArticleContent(data) {
     return request({
-        url: '/blog/article/readArticleContent',
+        url: '/blog/article/release/readArticleContent',
         method: 'GET',
         params: data
     })
@@ -47,7 +47,7 @@ export function readArticleContent(data) {
  */
 export function appealArticle(data) {
     return request({
-        url: '/blog/article/appealArticle',
+        url: '/blog/article/verify/appealArticle',
         method: 'POST',
         data
     })

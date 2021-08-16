@@ -3,12 +3,12 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-10 21:16:55
+ * @LastEditTime: 2021-08-16 01:01:44
 -->
 <template>
   <div class="app-container">
     <transition name="slide-fade" mode="out-in">
-      <keep-alive>
+      <keep-alive exclude="ReadArticle">
         <router-view />
       </keep-alive>
     </transition>

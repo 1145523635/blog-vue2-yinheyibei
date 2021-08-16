@@ -28,7 +28,7 @@ import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 // 白名单重定向
-const whiteList = ['/', '/resources', '/404', '/home']
+const whiteList = ['/', '/resources', '/404', '/home', '/readArticle']
 
 
 

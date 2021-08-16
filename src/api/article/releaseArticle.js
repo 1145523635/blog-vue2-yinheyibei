@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function getArticleReleaseOption() {
     return request({
-        url: '/blog/article/getArticleReleaseOption',
+        url: '/blog/article/release/getArticleReleaseOption',
         method: 'GET',
     })
 }
@@ -30,7 +30,7 @@ export function getArticleReleaseOption() {
  */
 export function blogUserReleaseContent(data) {
     return request({
-        url: '/blog/article/blogUserReleaseContent',
+        url: '/blog/article/verify/blogUserReleaseContent',
         method: 'POST',
         data
     })

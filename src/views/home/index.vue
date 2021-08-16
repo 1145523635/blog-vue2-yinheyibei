@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-13 22:44:23
+ * @LastEditTime: 2021-08-16 00:17:32
 -->
 <template>
   <div class="home">
@@ -24,7 +24,7 @@ export default {
     };
   },
   created() {
-    this.init();
+    // this.init();
   },
   methods: {
     init() {

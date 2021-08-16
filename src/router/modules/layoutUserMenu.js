@@ -71,7 +71,7 @@ export const layoutUserMenu = [{
         },
         {
             path: 'articleNews',
-            name: 'articleNews',
+            name: 'ArticleNews',
             meta: { title: '消息通知' },
             component: () =>
                 import ('@/views/user/userPages/articleNews/index.vue'),

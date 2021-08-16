@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 20:37:43
+ * @LastEditTime: 2021-08-16 01:03:20
 -->
 <template>
   <div class="app-container">
@@ -69,6 +69,7 @@
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 import { readArticleContent } from "@/api/article/articleList";
+import { addArticleBrowse } from "@/api/article/recommendArticle";
 export default {
   name: "ReadArticle",
   components: {
@@ -99,17 +100,34 @@ export default {
         //作者信息
         getUserInfo: {},
       },
+
+      //定时器
+      timer: "",
+
+      //当前用户ID
+      userId: 0,
     };
   },
   created() {
+    if (this.$store.getters.userInfo) {
+      this.userId = this.$store.getters.userInfo.user.id;
+    } else {
+      this.userId = 0;
+    }
+
     this.articleId = this.$route.query.id;
     this.init();
+
+    //阅读时间为5秒
   },
   methods: {
     init() {
       //页面初始化
       readArticleContent({ articleId: this.articleId }).then((res) => {
         this.articleData = Object.assign({}, res.data);
+        if (this.articleData.user_id != this.userId) {
+          this.timer = setTimeout(this.reading, 5000);
+        }
       });
     },
 
@@ -119,6 +137,23 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+
+    /**
+     * 阅读时间达标
+     */
+    reading() {
+      const data = { id: this.articleData.id };
+      addArticleBrowse(data).then((res) => {
+        if (res.code == 200) {
+          this.articleData.browse_num++;
+        }
+      });
+    },
+  },
+
+  //页面销毁 清除定时器
+  beforeDestroy() {
+    clearTimeout(this.timer);
   },
 };
 </script>
