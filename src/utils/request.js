@@ -163,7 +163,8 @@ function handleCode(response) {
         removeToken()
         store.commit('SET_TOKEN', null)
         store.commit('SET_INFO', null)
-        router.replace('/')
+        LoginBox.install();
+        // router.replace('/')
 
         return {
             code: 10004,

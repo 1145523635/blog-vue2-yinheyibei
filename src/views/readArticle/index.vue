@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 01:03:20
+ * @LastEditTime: 2021-08-17 01:12:55
 -->
 <template>
   <div class="app-container">
@@ -42,8 +42,13 @@
             ><i class="el-icon-view"></i> {{ articleData.browse_num }}
           </span>
 
-          <span class="other-item"
-            ><i class="el-icon-star-off"></i> {{ articleData.thumbs_num }}
+          <span
+            class="other-item"
+            @click="changeThumbs()"
+            :class="{ 'thumbs-item': articleData.isThumbs }"
+            ><i class="el-icon-star-on" v-if="articleData.isThumbs"></i
+            ><i class="el-icon-star-off" v-else></i>
+            {{ articleData.thumbs_num }}
           </span>
         </div>
       </div>
@@ -60,6 +65,50 @@
           style="height: 100%; z-index: 1"
         />
       </div>
+      <!-- 文章版权 -->
+      <div class="article-copyright" v-if="!isAuthor">
+        <p>© 版权声明</p>
+        <p>分享是一种美德，转载请保留原链接。</p>
+        <p>
+          当前链接：<span>
+            <el-link :href="articleLink" type="primary">{{
+              articleLink
+            }}</el-link></span
+          >
+        </p>
+      </div>
+      <!-- 文章分类 -->
+      <div class="article-tag">
+        <p>
+          <el-tag size="mini" effect="dark" class="item-tag"
+            ><i class="el-icon-folder-opened"></i>
+            {{
+              articleData.getArticleClassification.classification_name
+            }}</el-tag
+          >
+        </p>
+        <p>
+          <el-tag
+            size="mini"
+            type="success"
+            effect="dark"
+            class="item-tag"
+            v-for="(value, key) in articleData.special"
+            ><i class="el-icon-collection-tag"></i>
+            {{ value.special_name }}</el-tag
+          >
+        </p>
+        <p>
+          <el-tag
+            size="mini"
+            type="info"
+            class="item-tag"
+            v-for="(value, key) in articleData.label"
+            ><i class="el-icon-collection-tag"></i>
+            {{ value.label_name }}</el-tag
+          >
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +118,10 @@
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 import { readArticleContent } from "@/api/article/articleList";
-import { addArticleBrowse } from "@/api/article/recommendArticle";
+import {
+  addArticleBrowse,
+  changeArticleThumbs,
+} from "@/api/article/recommendArticle";
 export default {
   name: "ReadArticle",
   components: {
@@ -99,6 +151,18 @@ export default {
 
         //作者信息
         getUserInfo: {},
+
+        //是否已点赞
+        isThumbs: false,
+
+        //文章专题
+        special: [],
+
+        //文章标签
+        label: [],
+
+        //文章分类
+        getArticleClassification: {},
       },
 
       //定时器
@@ -106,6 +170,12 @@ export default {
 
       //当前用户ID
       userId: 0,
+
+      //文章链接
+      articleLink: "",
+
+      //判断是不是作者
+      isAuthor: false,
     };
   },
   created() {
@@ -117,16 +187,43 @@ export default {
 
     this.articleId = this.$route.query.id;
     this.init();
-
-    //阅读时间为5秒
   },
   methods: {
     init() {
       //页面初始化
       readArticleContent({ articleId: this.articleId }).then((res) => {
         this.articleData = Object.assign({}, res.data);
+
+        if (this.articleData.user_id != this.userId) {
+          this.isAuthor = false;
+        } else {
+          this.isAuthor = true;
+        }
+        //获取当前完整路径
+        this.articleLink = window.location.href;
+        return;
+        //阅读时间为5秒
         if (this.articleData.user_id != this.userId) {
           this.timer = setTimeout(this.reading, 5000);
+        }
+      });
+    },
+
+    /**
+     * 文章点赞
+     */
+    changeThumbs() {
+      const data = {
+        article_id: this.articleData.id,
+      };
+      changeArticleThumbs(data).then((res) => {
+        if (res.code == 200) {
+          if (this.articleData.isThumbs) {
+            this.articleData.thumbs_num--;
+          } else {
+            this.articleData.thumbs_num++;
+          }
+          this.articleData.isThumbs = !this.articleData.isThumbs;
         }
       });
     },
@@ -162,7 +259,6 @@ export default {
 .app-container {
   width: 100%;
 
-  background: #fff;
   border-radius: 5px;
   overflow: hidden;
   .container {
@@ -170,6 +266,8 @@ export default {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    background: #fff;
+    margin-bottom: 20px;
     .article-title {
       width: 100%;
       text-align: left;
@@ -228,11 +326,32 @@ export default {
           margin-right: 10px;
           font-size: 14px;
         }
+        .thumbs-item {
+          color: #ebe15b;
+        }
       }
     }
     .article-container {
       max-height: 500px;
       overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .article-copyright {
+      width: 100%;
+      text-align: left;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .article-tag {
+      text-align: left;
+      width: 100%;
+      margin-bottom: 10px;
+      p {
+        margin-top: 5px;
+      }
+      .item-tag {
+        margin-right: 3px;
+      }
     }
   }
 }

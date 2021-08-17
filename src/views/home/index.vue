@@ -3,13 +3,14 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 00:17:32
+ * @LastEditTime: 2021-08-17 00:43:42
 -->
 <template>
   <div class="home">
     <h1>websocket测试</h1>
     <el-input v-model="input"></el-input>
     <el-button type="primary" @click="socketSend">发送信息</el-button>
+   <el-skeleton :rows="6" animated />
   </div>
 </template>
 
@@ -54,5 +55,6 @@ export default {
 .home {
   width: 100%;
   text-align: center;
+  background: #fff;
 }
 </style>

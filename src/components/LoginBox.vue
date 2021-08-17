@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-24 23:34:08
+ * @LastEditTime: 2021-08-16 20:31:32
 -->
 <template>
   <el-dialog
@@ -14,9 +14,24 @@
     :close-on-click-modal="false"
   >
     <div slot="title">
-      <div class="dialogTitle">
-        <span :class="{ 'login-title': showLoginFrom }">登录</span> and
-        <span :class="{ 'register-form': !showLoginFrom }">注册</span>
+      <div
+        class="dialogTitle"
+        :class="{
+          'login-title-container': showLoginFrom,
+          'register-title-container': !showLoginFrom,
+        }"
+      >
+        <span
+          :class="{ 'login-title': showLoginFrom }"
+          @click="changeTable('login')"
+          >登录</span
+        >
+        and
+        <span
+          :class="{ 'register-form': !showLoginFrom }"
+          @click="changeTable('register')"
+          >注册</span
+        >
       </div>
     </div>
     <div class="login-form">
@@ -281,7 +296,8 @@ export default {
                 type: "success",
               });
               this.show = false;
-              router.push("/");
+              // router.push("/");
+              router.go(0)
               this.loginLoading = false;
             }, 1000);
           });
@@ -369,7 +385,9 @@ export default {
 <style lang="scss" scoped>
 .dialogTitle {
   padding-left: 20px;
-  border-bottom: 2px solid #00a2e3;
+  span {
+    cursor: pointer;
+  }
   .login-title {
     color: #2997f7;
     font-weight: 600;
@@ -378,6 +396,12 @@ export default {
     color: #85ce61;
     font-weight: 600;
   }
+}
+.login-title-container {
+  border-bottom: 2px solid #00a2e3;
+}
+.register-title-container {
+  border-bottom: 2px solid #85ce61;
 }
 .login-form {
   width: 100%;

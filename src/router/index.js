@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 15:58:02
+ * @LastEditTime: 2021-08-16 21:54:20
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -68,7 +68,15 @@ const routes = [{
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
+
+    //页面跳转回到首页
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        }
+        return { x: 0, y: 0 }
+    }
 })
 
 export default router

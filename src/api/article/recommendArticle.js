@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-15 21:03:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 00:21:14
+ * @LastEditTime: 2021-08-16 16:36:43
  */
 import { request } from '@/utils/request'
 
@@ -32,6 +32,21 @@ export function addArticleBrowse(data) {
     return request({
         url: '/blog/article/release/addArticleBrowse',
         method: 'GET',
+        params: data
+    })
+}
+
+/**
+ * @Description: 文章点赞
+ * @Author: 银河以北
+ * @Date: 2021-08-16 16:36:15
+ * @param {*} data
+ * @return {*}
+ */
+export function changeArticleThumbs(data) {
+    return request({
+        url: '/blog/article/verify/changeArticleThumbs',
+        method: 'POST',
         params: data
     })
 }
