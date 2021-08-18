@@ -7,7 +7,6 @@
       <div class="comment" :style="{ width: commentWidth }">
         <el-input
           @focus="showButton(0)"
-          @blur="hideButton()"
           type="textarea"
           :autosize="{ minRows: minRows, maxRows: maxRows }"
           :placeholder="placeholder"
@@ -113,7 +112,6 @@
           >
             <el-input
               @focus="showButton(item.id)"
-              @blur="hideButton()"
               type="textarea"
               :autosize="{ minRows: minRows, maxRows: maxRows }"
               :placeholder="placeholder"
@@ -222,7 +220,6 @@
             >
               <el-input
                 @focus="showButton(ritem.id)"
-                @blur="hideButton()"
                 type="textarea"
                 :autosize="{ minRows: minRows, maxRows: maxRows }"
                 :placeholder="placeholder"
@@ -427,12 +424,12 @@ export default {
       if (index !== 0) {
         this.$set(this.replyMap, index, false);
       }
+      console.log(index + "index");
+      //this.showFlag = false;
     },
-    hideButton() {
-      this.buttonMap = [];
-      this.replyMap = [];
-    },
+  
     doSend() {
+      //console.log("====="+this.textarea);
       this.$emit("doSend", this.textareaMap[0]);
       this.$set(this.textareaMap, 0, "");
     },
@@ -473,7 +470,8 @@ export default {
       return str;
     },
     doReply(index) {
-      this.$set(this.replyMap, index, !this.replyMap[index]);
+      this.$set(this.replyMap, index, true);
+      console.log(this.replyMap[index]);
     },
 
     pBodyStatus(index, status = 0) {

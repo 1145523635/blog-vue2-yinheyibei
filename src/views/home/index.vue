@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-18 14:46:41
+ * @LastEditTime: 2021-08-18 22:57:13
 -->
 <template>
   <div class="home">
@@ -11,20 +11,13 @@
     <el-input v-model="input"></el-input>
     <el-button type="primary" @click="socketSend">发送信息</el-button>
     <el-skeleton :rows="6" animated />
-    <comment
-      :avatar="$utils.imgUrl(userInfo.avatar_url)"
-      :authorId="userInfo.id"
-    ></comment>
   </div>
 </template>
 
 <script>
-import comment from "@/components/comment/index.vue";
 export default {
   name: "Home",
-  components: {
-    comment,
-  },
+  components: {},
   data() {
     return {
       path: "ws://0.0.0.0:2346?a=13",

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-18 22:44:58
+ * @LastEditTime: 2021-08-18 23:31:09
 -->
 <template>
   <div class="app-container">
@@ -191,6 +191,8 @@ export default {
       //当前用户信息
       userInfo: {
         id: 0,
+        avatar_url:
+          "uploads/admin/1/images/2021/08/18/462d9a7f1bc5909f111f230cdeaf78bc.jpg",
       },
 
       //文章链接
@@ -274,7 +276,7 @@ export default {
         article_id: this.articleId,
       };
       sendArticleComment(data).then((res) => {
-        if (res) {
+        if (res.code == 200) {
           this.$notify({
             title: "评论提交成功",
             message: "你的评论管理员将在客服审核后给予你回复",
@@ -300,7 +302,7 @@ export default {
         return;
       }
       sendArticleComment(data).then((res) => {
-        if (res) {
+        if (res.code == 200) {
           this.$notify({
             title: "评论提交成功",
             message: "你的评论管理员将在客服审核后给予你回复",
