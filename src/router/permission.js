@@ -16,7 +16,7 @@ import router from './index'
 import store from '@/store'
 
 //引入全局登录框
-import { LoginBox } from '@/components/index'
+import { LoginBox } from '@/components/loginBox/index'
 
 //引入获取从cookie获取token的方法
 import { getToken } from '@/utils/auth' // get token from cookie

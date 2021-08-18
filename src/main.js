@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-09 23:17:31
+ * @LastEditTime: 2021-08-18 14:48:25
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -33,7 +33,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 //引入全局注册组件
-import { LoginBox } from '@/components/index'
+import { LoginBox } from '@/components/loginBox/index'
 Vue.prototype.$Login = LoginBox.install;
 
 

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-09 23:15:40
+ * @LastEditTime: 2021-08-18 22:33:17
 -->
 <template>
   <div id="app">
@@ -31,6 +31,12 @@ export default {
           name: "七里香",
           artist: "jay",
           url: "https://ljk.ganfanwang.cn/static/music/index.flac",
+          theme: this.randomColor(),
+        },
+        {
+          name: "白月光与朱砂痣",
+          artist: "大籽",
+          url: "https://ljk.ganfanwang.cn/static/music/大籽 - 白月光与朱砂痣.mp3",
           theme: this.randomColor(),
         },
         {
@@ -177,7 +183,7 @@ export default {
   },
   methods: {
     onListHide() {
-      console.log("xx");
+
     },
     randomColor() {
       return `#${((Math.random() * 0xffffff) << 0).toString(16)}`;

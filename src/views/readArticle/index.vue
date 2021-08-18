@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-17 01:12:55
+ * @LastEditTime: 2021-08-18 22:44:58
 -->
 <template>
   <div class="app-container">
@@ -109,6 +109,18 @@
           >
         </p>
       </div>
+      <!-- 评论 -->
+      <div class="article-comment">
+        <comment
+          :avatar="$utils.imgUrl(userInfo.avatar_url)"
+          :authorId="articleData.getUserInfo.id"
+          :label="'作者'"
+          :commentNum="commentNum"
+          :commentList="commentList"
+          @doSend="doSend($event)"
+          @doChidSend="doChidSend(arguments)"
+        ></comment>
+      </div>
     </div>
   </div>
 </template>
@@ -117,7 +129,14 @@
 //引入markdown富文本编辑器
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
+
+//评论组件
+import comment from "@/components/comment/index.vue";
 import { readArticleContent } from "@/api/article/articleList";
+import {
+  sendArticleComment,
+  getArticleComment,
+} from "@/api/article/articleComment";
 import {
   addArticleBrowse,
   changeArticleThumbs,
@@ -126,6 +145,7 @@ export default {
   name: "ReadArticle",
   components: {
     mavonEditor,
+    comment,
   },
   data() {
     return {
@@ -168,21 +188,29 @@ export default {
       //定时器
       timer: "",
 
-      //当前用户ID
-      userId: 0,
+      //当前用户信息
+      userInfo: {
+        id: 0,
+      },
 
       //文章链接
       articleLink: "",
 
       //判断是不是作者
       isAuthor: false,
+
+      //评论数据
+      commentList: [],
+
+      //评论数量
+      commentNum: 0,
     };
   },
   created() {
     if (this.$store.getters.userInfo) {
-      this.userId = this.$store.getters.userInfo.user.id;
+      this.userInfo = this.$store.getters.userInfo.user;
     } else {
-      this.userId = 0;
+      this.userInfo.id = 0;
     }
 
     this.articleId = this.$route.query.id;
@@ -190,11 +218,10 @@ export default {
   },
   methods: {
     init() {
-      //页面初始化
+      //页面初始化 获取除文章评论外所有的数据
       readArticleContent({ articleId: this.articleId }).then((res) => {
         this.articleData = Object.assign({}, res.data);
-
-        if (this.articleData.user_id != this.userId) {
+        if (this.articleData.user_id != this.userInfo.id) {
           this.isAuthor = false;
         } else {
           this.isAuthor = true;
@@ -203,8 +230,82 @@ export default {
         this.articleLink = window.location.href;
         return;
         //阅读时间为5秒
-        if (this.articleData.user_id != this.userId) {
+        if (this.articleData.user_id != this.userInfo.id) {
           this.timer = setTimeout(this.reading, 5000);
+        }
+      });
+
+      //获取文章评论
+      const aricleData = { article_id: this.articleId };
+      getArticleComment(aricleData).then((res) => {
+        this.commentList = Object.assign([], res.data);
+
+        //获取文章评论数量
+        this.commentNum = this.getCommentList(this.commentList);
+      });
+    },
+
+    /**
+     * 获取评论条数
+     */
+    getCommentList(item) {
+      let num = item.length;
+      item.forEach((value) => {
+        if (value.children) {
+          num += this.getCommentList(value.children);
+        }
+      });
+      return num;
+    },
+
+    /**
+     * 初始输入框的发送事件
+     */
+    doSend(content) {
+      if (content == "") {
+        this.$message.error("请输入评论的内容");
+        return;
+      }
+      const data = {
+        parent_id: 0,
+        user_id: this.userInfo.id,
+        reply_id: 0,
+        content,
+        article_id: this.articleId,
+      };
+      sendArticleComment(data).then((res) => {
+        if (res) {
+          this.$notify({
+            title: "评论提交成功",
+            message: "你的评论管理员将在客服审核后给予你回复",
+            type: "success",
+          });
+        }
+      });
+    },
+
+    /**
+     * 子级回复评论
+     */
+    doChidSend(item) {
+      const data = {
+        content: item[0], //文章内容
+        reply_id: item[1], //回复ID
+        parent_id: item[2], //父级ID
+        user_id: this.userInfo.id, //评论者ID
+        article_id: this.articleId, //文章ID
+      };
+      if (data.content == "") {
+        this.$message.error("请输入评论的内容");
+        return;
+      }
+      sendArticleComment(data).then((res) => {
+        if (res) {
+          this.$notify({
+            title: "评论提交成功",
+            message: "你的评论管理员将在客服审核后给予你回复",
+            type: "success",
+          });
         }
       });
     },
@@ -352,6 +453,11 @@ export default {
       .item-tag {
         margin-right: 3px;
       }
+    }
+    .article-comment {
+      z-index: 100;
+      margin-bottom: 10px;
+      width: 100%;
     }
   }
 }

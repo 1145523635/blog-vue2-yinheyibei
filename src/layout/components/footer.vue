@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 22:22:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-06-11 12:01:36
+ * @LastEditTime: 2021-08-18 16:54:02
 -->
 <template>
   <div class="app-container">
@@ -20,6 +20,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+  z-index: 0;
   .container {
     width: 1380px;
     height: 200px;

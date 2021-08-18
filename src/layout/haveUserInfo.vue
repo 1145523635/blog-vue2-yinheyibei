@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-05 20:42:40
+ * @LastEditTime: 2021-08-18 16:54:57
 -->
 <template>
   <div class="app-contianer">
@@ -88,6 +88,7 @@ export default {
     }
     .container-footer {
       width: 100%;
+      z-index: 0;
       background: #22292d;
     }
   }

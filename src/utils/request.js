@@ -25,7 +25,7 @@ import { Notification } from 'element-ui'
 import baseSetting from '@/config/defaultSettings'
 
 //引入全局登录框
-import { LoginBox } from '@/components/index'
+import { LoginBox } from '@/components/loginBox/index'
 
 
 export function request(config) {

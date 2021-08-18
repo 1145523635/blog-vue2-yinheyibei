@@ -3,28 +3,38 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-17 00:43:42
+ * @LastEditTime: 2021-08-18 14:46:41
 -->
 <template>
   <div class="home">
     <h1>websocket测试</h1>
     <el-input v-model="input"></el-input>
     <el-button type="primary" @click="socketSend">发送信息</el-button>
-   <el-skeleton :rows="6" animated />
+    <el-skeleton :rows="6" animated />
+    <comment
+      :avatar="$utils.imgUrl(userInfo.avatar_url)"
+      :authorId="userInfo.id"
+    ></comment>
   </div>
 </template>
 
 <script>
+import comment from "@/components/comment/index.vue";
 export default {
   name: "Home",
+  components: {
+    comment,
+  },
   data() {
     return {
       path: "ws://0.0.0.0:2346?a=13",
       socket: {},
       input: undefined,
+      userInfo: {},
     };
   },
   created() {
+    this.userInfo = Object.assign({}, this.$store.getters.userInfo.user);
     // this.init();
   },
   methods: {
