@@ -14,10 +14,11 @@ import { request } from '@/utils/request'
  * @param {*}
  * @return {*}
  */
-export function getRecommendArticle() {
+export function getRecommendArticle(data) {
     return request({
         url: '/blog/article/release/getRecommendArticle',
-        method: 'GET',
+        method: 'POST',
+        data
     })
 }
 

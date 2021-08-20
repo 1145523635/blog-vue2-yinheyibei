@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-18 23:31:09
+ * @LastEditTime: 2021-08-19 00:23:14
 -->
 <template>
   <div class="app-container">
@@ -37,6 +37,9 @@
         <div class="article-data">
           <span class="other-item"
             ><i class="el-icon-chat-dot-square"></i> 0
+            <!-- <a href="#article-comment" class="comment-anchor">
+              {{ commentNum }}</a
+            > -->
           </span>
           <span class="other-item"
             ><i class="el-icon-view"></i> {{ articleData.browse_num }}
@@ -110,7 +113,7 @@
         </p>
       </div>
       <!-- 评论 -->
-      <div class="article-comment">
+      <div class="article-comment" id='article-comment'>
         <comment
           :avatar="$utils.imgUrl(userInfo.avatar_url)"
           :authorId="articleData.getUserInfo.id"
@@ -428,6 +431,10 @@ export default {
         .other-item {
           margin-right: 10px;
           font-size: 14px;
+          .comment-anchor {
+            text-decoration: none;
+            color: #4e5358;
+          }
         }
         .thumbs-item {
           color: #ebe15b;

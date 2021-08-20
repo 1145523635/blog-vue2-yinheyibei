@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-17 01:10:46
+ * @LastEditTime: 2021-08-21 01:14:36
 -->
 <template>
   <div class="app-container">
@@ -25,10 +25,14 @@
             <i class="el-icon-folder-opened"></i> 分类
             <span class="division">|</span>
           </div>
-          <div class="filter-item">
+          <div class="filter-item" v-if="optionsData.classification">
             <span
               v-for="(item, index) in optionsData.classification"
               :key="index"
+              @click="changeClassificationFilter(item.id)"
+              :class="{
+                'actice-item': item.id == filterForm.article_classification,
+              }"
               >{{ item.classification_name }}</span
             >
           </div>
@@ -39,10 +43,14 @@
             <i class="el-icon-collection-tag"></i> 专题
             <span class="division">|</span>
           </div>
-          <div class="filter-item">
-            <span v-for="(item, index) in optionsData.special" :key="index">{{
-              item.special_name
-            }}</span>
+          <div class="filter-item" v-if="optionsData.special">
+            <span
+              v-for="(item, index) in optionsData.special"
+              :key="index"
+              @click="changeSpecialFilter(item.id)"
+              :class="{ 'actice-item': filterForm.special.includes(item.id) }"
+              >{{ item.special_name }}</span
+            >
           </div>
         </div>
         <!-- 文章标签 -->
@@ -50,14 +58,19 @@
           <div class="filter-header">
             <i class="el-icon-s-flag"></i> 标签 <span class="division">|</span>
           </div>
-          <div class="filter-item">
-            <span v-for="(item, index) in optionsData.label" :key="index">{{
-              item.label_name
-            }}</span>
+          <div class="filter-item" v-if="optionsData.label">
+            <span
+              v-for="(item, index) in optionsData.label"
+              :key="index"
+              @click="changeLabelFilter(item.id)"
+              :class="{ 'actice-item': filterForm.label.includes(item.id) }"
+              >{{ item.label_name }}</span
+            >
           </div>
         </div>
       </div>
       <!-- 内容展示 -->
+
       <div class="article-container">
         <div class="no-data" v-if="articleList.length == 0">
           <div><span>找不到文章咯！</span></div>
@@ -157,6 +170,13 @@ export default {
 
       //文章数据
       articleList: [],
+
+      //过滤表单
+      filterForm: {
+        article_classification: "",
+        special: [],
+        label: [],
+      },
     };
   },
   created() {
@@ -166,10 +186,40 @@ export default {
   methods: {
     //初始化函数
     init() {
+      const query = Object.assign({}, this.filterForm);
       //文章数据
-      getRecommendArticle().then((res) => {
-        this.articleList = Object.assign({}, res.data);
+      getRecommendArticle(query).then((res) => {
+        this.articleList = Object.assign([], res.data);
       });
+    },
+
+    //更改过滤表单参数 （文章分类）
+    changeClassificationFilter(id) {
+      if (id == this.filterForm.article_classification) {
+        this.filterForm.article_classification = "";
+      } else {
+        this.filterForm.article_classification = id;
+      }
+    },
+
+    //更改过滤表单参数 （文章专题）
+    changeSpecialFilter(id) {
+      const index = this.filterForm.special.indexOf(id);
+      if (index == -1) {
+        this.filterForm.special.push(id);
+      } else {
+        this.filterForm.special.splice(index, 1);
+      }
+    },
+
+    //更改过滤表单参数 （文章标签）
+    changeLabelFilter(id) {
+      const index = this.filterForm.label.indexOf(id);
+      if (index == -1) {
+        this.filterForm.label.push(id);
+      } else {
+        this.filterForm.label.splice(index, 1);
+      }
     },
 
     //查看详细文章
@@ -183,6 +233,14 @@ export default {
       getArticleReleaseOption().then((res) => {
         this.optionsData = Object.assign({}, res.data);
       });
+    },
+  },
+  watch: {
+    filterForm: {
+      handler() {
+        this.init();
+      },
+      deep: true,
     },
   },
 };
@@ -230,6 +288,10 @@ export default {
             color: #409eff;
           }
         }
+        .actice-item {
+          color: #409eff;
+          font-weight: 600;
+        }
       }
     }
     .article-container {
@@ -242,7 +304,7 @@ export default {
         flex-wrap: wrap;
         .article-item {
           padding: 10px;
-          width: 250px;
+          width: 263px;
           cursor: pointer;
           display: flex;
           justify-content: center;
@@ -252,6 +314,7 @@ export default {
           overflow: hidden;
           transition: 0.5s;
           margin-right: 10px;
+          margin-bottom: 10px;
           .article-img {
             width: 100%;
             height: 150px;
