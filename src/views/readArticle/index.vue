@@ -335,6 +335,8 @@ export default {
           this.articleData.isThumbs = !this.articleData.isThumbs;
         }
       });
+
+      
     },
 
     /**
