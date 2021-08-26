@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-18 16:54:51
+ * @LastEditTime: 2021-08-22 22:45:03
 -->
 <template>
   <div class="app-contianer">
@@ -46,7 +46,6 @@ export default {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-
     .contianer-header {
       padding: 0, 10px, 10px, 10px;
       width: 100%;

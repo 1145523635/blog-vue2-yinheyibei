@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-19 00:23:14
+ * @LastEditTime: 2021-08-25 21:22:11
 -->
 <template>
   <div class="app-container">
@@ -52,6 +52,9 @@
             ><i class="el-icon-star-on" v-if="articleData.isThumbs"></i
             ><i class="el-icon-star-off" v-else></i>
             {{ articleData.thumbs_num }}
+          </span>
+          <span class="other-item" @click="changeCollection()"
+            ><i class="el-icon-collection-tag"></i> 0
           </span>
         </div>
       </div>
@@ -113,7 +116,7 @@
         </p>
       </div>
       <!-- 评论 -->
-      <div class="article-comment" id='article-comment'>
+      <div class="article-comment" id="article-comment">
         <comment
           :avatar="$utils.imgUrl(userInfo.avatar_url)"
           :authorId="articleData.getUserInfo.id"
@@ -333,6 +336,16 @@ export default {
         }
       });
     },
+
+    /**
+     * 收藏文章
+     */
+    changeCollection(){
+       const data = {
+        article_id: this.articleData.id,
+      };
+    },
+
 
     /**
      * 返回上一页

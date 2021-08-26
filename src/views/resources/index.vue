@@ -3,24 +3,37 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-21 01:14:36
+ * @LastEditTime: 2021-08-23 00:59:21
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <!-- 头部背景 -->
       <div class="header-container">
+       
         <el-image
           style="width: 100%; height: 100%"
           fit="cover"
-          :src="defaultImg"
+          :src="$utils.imgUrl(imgContent.imgUrl)"
         >
         </el-image>
+        <div class='describe'>
+          <div>
+            <h4><i class="el-icon-edit" v-if='imgContent.status==0'></i>
+            <i class="el-icon-folder-opened" v-if='imgContent.status==1'></i>
+            <i class="el-icon-collection-tag" v-if='imgContent.status==2'></i>
+            <i class="el-icon-s-flag" v-if='imgContent.status==3'></i> {{imgContent.text}}</h4>
+            <p>{{imgContent.describe}}</p>
+          </div>
+        </div>
       </div>
       <!-- 过滤方法 -->
       <div class="filter-container">
         <!-- 文章分类过滤 -->
-        <div class="filter-classification">
+        <div
+          class="filter-classification"
+          v-if="optionsData.classification.length > 0"
+        >
           <div class="filter-header">
             <i class="el-icon-folder-opened"></i> 分类
             <span class="division">|</span>
@@ -29,7 +42,7 @@
             <span
               v-for="(item, index) in optionsData.classification"
               :key="index"
-              @click="changeClassificationFilter(item.id)"
+              @click="changeClassificationFilter(item)"
               :class="{
                 'actice-item': item.id == filterForm.article_classification,
               }"
@@ -38,7 +51,10 @@
           </div>
         </div>
         <!-- 文章专题过滤 -->
-        <div class="filter-classification">
+        <div
+          class="filter-classification"
+          v-if="optionsData.special.length > 0"
+        >
           <div class="filter-header">
             <i class="el-icon-collection-tag"></i> 专题
             <span class="division">|</span>
@@ -47,14 +63,16 @@
             <span
               v-for="(item, index) in optionsData.special"
               :key="index"
-              @click="changeSpecialFilter(item.id)"
-              :class="{ 'actice-item': filterForm.special.includes(item.id) }"
+              @click="changeSpecialFilter(item)"
+              :class="{
+                'actice-item': filterForm.article_special.includes(item.id),
+              }"
               >{{ item.special_name }}</span
             >
           </div>
         </div>
         <!-- 文章标签 -->
-        <div class="filter-classification">
+        <div class="filter-classification" v-if="optionsData.label.length > 0">
           <div class="filter-header">
             <i class="el-icon-s-flag"></i> 标签 <span class="division">|</span>
           </div>
@@ -62,19 +80,22 @@
             <span
               v-for="(item, index) in optionsData.label"
               :key="index"
-              @click="changeLabelFilter(item.id)"
-              :class="{ 'actice-item': filterForm.label.includes(item.id) }"
+              @click="changeLabelFilter(item)"
+              :class="{
+                'actice-item': filterForm.article_label.includes(item.id),
+              }"
               >{{ item.label_name }}</span
             >
           </div>
         </div>
       </div>
       <!-- 内容展示 -->
-
       <div class="article-container">
+        <!-- 没有数据 -->
         <div class="no-data" v-if="articleList.length == 0">
           <div><span>找不到文章咯！</span></div>
         </div>
+        <!-- 数据展示 -->
         <div class="article-data" v-else>
           <div
             class="article-item"
@@ -145,6 +166,10 @@
             </div>
           </div>
         </div>
+        <!-- 加载跟多按钮 -->
+        <div class="load-more">
+          <el-button :type="showGetMoreBtn?'primary':'info'" round size="mini" @click="getMoreArticle()" :disabled='!showGetMoreBtn'><span v-if='showGetMoreBtn'>加载更多</span><span v-else>没有更多了</span></el-button></el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -158,9 +183,6 @@ export default {
 
   data() {
     return {
-      //默认图片
-      defaultImg: require("@/assets/defaultData/background/background.png"),
-
       //过滤数据
       optionsData: {
         classification: [], //文章分类
@@ -174,57 +196,102 @@ export default {
       //过滤表单
       filterForm: {
         article_classification: "",
-        special: [],
-        label: [],
+        article_special: [],
+        article_label: [],
+      },
+
+      //分页参数
+      pages: {
+        list_rows: 3,
+        page: 0,
+      },
+
+      //显示加载跟多按钮
+      showGetMoreBtn: true,
+
+      //顶部图片展示内容
+      imgContent: {
+        imgUrl:
+          "uploads/admin/1/images/2021/08/22/19df673cbc103121dd01ad3189a31159.png",
+        text: "洞幽察微",
+        describe: "相信奇迹的人，一定也和奇迹一样了不起吧！",
+        status: 0,
       },
     };
   },
   created() {
     this.configData();
-    this.init();
+    this.init(true);
   },
   methods: {
     //初始化函数
-    init() {
-      const query = Object.assign({}, this.filterForm);
+    init(status = true) {
+      const query = Object.assign({}, this.filterForm, this.pages);
       //文章数据
       getRecommendArticle(query).then((res) => {
-        this.articleList = Object.assign([], res.data);
+        if (status) {
+          this.articleList = Object.assign([], res.data);
+        } else {
+          if (res.data.length > 0) {
+            this.articleList = this.articleList.concat(res.data);
+          }
+        }
+        if (res.data.length < this.pages.list_rows) {
+          this.showGetMoreBtn = false;
+        }
       });
     },
 
     //更改过滤表单参数 （文章分类）
-    changeClassificationFilter(id) {
-      if (id == this.filterForm.article_classification) {
+    changeClassificationFilter(item) {
+      this.imgContent.imgUrl = item.cover_url;
+      this.imgContent.describe = item.classification_describe;
+      this.imgContent.text = item.classification_name;
+      this.imgContent.status = 1;
+      if (item.id == this.filterForm.article_classification) {
         this.filterForm.article_classification = "";
       } else {
-        this.filterForm.article_classification = id;
+        this.filterForm.article_classification = item.id;
       }
     },
 
     //更改过滤表单参数 （文章专题）
-    changeSpecialFilter(id) {
-      const index = this.filterForm.special.indexOf(id);
+    changeSpecialFilter(item) {
+      this.imgContent.imgUrl = item.cover_url;
+      this.imgContent.describe = item.special_describe;
+      this.imgContent.text = item.special_name;
+      this.imgContent.status = 2;
+      const index = this.filterForm.article_special.indexOf(item.id);
       if (index == -1) {
-        this.filterForm.special.push(id);
+        this.filterForm.article_special.push(item.id);
       } else {
-        this.filterForm.special.splice(index, 1);
+        this.filterForm.article_special.splice(index, 1);
       }
     },
 
     //更改过滤表单参数 （文章标签）
-    changeLabelFilter(id) {
-      const index = this.filterForm.label.indexOf(id);
+    changeLabelFilter(item) {
+      this.imgContent.imgUrl = item.cover_url;
+      this.imgContent.describe = item.label_describe;
+      this.imgContent.text = item.label_name;
+      this.imgContent.status = 3;
+      const index = this.filterForm.article_label.indexOf(item.id);
       if (index == -1) {
-        this.filterForm.label.push(id);
+        this.filterForm.article_label.push(item.id);
       } else {
-        this.filterForm.label.splice(index, 1);
+        this.filterForm.article_label.splice(index, 1);
       }
     },
 
     //查看详细文章
     toReadArticle({ id }) {
       this.$router.push({ name: "ReadArticle", query: { id } });
+    },
+
+    //加载更多文章
+    getMoreArticle() {
+      this.pages.page++;
+      this.init(false);
     },
 
     //配置数据函数
@@ -238,7 +305,9 @@ export default {
   watch: {
     filterForm: {
       handler() {
-        this.init();
+        this.showGetMoreBtn = true;
+        this.pages.page = 0;
+        this.init(true);
       },
       deep: true,
     },
@@ -257,6 +326,27 @@ export default {
       border-radius: 10px;
       overflow: hidden;
       margin-bottom: 20px;
+      position: relative;
+      .describe {
+        position: absolute;
+        text-align: center;
+        color: #fff;
+        top: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-shadow: 0 0 5px #000;
+        cursor: pointer;
+        h4:hover {
+          color: #409eff;
+        }
+        p {
+          font-size: 13px;
+        }
+      }
     }
     .filter-container {
       width: 100%;
@@ -417,6 +507,9 @@ export default {
           top: -10px;
           right: 180px;
         }
+      }
+      .load-more {
+        width: 100%;
       }
     }
   }
