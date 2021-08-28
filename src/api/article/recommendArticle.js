@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-15 21:03:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 16:36:43
+ * @LastEditTime: 2021-08-28 20:46:03
  */
 import { request } from '@/utils/request'
 
@@ -48,6 +48,21 @@ export function changeArticleThumbs(data) {
     return request({
         url: '/blog/article/verify/changeArticleThumbs',
         method: 'POST',
-        params: data
+        data
+    })
+}
+
+/**
+ * @Description: 文章收藏
+ * @Author: 银河以北
+ * @Date: 2021-08-28 20:36:02
+ * @param {*} data
+ * @return {*}
+ */
+export function changArticleCollection(data) {
+    return request({
+        url: '/blog/article/verify/changArticleCollection',
+        method: 'POST',
+        data
     })
 }

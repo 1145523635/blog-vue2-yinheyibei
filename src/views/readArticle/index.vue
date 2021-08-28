@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-25 21:22:11
+ * @LastEditTime: 2021-08-28 21:47:43
 -->
 <template>
   <div class="app-container">
@@ -53,8 +53,12 @@
             ><i class="el-icon-star-off" v-else></i>
             {{ articleData.thumbs_num }}
           </span>
-          <span class="other-item" @click="changeCollection()"
-            ><i class="el-icon-collection-tag"></i> 0
+          <span
+            class="other-item"
+            @click="changeCollection()"
+            :class="{ 'is-Collection': articleData.isCollection }"
+            ><i class="el-icon-collection-tag"></i>
+            {{ articleData.collection_num }}
           </span>
         </div>
       </div>
@@ -146,6 +150,7 @@ import {
 import {
   addArticleBrowse,
   changeArticleThumbs,
+  changArticleCollection,
 } from "@/api/article/recommendArticle";
 export default {
   name: "ReadArticle",
@@ -175,11 +180,17 @@ export default {
         //文章浏览
         browse_num: 0,
 
+        //文章收藏量
+        collection_num:0,
+
         //作者信息
         getUserInfo: {},
 
         //是否已点赞
         isThumbs: false,
+
+        //是否收藏
+        isCollection:false,
 
         //文章专题
         special: [],
@@ -335,19 +346,26 @@ export default {
           this.articleData.isThumbs = !this.articleData.isThumbs;
         }
       });
-
-      
     },
 
     /**
      * 收藏文章
      */
-    changeCollection(){
-       const data = {
+    changeCollection() {
+      const data = {
         article_id: this.articleData.id,
       };
+      changArticleCollection(data).then((res) => {
+        if (res.code == 200) {
+          if (this.articleData.isCollection) {
+            this.articleData.collection_num--;
+          } else {
+            this.articleData.collection_num++;
+          }
+          this.articleData.isCollection = !this.articleData.isCollection;
+        }
+      });
     },
-
 
     /**
      * 返回上一页
@@ -452,6 +470,9 @@ export default {
           }
         }
         .thumbs-item {
+          color: #ebe15b;
+        }
+        .is-Collection {
           color: #ebe15b;
         }
       }

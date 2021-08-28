@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 00:54:50
+ * @LastEditTime: 2021-08-28 21:52:05
 -->
 <template>
   <div class="app-container">
@@ -82,6 +82,10 @@
                 >
                 <span class="other-item"
                   ><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span
+                >
+                <span class="other-item"
+                  ><i class="el-icon-collection-tag"></i>
+                  {{ item.collection_num }}</span
                 >
                 <el-dropdown
                   v-show="activeArticleType == 2 || activeArticleType == 3"

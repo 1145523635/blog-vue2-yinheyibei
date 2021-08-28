@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-23 00:59:21
+ * @LastEditTime: 2021-08-28 21:50:58
 -->
 <template>
   <div class="app-container">
@@ -161,6 +161,9 @@
                 >
                 <span class="other-item"
                   ><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span
+                >
+                 <span class="other-item"
+                  ><i class="el-icon-collection-tag"></i> {{ item.collection_num }}</span
                 >
               </div>
             </div>
