@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-10 00:01:55
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-10 00:03:18
+ * @LastEditTime: 2021-08-28 22:22:56
  */
 import { request } from '@/utils/request'
 
@@ -50,5 +50,19 @@ export function appealArticle(data) {
         url: '/blog/article/verify/appealArticle',
         method: 'POST',
         data
+    })
+}
+
+/**
+ * @Description: 
+ * @Author: 银河以北
+ * @Date: 2021-08-28 22:21:55
+ * @param {*}
+ * @return {*}
+ */
+export function getUserArticleCollection() {
+    return request({
+        url: '/blog/article/verify/getUserArticleCollection',
+        method: 'GET',
     })
 }

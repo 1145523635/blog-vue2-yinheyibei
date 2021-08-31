@@ -46,7 +46,7 @@ export const layoutUserMenu = [{
             name: 'Collection',
             meta: { title: '用户收藏' },
             component: () =>
-                import ('@/views/user/userPages/collection.vue'),
+                import ('@/views/user/userPages/collection/index.vue'),
         },
         {
             path: 'comment',
