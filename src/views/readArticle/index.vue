@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-28 21:47:43
+ * @LastEditTime: 2021-09-01 20:02:46
 -->
 <template>
   <div class="app-container">
@@ -500,7 +500,7 @@ export default {
       }
     }
     .article-comment {
-      z-index: 100;
+      z-index: 10;
       margin-bottom: 10px;
       width: 100%;
     }

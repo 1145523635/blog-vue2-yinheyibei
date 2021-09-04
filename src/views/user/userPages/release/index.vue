@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-28 22:23:56
+ * @LastEditTime: 2021-09-01 20:41:06
 -->
 <template>
   <div class="app-container">
@@ -75,7 +75,7 @@
               </div>
               <div class="other">
                 <span class="other-item"
-                  ><i class="el-icon-chat-dot-square"></i> 0</span
+                  ><i class="el-icon-chat-dot-square"></i> {{item.articleCommentNum}}</span
                 >
                 <span class="other-item"
                   ><i class="el-icon-view"></i> {{ item.browse_num }}</span

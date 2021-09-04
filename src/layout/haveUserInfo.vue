@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-22 22:44:35
+ * @LastEditTime: 2021-09-01 20:03:12
 -->
 <template>
   <div class="app-contianer">
@@ -63,7 +63,7 @@ export default {
       justify-content: space-around;
       background: #fff;
       margin-bottom: 20px;
-      z-index: 10;
+      z-index: 100;
 
       .header {
         min-width: 1380px;

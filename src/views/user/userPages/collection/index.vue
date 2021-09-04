@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-28 22:24:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-29 15:07:08
+ * @LastEditTime: 2021-09-01 20:39:06
 -->
 <template>
   <div class="app-container">
@@ -30,17 +30,17 @@
           <div class="article-title" @click="toReadArticle(item)">
             <h4>{{ item.articleContent.article_title }}</h4>
           </div>
-          <!-- <div class="article-tage">
+          <div class="article-tage">
             <el-tag size="mini" effect="dark" class="item-tag"
               ><i class="el-icon-folder-opened"></i>
-              {{ item.getArticleClassification.classification_name }}</el-tag
+              {{ item.articleContent.getArticleClassification.classification_name }}</el-tag
             >
             <el-tag
               size="mini"
               type="success"
               effect="dark"
               class="item-tag"
-              v-for="(value, key) in item.special"
+              v-for="(value, key) in item.articleContent.special"
               ><i class="el-icon-collection-tag"></i>
               {{ value.special_name }}</el-tag
             >
@@ -48,10 +48,10 @@
               size="mini"
               type="info"
               class="item-tag"
-              v-for="(value, key) in item.label"
+              v-for="(value, key) in item.articleContent.label"
               ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag
             >
-          </div> -->
+          </div>
           <div class="article-time">
             <div class="time">
               <span>{{
@@ -60,7 +60,7 @@
             </div>
             <div class="other">
               <span class="other-item"
-                ><i class="el-icon-chat-dot-square"></i> 0</span
+                ><i class="el-icon-chat-dot-square"></i> {{item.articleContent.articleCommentNum}}</span
               >
               <span class="other-item"
                 ><i class="el-icon-view"></i>
@@ -75,7 +75,6 @@
                 {{ item.articleContent.collection_num }}</span
               >
               <!-- <el-dropdown
-                v-show="activeArticleType == 2 || activeArticleType == 3"
                 style="margin-left: 20px"
                 size="mini"
               >
