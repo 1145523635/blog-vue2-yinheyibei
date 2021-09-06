@@ -3,13 +3,14 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-04 20:32:11
+ * @LastEditTime: 2021-09-05 12:39:30
 -->
 <template>
   <div class="home">
     <h1>websocket测试</h1>
     <el-input v-model="input"></el-input>
     <el-button type="primary" @click="socketSend">发送信息</el-button>
+    <el-button type="primary" @click="activelySendMessages">主动发送消息</el-button>
     <div>
       <p v-for="(item, index) in infoList" :key="index">
         <span>{{ item.content }}</span>
@@ -19,12 +20,13 @@
 </template>
 
 <script>
+import {sendMessages} from '@/api/test'
 export default {
   name: "Home",
   components: {},
   data() {
     return {
-      path: "ws://0.0.0.0:2348",
+      path: "ws://8.131.60.32:2348",
 
       /* webscockt 对象 */
       socket: null,
@@ -43,7 +45,7 @@ export default {
       this.toUserId = 1;
     }
 
-    this.initWebSocket();
+    // this.initWebSocket();
   },
   methods: {
     //初始化webSockt
@@ -57,12 +59,12 @@ export default {
       this.socket.onopen = this.socketOpen;
       this.socket.onerror = this.socketOnerror;
       this.socket.onmessage = this.socketOnmessage;
-      this.socketTimer = setInterval(() => {
-        const data={
-          type:'heartbeat',
-        }
-        this.socket.send(JSON.stringify(data));
-      }, 15000);
+      // this.socketTimer = setInterval(() => {
+      //   const data={
+      //     type:'heartbeat',
+      //   }
+      //   this.socket.send(JSON.stringify(data));
+      // }, 15000);
       // this.socket.onclose = this.socketOnclose;
     },
     /* 发送消息 */
@@ -76,8 +78,6 @@ export default {
     },
     /* 接收消息 */
     socketOnmessage(data) {
-      console.log(this.socket);
-      console.log("接收消息");
       console.log(JSON.parse(data.data));
       this.infoList.push(JSON.parse(data.data));
     },
@@ -99,6 +99,15 @@ export default {
     socketOnclose(e) {
       console.log("关闭连接", e);
     },
+
+    /**
+     * 主动发送消息
+     */
+    activelySendMessages(){
+      sendMessages().then(res=>{
+        console.log(res);
+      })
+    }
   },
   /* 组件销毁
    */

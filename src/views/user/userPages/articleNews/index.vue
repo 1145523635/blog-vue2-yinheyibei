@@ -3,39 +3,60 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-14 23:19:09
+ * @LastEditTime: 2021-09-06 22:17:55
 -->
 <template>
   <div class="app-container">
     <div class="container">
-      <!-- 消息通知列表 -->
-      <div class="left-link">
-        <div
-          class="link-item"
-          v-for="(item, index) in noticeList"
-          :key="index"
-          @click="changeMenu(item)"
-        >
-          <p
-            :class="{
-              'router-link-exact-active': item.id == activeNoticId,
-            }"
-          >
-            <span v-if="isNotRead.includes(item.id)" style="color: #e6a23c"
-              ><i class="el-icon-warning"></i
-            ></span>
-            <span v-else style="color: #67c23a"
-              ><i class="el-icon-success"></i
-            ></span>
-            <span v-if="item.type == 1">文章审核</span>
-          </p>
+      <div class="not-data" v-if="noticeList.length == 0">
+        <div class="img-container">
+          <img width="100%" :src="notDataImg" :alt="notDataImg" />
         </div>
       </div>
-      <!-- 右边内容展示 -->
-      <div class="right-container">
-        <div class="notice-container">
-          <p class="time">{{ noticeTime }}</p>
-          <span>{{ noticeContent }}</span>
+      <div class="info-container" v-else>
+        <!-- 消息通知列表 -->
+        <div class="left-link">
+          <div class="item-container">
+            <div
+              class="link-item"
+              v-for="(item, index) in noticeList"
+              :key="index"
+              @click="changeMenu(item)"
+            >
+              <p
+                :class="{
+                  'router-link-exact-active': item.id == activeNoticId,
+                }"
+              >
+                <span v-if="isNotRead.includes(item.id)" style="color: #e6a23c"
+                  ><i class="el-icon-warning"></i
+                ></span>
+                <span v-else style="color: #67c23a"
+                  ><i class="el-icon-success"></i
+                ></span>
+                <span v-if="item.type == 1">文章审核</span>
+              </p>
+            </div>
+          </div>
+          <div class="pagination">
+            <el-pagination
+              background
+              layout="prev, total, next"
+              :total="pages.total"
+              style="width: 100%"
+              @prev-click="prevClick"
+              @next-click="nextClick"
+            >
+            </el-pagination>
+          </div>
+        </div>
+
+        <!-- 右边内容展示 -->
+        <div class="right-container">
+          <div class="notice-container">
+            <p class="time">{{ noticeTime }}</p>
+            <span>{{ noticeContent }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -62,6 +83,16 @@ export default {
 
       //没有阅读的通知消息ID
       isNotRead: [],
+
+      //分页参数
+      pages: {
+        list_rows: 10,
+        page: 1,
+        total: 0,
+      },
+
+      //没有数据图片
+      notDataImg: require("@/assets/notData/notData.png"),
     };
   },
   created() {
@@ -71,17 +102,19 @@ export default {
   methods: {
     init() {
       //页面初始化数据
-      getNoticeList().then((res) => {
+      const query = Object.assign({}, this.pages);
+      getNoticeList(query).then((res) => {
         /* 默认赋值 */
-        this.noticeContent = res.data[0].notice;
-        this.activeNoticId = res.data[0].id;
-        this.noticeTime = res.data[0].create_time.slice(0, 10);
-        res.data.forEach((item) => {
+        this.noticeContent = res.data.data[0].notice;
+        this.activeNoticId = res.data.data[0].id;
+        this.noticeTime = res.data.data[0].create_time.slice(0, 10);
+        res.data.data.forEach((item) => {
           if (item.is_read == 0) {
             this.isNotRead.push(item.id);
           }
         });
-        this.noticeList = Object.assign([], res.data);
+        this.noticeList = Object.assign([], res.data.data);
+        this.pages.total = res.data.total;
       });
     },
 
@@ -92,6 +125,16 @@ export default {
         this.noticeContent = notice;
         this.noticeTime = create_time.slice(0, 10);
       }
+    },
+
+    //分页参数回调
+    prevClick(value) {
+      this.pages.page = value;
+      this.init();
+    },
+    nextClick(value) {
+      this.pages.page = value;
+      this.init();
     },
   },
   watch: {
@@ -116,66 +159,93 @@ export default {
     justify-content: flex-start;
     align-items: top;
     height: 100%;
-    .left-link {
-      width: 200px;
-      min-height: 200px;
-      border-right: 1px solid #e8e8e8;
-      height: 100%;
-      .link-item {
-        width: 100%;
-        height: 40px;
-        cursor: pointer;
-        line-height: 40px;
-        text-align: right;
-        width: 100%;
-        position: relative;
-        // 活动路由样式
-        .router-link-exact-active {
-          color: #1890ff;
-          background: #e6f7ff;
-          display: block;
+    .info-container {
+      width: 100%;
+      margin-top: 0;
+      display: flex;
+      justify-content: space-between;
+      .left-link {
+        width: 200px;
+        min-height: 200px;
+        border-right: 1px solid #e8e8e8;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .item-container {
+          .link-item {
+            width: 100%;
+            height: 40px;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: right;
+            width: 100%;
+            position: relative;
+            // 活动路由样式
+            .router-link-exact-active {
+              color: #1890ff;
+              background: #e6f7ff;
+              display: block;
+            }
+            .router-link-exact-active::after {
+              content: " ";
+              width: 2px;
+              height: 40px;
+              background: #409eff;
+              position: absolute;
+            }
+            span {
+              padding-right: 20px;
+            }
+          }
         }
-        .router-link-exact-active::after {
-          content: " ";
-          width: 2px;
-          height: 40px;
-          background: #409eff;
-          position: absolute;
+
+        .pagination {
+          width: 100%;
         }
-        span {
-          padding-right: 20px;
+      }
+      .right-container {
+        width: calc(100% - 200px);
+        height: 100%;
+        .notice-container {
+          margin: 20px;
+          width: calc(100% - 40px);
+          height: 450px;
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: rgba(144, 147, 153, 0.3);
+            border-radius: 2px;
+          }
+          &::-webkit-scrollbar-track {
+            background-color: #f0f2f5;
+          }
+          &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(144, 147, 153, 0.6);
+          }
+          &::-webkit-scrollbar-thumb:active {
+            background-color: rgba(144, 147, 153, 0.9);
+          }
+        }
+        .time {
+          text-align: right;
+          font-size: 12px;
+          color: #999;
         }
       }
     }
-    .right-container {
-      width: calc(100% - 200px);
+
+    .not-data {
+      width: 100%;
       height: 100%;
-      .notice-container {
-        margin: 20px;
-        width: calc(100% - 40px);
-        height: 450px;
-        overflow-y: auto;
-        &::-webkit-scrollbar {
-          width: 4px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: rgba(144, 147, 153, 0.3);
-          border-radius: 2px;
-        }
-        &::-webkit-scrollbar-track {
-          background-color: #f0f2f5;
-        }
-        &::-webkit-scrollbar-thumb:hover {
-          background-color: rgba(144, 147, 153, 0.6);
-        }
-        &::-webkit-scrollbar-thumb:active {
-          background-color: rgba(144, 147, 153, 0.9);
-        }
-      }
-      .time {
-        text-align: right;
-        font-size: 12px;
-        color: #999;
+      display: flex;
+      background-color: #fff;
+      justify-content: center;
+      align-content: center;
+      .img-container {
+        width: 400px;
       }
     }
   }

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-15 19:35:09
+ * @LastEditTime: 2021-09-06 22:52:30
 -->
 <template>
   <div class="app-container">
@@ -52,7 +52,7 @@
               >注册</el-button
             >
           </div>
-          <div v-else>
+          <div v-else class="operation-options">
             <el-button
               type="primary"
               icon="el-icon-star-off"
@@ -68,6 +68,50 @@
               @click="toWriteArticle"
               >写文章</el-button
             >
+            <el-popover
+              placement="bottom"
+              title="消息通知"
+              width="250"
+              trigger="click"
+            >
+              <div class="websocket-container" v-if="socketInfo.length > 0">
+                <div
+                  class="info-websocket"
+                  v-for="(item, index) in socketInfo"
+                  :key="index"
+                >
+                  <div>
+                    <p>{{ item.notice }}</p>
+                  </div>
+                  <div>
+                    <p class="item-time">{{ item.create_time }}</p>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <img :src="notInfoImg" width="100%" alt="" />
+                <p class="not-info-title">现在没有消息通知你呢</p>
+              </div>
+              <div slot="reference">
+                <el-badge
+                  :value="socketInfo.length"
+                  class="item"
+                  :hidden="socketInfo.length == 0"
+                >
+                  <el-button
+                    ref="infoBtn"
+                    type="warning"
+                    size="mini"
+                    v-show="nowRoutePath"
+                    @mouseover.native="mouseoverInfoBtn"
+                    @mouseleave.native="mouseLeaveInfoBtn"
+                    style="background: #ffd90c; border: none"
+                    ><i class="el-icon-message-solid" ref="infoIcon"></i>
+                    消息通知</el-button
+                  >
+                </el-badge>
+              </div>
+            </el-popover>
           </div>
         </div>
       </div>
@@ -76,6 +120,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import base from "@/config/defaultSettings";
 export default {
   name: "UserInfo",
   data() {
@@ -97,19 +142,96 @@ export default {
 
       //当前路由  用来控制写文章按钮的显示、隐藏
       nowRoutePath: true,
+
+      //长链接心跳计时器
+      socketTimer: null,
+
+      //长链接对象
+      socket: null,
+
+      //长链接发送的消息
+      socketInfo: [],
+
+      //没有数据图片
+      notInfoImg: require("@/assets/notData/notInfo.png"),
     };
   },
   created() {
-
     if (this.userInfo && this.userInfo.user.avatar_url != undefined) {
       this.havaUserInfo = true;
       this.isNetImg = false;
       this.userNickname = this.userInfo.user.nickname;
       this.userInfoAvatar = this.userInfo.user.avatar_url;
     }
+
+   
+  },
+  mounted() {
+     this.initWebSocket();
+    if (this.socketInfo.length > 0) {
+      this.$refs.infoIcon.classList.add("info-btn");
+    }
   },
 
   methods: {
+    initWebSocket() {
+      //没有用户信息不执行
+      if (!this.userInfo) {
+        return;
+      }
+      //初始化链接
+      this.socket = new WebSocket(base.websocketUrl);
+      this.socket.onopen = this.socketOpen;
+      this.socket.onerror = this.socketOnerror;
+      this.socket.onmessage = this.socketOnmessage;
+    },
+    /* 发送消息 */
+    socketSend() {
+      const data = {
+        type: "text",
+        toUserId: 1,
+        content: this.input,
+      };
+      this.socket.send(JSON.stringify(data));
+    },
+    /* 接收消息 */
+    socketOnmessage(data) {
+      const info = JSON.parse(data.data);
+      if(Array.isArray(info)){
+          this.socketInfo=info;
+      }
+      if (info.type == 1) {
+        this.socketInfo.unshift(info);
+      }
+      this.mouseLeaveInfoBtn();
+    },
+    /* 连接成功 */
+    socketOpen() {
+      const data = {
+        userId: this.userInfo.user.id,
+        type: "bind",
+        content: "初次连接",
+      };
+     
+      this.socket.send(JSON.stringify(data));
+    },
+    /* 连接失败 */
+    socketOnerror(e) {
+      console.log("连接失败", e);
+    },
+    /* 关闭连接 */
+    socketOnclose(e) {
+      console.log("关闭连接", e);
+    },
+    mouseoverInfoBtn() {
+      this.$refs.infoIcon.classList.remove("info-btn");
+    },
+    mouseLeaveInfoBtn() {
+      if (this.socketInfo.length > 0) {
+        this.$refs.infoIcon.classList.add("info-btn");
+      }
+    },
+
     login() {
       this.$Login("login");
     },
@@ -215,7 +337,87 @@ export default {
       width: 100%;
       display: flex;
       justify-content: center;
+      .operation-options {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        button {
+          margin-bottom: 5px;
+          margin-right: 5px;
+        }
+        .info-btn {
+          animation: rock 1s 0s ease-in-out infinite;
+        }
+        @keyframes rock {
+          0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+            font-size: 12px;
+          }
+          10% {
+            -webkit-transform: rotate(-15deg);
+            transform: rotate(-15deg);
+            font-size: 12px;
+          }
+          20% {
+            -webkit-transform: rotate(-30deg);
+            transform: rotate(-30deg);
+            font-size: 14px;
+          }
+          30% {
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            font-size: 16px;
+          }
+          35% {
+            -webkit-transform: rotate(-15deg);
+            transform: rotate(-15deg);
+            font-size: 12px;
+          }
+          40% {
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            font-size: 16px;
+          }
+          45% {
+            -webkit-transform: rotate(-15deg);
+            transform: rotate(-15deg);
+            font-size: 12px;
+          }
+          50% {
+            -webkit-transform: rotate(-30deg);
+            transform: rotate(-30deg);
+            font-size: 14px;
+          }
+          100% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+            font-size: 12px;
+          }
+        }
+      }
     }
   }
+}
+.websocket-container {
+  width: 100%;
+  .info-websocket {
+    width: 100%;
+    cursor: pointer;
+
+    .item-time {
+      width: 100%;
+      text-align: right;
+      font-size: 12px;
+      color: #999;
+    }
+  }
+}
+.not-info-title {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
 }
 </style>

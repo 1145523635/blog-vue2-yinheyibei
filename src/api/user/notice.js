@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-14 14:38:51
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-14 23:07:16
+ * @LastEditTime: 2021-09-06 21:39:19
  */
 
 import { request } from '@/utils/request'
@@ -15,10 +15,11 @@ import { request } from '@/utils/request'
  * @param {*}
  * @return {*}
  */
-export function getNoticeList() {
+export function getNoticeList(data) {
     return request({
         url: '/blog/blogUser/getNoticeList',
         method: 'GET',
+        params: data
     })
 }
 
