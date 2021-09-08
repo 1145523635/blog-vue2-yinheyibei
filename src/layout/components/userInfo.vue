@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-06 22:52:30
+ * @LastEditTime: 2021-09-08 22:34:37
 -->
 <template>
   <div class="app-container">
@@ -79,12 +79,15 @@
                   class="info-websocket"
                   v-for="(item, index) in socketInfo"
                   :key="index"
+                  @click="toNoticeDetails(item)"
                 >
                   <div>
-                    <p>{{ item.notice }}</p>
+                    <p class="item-notice">{{ item.notice }}</p>
                   </div>
                   <div>
-                    <p class="item-time">{{ item.create_time }}</p>
+                    <p class="item-time">
+                      {{ $utils.getPastTimes(item.create_time) }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -163,11 +166,9 @@ export default {
       this.userNickname = this.userInfo.user.nickname;
       this.userInfoAvatar = this.userInfo.user.avatar_url;
     }
-
-   
   },
   mounted() {
-     this.initWebSocket();
+    this.initWebSocket();
     if (this.socketInfo.length > 0) {
       this.$refs.infoIcon.classList.add("info-btn");
     }
@@ -197,8 +198,8 @@ export default {
     /* 接收消息 */
     socketOnmessage(data) {
       const info = JSON.parse(data.data);
-      if(Array.isArray(info)){
-          this.socketInfo=info;
+      if (Array.isArray(info)) {
+        this.socketInfo = info;
       }
       if (info.type == 1) {
         this.socketInfo.unshift(info);
@@ -212,7 +213,7 @@ export default {
         type: "bind",
         content: "初次连接",
       };
-     
+
       this.socket.send(JSON.stringify(data));
     },
     /* 连接失败 */
@@ -229,6 +230,18 @@ export default {
     mouseLeaveInfoBtn() {
       if (this.socketInfo.length > 0) {
         this.$refs.infoIcon.classList.add("info-btn");
+      }
+    },
+
+    //去消息详情
+    toNoticeDetails({ type, id }) {
+      if (type == 1) {
+        this.$router.push({
+          path: "/userInfo/articleNews",
+          query: {
+            id,
+          },
+        });
       }
     },
 
@@ -401,9 +414,31 @@ export default {
   }
 }
 .websocket-container {
-  width: 100%;
+  background: #f5f6f7;
+  width: calc(100% - 6px);
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px;
+  /* 滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(144, 147, 153, 0.3);
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f0f2f5;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(144, 147, 153, 0.6);
+  }
+  &::-webkit-scrollbar-thumb:active {
+    background-color: rgba(144, 147, 153, 0.9);
+  }
   .info-websocket {
-    width: 100%;
+    width: calc(100% - 10px);
     cursor: pointer;
 
     .item-time {
@@ -411,6 +446,12 @@ export default {
       text-align: right;
       font-size: 12px;
       color: #999;
+    }
+    .item-notice {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 20:31:32
+ * @LastEditTime: 2021-09-08 14:10:48
 -->
 <template>
   <el-dialog
@@ -120,6 +120,7 @@
               size="small"
               placeholder="请输入验证码"
               v-model="registerForm.code"
+               clearable
             >
               <template slot="append"
                 ><el-button

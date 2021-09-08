@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-10 22:47:31
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-10 23:18:50
+ * @LastEditTime: 2021-09-08 22:29:41
  */
 
 
@@ -14,9 +14,9 @@
  * @param {*}
  * @return {*}
  */
-export function getPastTimes(time) {
+export function getPastTimes(time = getCurrentTime()) {
 
-    //服务器返回时间
+    //服务器返回时间 || 默认时间
     const itemTime = new Date(time).getTime()
 
     //当前时间
@@ -36,7 +36,41 @@ export function getPastTimes(time) {
     } else if (timeInterval > 3600 * 12 * 4 && timeInterval < 3600 * 12 * 6) {
         resultTime = '前天'
     } else if (timeInterval > 3600 * 12 * 6) {
-        resultTime = `${Math.round(timeInterval/86400)}天前`
+        resultTime = `${Math.round(timeInterval / 86400)}天前`
     }
     return resultTime
+}
+
+/**
+ * @Description: 获取当前时间 格式:yyyy-MM-dd HH:MM:SS 
+ * @Author: 银河以北
+ * @Date: 2021-09-08 22:28:52
+ * @param {*}
+ * @return {*}
+ */
+export function getCurrentTime() {
+    let date = new Date(); //当前时间
+    let month = zeroFill(date.getMonth() + 1); //月
+    let day = zeroFill(date.getDate()); //日
+    let hour = zeroFill(date.getHours()); //时
+    let minute = zeroFill(date.getMinutes()); //分
+    let second = zeroFill(date.getSeconds()); //秒
+    let curTime = date.getFullYear() + "-" + month + "-" + day +
+        " " + hour + ":" + minute + ":" + second;
+    return curTime;
+}
+
+/**
+ * @Description: 时间格式补零
+ * @Author: 银河以北
+ * @Date: 2021-09-08 22:28:04
+ * @param {*} i
+ * @return {*}
+ */
+function zeroFill(i) {
+    if (i >= 0 && i <= 9) {
+        return "0" + i;
+    } else {
+        return i;
+    }
 }

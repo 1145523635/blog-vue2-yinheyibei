@@ -3,20 +3,10 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-05 12:39:30
+ * @LastEditTime: 2021-09-08 14:05:48
 -->
 <template>
-  <div class="home">
-    <h1>websocket测试</h1>
-    <el-input v-model="input"></el-input>
-    <el-button type="primary" @click="socketSend">发送信息</el-button>
-    <el-button type="primary" @click="activelySendMessages">主动发送消息</el-button>
-    <div>
-      <p v-for="(item, index) in infoList" :key="index">
-        <span>{{ item.content }}</span>
-      </p>
-    </div>
-  </div>
+   <div>模块开发中</div>
 </template>
 
 <script>
@@ -38,13 +28,8 @@ export default {
     };
   },
   created() {
-    this.userInfo = Object.assign({}, this.$store.getters.userInfo.user);
-    if (this.userInfo.id == 1) {
-      this.toUserId = 11;
-    } else {
-      this.toUserId = 1;
-    }
-
+  
+    
     // this.initWebSocket();
   },
   methods: {

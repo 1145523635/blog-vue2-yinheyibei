@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-06 22:17:55
+ * @LastEditTime: 2021-09-08 22:52:45
 -->
 <template>
   <div class="app-container">
@@ -93,9 +93,16 @@ export default {
 
       //没有数据图片
       notDataImg: require("@/assets/notData/notData.png"),
+
+      //定时器
+      timer: null,
     };
   },
   created() {
+    if (this.$route.query.id) {
+      this.activeNoticId = this.$route.query.id;
+    }
+
     this.init();
   },
 
@@ -105,14 +112,24 @@ export default {
       const query = Object.assign({}, this.pages);
       getNoticeList(query).then((res) => {
         /* 默认赋值 */
-        this.noticeContent = res.data.data[0].notice;
-        this.activeNoticId = res.data.data[0].id;
-        this.noticeTime = res.data.data[0].create_time.slice(0, 10);
+
         res.data.data.forEach((item) => {
           if (item.is_read == 0) {
             this.isNotRead.push(item.id);
           }
+          //如果有默认活动消息ID 则赋对应的值
+          if (item.id == this.activeNoticId) {
+            this.noticeContent = item.notice;
+            this.noticeTime = item.create_time.slice(0, 10);
+          }
         });
+
+        //如果没有默认的活动消息ID是0 则赋默认值
+        if (this.noticeContent == 0) {
+          this.noticeContent = res.data.data[0].notice;
+          this.activeNoticId = res.data.data[0].id;
+          this.noticeTime = res.data.data[0].create_time.slice(0, 10);
+        }
         this.noticeList = Object.assign([], res.data.data);
         this.pages.total = res.data.total;
       });
@@ -139,11 +156,14 @@ export default {
   },
   watch: {
     activeNoticId(value) {
-      isReadNotice({ id: value }).then((res) => {
-        this.isNotRead = this.isNotRead.filter((item) => {
-          return item != value;
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        isReadNotice({ id: value }).then((res) => {
+          this.isNotRead = this.isNotRead.filter((item) => {
+            return item != value;
+          });
         });
-      });
+      }, 5000);
     },
   },
 };
