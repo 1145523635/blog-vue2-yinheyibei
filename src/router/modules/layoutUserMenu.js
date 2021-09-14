@@ -60,7 +60,7 @@ export const layoutUserMenu = [{
             name: 'Follow',
             meta: { title: '用户关注' },
             component: () =>
-                import ('@/views/user/userPages/follow.vue'),
+                import ('@/views/user/userPages/follow/index.vue'),
         },
         {
             path: 'releaseList',

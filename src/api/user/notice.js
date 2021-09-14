@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-14 14:38:51
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-06 21:39:19
+ * @LastEditTime: 2021-09-11 10:45:18
  */
 
 import { request } from '@/utils/request'
@@ -34,6 +34,21 @@ export function isReadNotice(data) {
     return request({
         url: '/blog/blogUser/isReadNotice',
         method: 'POST',
+        data
+    })
+}
+
+/**
+ * @Description: 主动删除消息
+ * @Author: 银河以北
+ * @Date: 2021-09-11 10:44:58
+ * @param {*} data
+ * @return {*}
+ */
+export function deleteNotice(data) {
+    return request({
+        url: '/blog/blogUser/deleteNotice',
+        method: 'DELETE',
         data
     })
 }

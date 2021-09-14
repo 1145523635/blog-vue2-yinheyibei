@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-01 20:02:46
+ * @LastEditTime: 2021-09-12 20:20:23
 -->
 <template>
   <div class="app-container">
@@ -32,6 +32,19 @@
           <div class="user-name">
             <h4>{{ articleData.getUserInfo.nickname }}</h4>
             <p>发布于 {{ $utils.getPastTimes(articleData.create_time) }}</p>
+          </div>
+          <div class="user-follow">
+            <el-button
+              size="mini"
+              style="background: #fff1f4; border-color: #fff1f4"
+              :icon="
+                articleData.isFollow ? 'el-icon-star-on' : 'el-icon-star-off'
+              "
+              :loading="followBtnLoading"
+              @click="followUser"
+              ><span v-if="articleData.isFollow"> 已关注</span>
+              <span v-else>关注</span></el-button
+            >
           </div>
         </div>
         <div class="article-data">
@@ -152,6 +165,7 @@ import {
   changeArticleThumbs,
   changArticleCollection,
 } from "@/api/article/recommendArticle";
+import { blogUserFollowUser } from "@/api/user/followUser";
 export default {
   name: "ReadArticle",
   components: {
@@ -181,7 +195,7 @@ export default {
         browse_num: 0,
 
         //文章收藏量
-        collection_num:0,
+        collection_num: 0,
 
         //作者信息
         getUserInfo: {},
@@ -190,7 +204,10 @@ export default {
         isThumbs: false,
 
         //是否收藏
-        isCollection:false,
+        isCollection: false,
+
+        //是否收藏
+        isFollow: false,
 
         //文章专题
         special: [],
@@ -223,6 +240,9 @@ export default {
 
       //评论数量
       commentNum: 0,
+
+      //关注按钮loding状态
+      followBtnLoading: false,
     };
   },
   created() {
@@ -261,6 +281,33 @@ export default {
 
         //获取文章评论数量
         this.commentNum = this.getCommentList(this.commentList);
+      });
+    },
+
+    /**
+     * 关注用户（作者）
+     */
+    followUser() {
+      this.followBtnLoading = true;
+      const data = { follow_id: this.articleData.getUserInfo.id };
+      blogUserFollowUser(data).then((res) => {
+        this.followBtnLoading = false;
+        if (res.code == 200) {
+          if (this.articleData.isFollow) {
+            this.$notify({
+              title: "成功",
+              message: `你已成功取消关注${this.articleData.getUserInfo.nickname}`,
+              type: "warning",
+            });
+          } else {
+            this.$notify({
+              title: "成功",
+              message: `你已成功关注${this.articleData.getUserInfo.nickname}`,
+              type: "success",
+            });
+          }
+          this.articleData.isFollow = !this.articleData.isFollow;
+        }
       });
     },
 
@@ -450,60 +497,66 @@ export default {
         }
         .user-name {
           text-align: left;
+          margin-right: 20px;
           p {
             font-size: 12px;
             color: #999;
           }
         }
-      }
-      .article-data {
-        background: #f5f6f7;
-        padding: 7px;
-        border-radius: 20px;
-        cursor: pointer;
-        .other-item {
-          margin-right: 10px;
-          font-size: 14px;
-          .comment-anchor {
-            text-decoration: none;
-            color: #4e5358;
+        .user-follow {
+          button {
+            color: #ff768f;
           }
         }
-        .thumbs-item {
-          color: #ebe15b;
+      }
+    }
+    .article-data {
+      background: #f5f6f7;
+      padding: 7px;
+      border-radius: 20px;
+      cursor: pointer;
+      .other-item {
+        margin-right: 10px;
+        font-size: 14px;
+        .comment-anchor {
+          text-decoration: none;
+          color: #4e5358;
         }
-        .is-Collection {
-          color: #ebe15b;
-        }
+      }
+      .thumbs-item {
+        color: #ebe15b;
+      }
+      .is-Collection {
+        color: #ebe15b;
       }
     }
-    .article-container {
-      max-height: 500px;
-      overflow: hidden;
-      margin-bottom: 10px;
+  }
+  .article-container {
+    max-height: 500px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .article-copyright {
+    width: 100%;
+    text-align: left;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .article-tag {
+    text-align: left;
+    width: 100%;
+    margin-bottom: 10px;
+    p {
+      margin-top: 5px;
     }
-    .article-copyright {
-      width: 100%;
-      text-align: left;
-      font-size: 13px;
-      margin-bottom: 10px;
+    .item-tag {
+      margin-right: 3px;
     }
-    .article-tag {
-      text-align: left;
-      width: 100%;
-      margin-bottom: 10px;
-      p {
-        margin-top: 5px;
-      }
-      .item-tag {
-        margin-right: 3px;
-      }
-    }
-    .article-comment {
-      z-index: 10;
-      margin-bottom: 10px;
-      width: 100%;
-    }
+  }
+  .article-comment {
+    z-index: 10;
+    margin-bottom: 10px;
+    width: 100%;
   }
 }
 </style>

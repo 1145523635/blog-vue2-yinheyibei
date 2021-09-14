@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-08 22:52:45
+ * @LastEditTime: 2021-09-11 13:58:55
 -->
 <template>
   <div class="app-container">
@@ -54,7 +54,12 @@
         <!-- 右边内容展示 -->
         <div class="right-container">
           <div class="notice-container">
-            <p class="time">{{ noticeTime }}</p>
+            <div class="time">
+              <p class="delete-notice">
+                <i class="el-icon-delete" @click="deleteNotice"></i>
+              </p>
+              <p>{{ noticeTime }}</p>
+            </div>
             <span>{{ noticeContent }}</span>
           </div>
         </div>
@@ -64,7 +69,7 @@
 </template>
 
 <script>
-import { getNoticeList, isReadNotice } from "@/api/user/notice";
+import { getNoticeList, isReadNotice, deleteNotice } from "@/api/user/notice";
 export default {
   name: "ArticleNews",
   data() {
@@ -133,6 +138,44 @@ export default {
         this.noticeList = Object.assign([], res.data.data);
         this.pages.total = res.data.total;
       });
+    },
+
+    //删除消息
+    async deleteNotice() {
+      const dataLen = this.noticeList.length;
+      let activeNoticIdIndex = 0;
+      this.noticeList.forEach((item, index) => {
+        if (this.activeNoticId == item.id) {
+          activeNoticIdIndex = index + 1;
+        }
+      });
+      const res = await deleteNotice({ id: this.activeNoticId });
+      if (res.code == 200) {
+        if (activeNoticIdIndex == dataLen) {
+          if (dataLen == 1) {
+            this.activeNoticId = 0;
+          } else {
+            this.activeNoticId = this.noticeList[activeNoticIdIndex - 2].id;
+            this.noticeContent = this.noticeList[activeNoticIdIndex - 2].notice;
+            this.noticeTime = this.noticeList[
+              activeNoticIdIndex - 2
+            ].create_time.slice(0, 10);
+          }
+          this.noticeList.pop();
+        } else {
+          this.activeNoticId = this.noticeList[activeNoticIdIndex].id;
+          this.noticeContent = this.noticeList[activeNoticIdIndex].notice;
+          this.noticeTime = this.noticeList[
+            activeNoticIdIndex
+          ].create_time.slice(0, 10);
+          this.noticeList.splice(activeNoticIdIndex - 1, 1);
+        }
+        this.$notify({
+          title: "成功",
+          message: "消息删除成功",
+          type: "success",
+        });
+      }
     },
 
     //切换通知消息
@@ -253,6 +296,14 @@ export default {
           text-align: right;
           font-size: 12px;
           color: #999;
+          .delete-notice {
+            margin-bottom: 10px;
+            color: #000;
+            cursor: pointer;
+          }
+          .delete-notice :hover {
+            color: red;
+          }
         }
       }
     }

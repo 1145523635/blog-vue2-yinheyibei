@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-08 22:34:37
+ * @LastEditTime: 2021-09-11 14:09:00
 -->
 <template>
   <div class="app-container">
@@ -91,7 +91,7 @@
                   </div>
                 </div>
               </div>
-              <div v-else>
+              <div v-else @click="toNoticePage" class="websocket-emty">
                 <img :src="notInfoImg" width="100%" alt="" />
                 <p class="not-info-title">现在没有消息通知你呢</p>
               </div>
@@ -105,10 +105,9 @@
                     ref="infoBtn"
                     type="warning"
                     size="mini"
-                    v-show="nowRoutePath"
                     @mouseover.native="mouseoverInfoBtn"
                     @mouseleave.native="mouseLeaveInfoBtn"
-                    style="background: #ffd90c; border: none"
+                    style="background: #ffd90c; border-color: #ffd90c"
                     ><i class="el-icon-message-solid" ref="infoIcon"></i>
                     消息通知</el-button
                   >
@@ -244,7 +243,12 @@ export default {
         });
       }
     },
-
+    //去消息页面 不带参数
+    toNoticePage() {
+      this.$router.push({
+        path: "/userInfo/articleNews",
+      });
+    },
     login() {
       this.$Login("login");
     },
@@ -454,6 +458,9 @@ export default {
       text-overflow: ellipsis;
     }
   }
+}
+.websocket-emty {
+  cursor: pointer;
 }
 .not-info-title {
   width: 100%;
