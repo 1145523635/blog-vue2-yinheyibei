@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-08 14:10:48
+ * @LastEditTime: 2021-09-15 13:32:44
 -->
 <template>
   <el-dialog
@@ -194,7 +194,8 @@ export default {
       show: false,
       //登录表单
       loginForm: {
-        email: "1145523635@qq.com",
+        // 1145523635@qq.com
+        email: "",
         password: "",
       },
 
@@ -229,7 +230,8 @@ export default {
 
       //注册表单
       registerForm: {
-        email: "3627629185@qq.com",
+        // 3627629185@qq.com
+        email: "",
         code: undefined,
         password: undefined,
         againPassword: undefined,

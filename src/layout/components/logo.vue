@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-31 01:08:14
+ * @LastEditTime: 2021-09-15 09:20:11
 -->
 <template>
   <div class="app-contianer">
@@ -11,7 +11,7 @@
       <div class="logo">
         <img :src="logo" alt="银河以北~logo" class="logo-img" />
       </div>
-      <div class="logo-title" @click="toHme"><h1>银河以北</h1></div>
+      <div class="logo-title" @click="toHme"><h3>银河以北</h3></div>
     </div>
   </div>
 </template>
@@ -43,12 +43,13 @@ export default {
     justify-content: start;
     align-items: center;
 
-
     .logo {
       .logo-img {
         width: 50px;
         margin-right: 20px;
         cursor: pointer;
+        border-radius: 50%;
+        overflow: hidden;
       }
     }
     .logo-title {

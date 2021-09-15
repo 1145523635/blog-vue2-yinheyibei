@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-28 22:24:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-01 20:39:06
+ * @LastEditTime: 2021-09-14 21:38:50
 -->
 <template>
   <div class="app-container">
@@ -116,7 +116,6 @@ export default {
       //数据初始化
       getUserArticleCollection().then((res) => {
         this.articleList = Object.assign([], res.data);
-        console.log(this.articleList);
       });
     },
 

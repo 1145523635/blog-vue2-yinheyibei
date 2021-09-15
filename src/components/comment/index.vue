@@ -424,12 +424,9 @@ export default {
       if (index !== 0) {
         this.$set(this.replyMap, index, false);
       }
-      console.log(index + "index");
-      //this.showFlag = false;
     },
-  
+
     doSend() {
-      //console.log("====="+this.textarea);
       this.$emit("doSend", this.textareaMap[0]);
       this.$set(this.textareaMap, 0, "");
     },
@@ -471,7 +468,6 @@ export default {
     },
     doReply(index) {
       this.$set(this.replyMap, index, true);
-      console.log(this.replyMap[index]);
     },
 
     pBodyStatus(index, status = 0) {

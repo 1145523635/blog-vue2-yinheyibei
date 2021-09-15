@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-11 14:09:00
+ * @LastEditTime: 2021-09-15 13:02:02
 -->
 <template>
   <div class="app-container">
@@ -32,7 +32,9 @@
         <div class="user-name">
           <span>{{ userNickname }}</span>
         </div>
+        <UserOtherInfo :otherInfo="otherInfo" v-if="isHaveInfo" />
       </div>
+
       <!-- 用户登录 -->
       <div class="user-login">
         <div class="login-btn">
@@ -123,8 +125,12 @@
 <script>
 import { mapGetters } from "vuex";
 import base from "@/config/defaultSettings";
+import UserOtherInfo from "@/components/userOtherInfo/index.vue";
 export default {
   name: "UserInfo",
+  components: {
+    UserOtherInfo,
+  },
   data() {
     return {
       //用户背景
@@ -156,6 +162,12 @@ export default {
 
       //没有数据图片
       notInfoImg: require("@/assets/notData/notInfo.png"),
+
+      //用户其他信息（文章、关注、粉丝）
+      otherInfo: {},
+
+      //判断是否需要渲染UserOtherInfo组件
+      isHaveInfo: false,
     };
   },
   created() {
@@ -164,10 +176,14 @@ export default {
       this.isNetImg = false;
       this.userNickname = this.userInfo.user.nickname;
       this.userInfoAvatar = this.userInfo.user.avatar_url;
+      this.isHaveInfo = true;
+      this.otherInfo = Object.assign({}, this.userInfo.other);
+    } else {
+      this.isHaveInfo = false;
     }
   },
   mounted() {
-    this.initWebSocket();
+    // this.initWebSocket();
     if (this.socketInfo.length > 0) {
       this.$refs.infoIcon.classList.add("info-btn");
     }
@@ -273,10 +289,13 @@ export default {
         this.havaUserInfo = true;
         this.userNickname = newVal.user.nickname;
         this.userInfoAvatar = newVal.user.avatar_url;
+        this.isHaveInfo = true;
+        this.otherInfo = Object.assign({}, this.userInfo.other);
       } else {
         this.isNetImg = true;
         this.havaUserInfo = false;
         this.userNickname = "未登录";
+        this.isHaveInfo = false;
         this.userInfoAvatar = require("@/assets/user/user-avatar.png");
       }
     },

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-12 20:23:27
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 12:53:15
+ * @LastEditTime: 2021-09-14 21:49:37
 -->
 <template>
   <div class="app-container">
@@ -165,6 +165,7 @@ export default {
     };
   },
   created() {
+    this.isFollow = this.$route.query.isFollow;
     this.init();
   },
   methods: {
@@ -178,11 +179,11 @@ export default {
       getUserFans().then((res) => {
         this.fansUserList = Object.assign([], res.data);
       });
+      console.log(this.isFollow);
     },
 
     //关注或取消用户
     followUser(item) {
-      console.log(item);
       let follow_id = "";
       let userName = "";
       if (item.getFollowInfo) {

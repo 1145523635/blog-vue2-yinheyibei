@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-01 00:12:21
+ * @LastEditTime: 2021-09-14 21:37:16
  */
 
 //引入element-ui 提示框
@@ -69,7 +69,6 @@ router.beforeEach(async(to, from, next) => {
             }
         }
     } else {
-        // console.log('不存在token');
         //判断下一跳再不在白名单里面
         if (whiteList.includes(to.path)) {
             next()

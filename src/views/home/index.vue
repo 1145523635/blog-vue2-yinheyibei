@@ -3,14 +3,14 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-08 14:05:48
+ * @LastEditTime: 2021-09-14 21:37:08
 -->
 <template>
-   <div>模块开发中</div>
+  <div>模块开发中</div>
 </template>
 
 <script>
-import {sendMessages} from '@/api/test'
+import { sendMessages } from "@/api/test";
 export default {
   name: "Home",
   components: {},
@@ -28,8 +28,6 @@ export default {
     };
   },
   created() {
-  
-    
     // this.initWebSocket();
   },
   methods: {
@@ -88,11 +86,11 @@ export default {
     /**
      * 主动发送消息
      */
-    activelySendMessages(){
-      sendMessages().then(res=>{
+    activelySendMessages() {
+      sendMessages().then((res) => {
         console.log(res);
-      })
-    }
+      });
+    },
   },
   /* 组件销毁
    */

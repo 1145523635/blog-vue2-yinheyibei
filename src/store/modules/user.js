@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-08 14:08:48
+ * @LastEditTime: 2021-09-14 18:08:05
  */
 
 //引入登录方法
@@ -17,7 +17,7 @@ const user = {
         token: undefined,
 
         //用户信息
-        info: undefined
+        info: undefined,
     },
 
     mutations: {
@@ -63,8 +63,7 @@ const user = {
                 getUserInfo().then(response => {
                     if (response) {
                         const result = response.data
-
-                        //在vueX设置用户信息
+                            //在vueX设置用户信息
                         if (result) {
                             commit('SET_INFO', result)
                         } else {

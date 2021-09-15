@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-15 14:06:16
+ * @LastEditTime: 2021-09-14 21:36:04
 -->
 <template>
   <div class="app-container">
@@ -276,7 +276,6 @@ export default {
         if (res.code == 200) {
           //获取后端返回的图片路径
           const mdImgUrl = this.$utils.imgUrl(res.data.img_path);
-          console.log(mdImgUrl);
           //替换md文章中的图片路径
           this.$refs.md.$img2Url(pos, mdImgUrl);
         }

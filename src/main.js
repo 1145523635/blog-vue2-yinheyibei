@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-18 14:48:25
+ * @LastEditTime: 2021-09-15 11:00:24
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -15,6 +15,8 @@ import '@/router/permission' // 全局路由钩子
 import { getToken } from '@/utils/auth'
 store.commit('SET_TOKEN', getToken())
 
+//引入svg组件
+import './icons'
 //animate动画库
 import 'animate.css'
 
