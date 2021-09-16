@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-15 13:02:02
+ * @LastEditTime: 2021-09-15 13:52:29
 -->
 <template>
   <div class="app-container">
@@ -183,7 +183,7 @@ export default {
     }
   },
   mounted() {
-    // this.initWebSocket();
+    this.initWebSocket();
     if (this.socketInfo.length > 0) {
       this.$refs.infoIcon.classList.add("info-btn");
     }

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-05 12:41:51
+ * @LastEditTime: 2021-09-16 13:01:25
 -->
 <template>
   <div class="app-container">
@@ -172,16 +172,18 @@ export default {
         roundButton: true,
         showCancelButton: true,
         dangerouslyUseHTMLString: true,
-        callback: () => {
-          this.$store.dispatch("Logout").then((res) => {
-            this.$router.push("/");
-            if (res) {
-              this.$message({
-                message: "成功退出，欢迎下次再来哦",
-                type: "success",
-              });
-            }
-          });
+        callback: (action) => {
+          if (action == "confirm") {
+            this.$store.dispatch("Logout").then((res) => {
+              this.$router.push("/");
+              if (res) {
+                this.$message({
+                  message: "成功退出，欢迎下次再来哦",
+                  type: "success",
+                });
+              }
+            });
+          }
         },
       });
     },
