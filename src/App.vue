@@ -3,12 +3,19 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-18 22:33:17
+ * @LastEditTime: 2021-09-21 19:43:33
 -->
 <template>
   <div id="app">
-    <transition name="slide-fade" mode="out-in">
-      <router-view />
+
+    <transition
+      name="slide-fade"
+      mode="out-in"
+    >
+      <div>
+        <router-view />
+      </div>
+
     </transition>
     <!-- 音乐播放器 -->
     <aplayer
@@ -182,9 +189,7 @@ export default {
     },
   },
   methods: {
-    onListHide() {
-
-    },
+    onListHide() {},
     randomColor() {
       return `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
     },

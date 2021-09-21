@@ -3,10 +3,10 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 21:37:08
+ * @LastEditTime: 2021-09-21 19:56:31
 -->
 <template>
-  <div>模块开发中</div>
+  <div class='app-container'>模块开发中</div>
 </template>
 
 <script>

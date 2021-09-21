@@ -3,8 +3,11 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:47:00
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 00:53:32
+ * @LastEditTime: 2021-09-21 19:58:43
  */
+
+//引入用户信息模块
+import UserInfo from '@/layout/userInfo'
 export const layoutUserInfo = [{
         path: 'home',
         name: 'Home',
@@ -12,8 +15,11 @@ export const layoutUserInfo = [{
             title: '时光笔记',
             keepAlive: true
         },
-        component: () =>
-            import ('@/views/home/index.vue'),
+        components: {
+            default: () =>
+                import ('@/views/home/index.vue'),
+            userInfo: UserInfo
+        }
     }, {
         path: 'resources',
         name: 'Resources',
@@ -21,8 +27,11 @@ export const layoutUserInfo = [{
             title: '编程资源',
             keepAlive: true
         },
-        component: () =>
-            import ('@/views/resources/index.vue')
+        components: {
+            default: () =>
+                import ('@/views/resources/index.vue'),
+            userInfo: UserInfo
+        }
     },
     {
         path: 'blogAbout',
@@ -31,8 +40,11 @@ export const layoutUserInfo = [{
             title: '关于',
             keepAlive: true
         },
-        component: () =>
-            import ('@/views/blogAbout/index.vue')
+        components: {
+            default: () =>
+                import ('@/views/blogAbout/index.vue'),
+            userInfo: UserInfo
+        }
     },
     {
         path: 'release',
@@ -41,8 +53,11 @@ export const layoutUserInfo = [{
             title: '发布文章',
             keepAlive: true
         },
-        component: () =>
-            import ('@/views/release/index.vue')
+        components: {
+            default: () =>
+                import ('@/views/release/index.vue'),
+            userInfo: UserInfo
+        }
     },
     {
         path: 'readArticle',
@@ -51,8 +66,10 @@ export const layoutUserInfo = [{
             title: '文章阅读',
             keepAlive: false
         },
-        component: () =>
-            import ('@/views/readArticle/index.vue')
-
+        components: {
+            default: () =>
+                import ('@/views/readArticle/index.vue'),
+            userInfo: UserInfo
+        }
     }
 ]

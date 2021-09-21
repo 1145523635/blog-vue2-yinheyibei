@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-16 12:48:43
+ * @LastEditTime: 2021-09-20 09:24:56
  */
 
 //引入登录方法
@@ -63,11 +63,12 @@ const user = {
                 getUserInfo().then(response => {
                     if (response) {
                         const result = response.data
-                            //在vueX设置用户信息
+
+                        //在vueX设置用户信息
                         if (result) {
                             commit('SET_INFO', result)
                         } else {
-                            reject(new Error('getInfo: roles must be a non-null array !'))
+                            reject(new Error('获取用户信息失败!'))
                         }
                         //返回请求信息
                         resolve(response)

@@ -3,13 +3,22 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 01:01:44
+ * @LastEditTime: 2021-09-21 20:12:02
 -->
 <template>
   <div class="app-container">
-    <transition name="slide-fade" mode="out-in">
+    <transition
+      name="slide-fade"
+      mode="out-in"
+    >
       <keep-alive exclude="ReadArticle">
-        <router-view />
+        <div class='mian-container'>
+          <router-view />
+          <router-view
+            name='userInfo'
+            class='userInfo'
+          />
+        </div>
       </keep-alive>
     </transition>
   </div>
@@ -41,5 +50,13 @@ export default {
 .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+.mian-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .userInfo {
+    margin-left: 20px;
+  }
 }
 </style>

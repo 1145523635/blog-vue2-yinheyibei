@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-19 00:28:00
+ * @LastEditTime: 2021-09-21 19:57:31
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -13,9 +13,10 @@ import VueRouter from 'vue-router'
 /**
  * LayoutUser 这个layout模块存在用户信息模块
  */
-import LayoutUserInfo from '@/layout/haveUserInfo'
+// import LayoutUserInfo from '@/layout/haveUserInfo'
 
 import LayoutUserMenu from '@/layout/haveMenu'
+
 
 /**
  * 引入两个模块的路由
@@ -34,7 +35,7 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/',
         name: 'Yinheyibei',
-        component: LayoutUserInfo,
+        component: LayoutUserMenu,
         meta: { title: 'layoutUserInfo' },
         redirect: '/home',
         children: layoutUserInfo

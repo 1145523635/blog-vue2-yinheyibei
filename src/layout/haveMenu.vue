@@ -3,18 +3,26 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-22 22:45:03
+ * @LastEditTime: 2021-09-21 20:04:11
 -->
 <template>
   <div class="app-contianer">
     <div class="contianer">
       <!-- 头部 -->
       <div class="contianer-header">
-        <div class="header"><Logo></Logo> <Menu></Menu><Login></Login></div>
+        <div class="header">
+          <Logo></Logo>
+          <Menu></Menu>
+          <Login></Login>
+        </div>
       </div>
       <!-- 显示内容 -->
-      <div class="contianer-main"><Main></Main></div>
-      <div class="container-footer"><Footer></Footer></div>
+      <div class="contianer-main">
+        <Main></Main>
+      </div>
+      <div class="container-footer">
+        <Footer></Footer>
+      </div>
     </div>
   </div>
 </template>
@@ -62,7 +70,7 @@ export default {
         align-items: center;
         position: fixed;
         top: 0;
-        z-index: 99999;
+        z-index: 100;
         backdrop-filter: saturate(180%) blur(20px);
         background-color: rgba(255, 255, 255, 0.82);
       }

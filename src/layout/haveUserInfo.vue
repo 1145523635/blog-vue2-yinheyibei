@@ -3,24 +3,32 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-01 20:03:12
+ * @LastEditTime: 2021-09-21 19:51:59
 -->
 <template>
   <div class="app-contianer">
     <div class="contianer">
       <!-- 头部 -->
       <div class="contianer-header">
-        <div class="header"><Logo></Logo> <Menu></Menu><Login></Login></div>
+        <div class="header">
+          <Logo></Logo>
+          <Menu></Menu>
+          <Login></Login>
+        </div>
       </div>
 
       <!-- 显示内容 -->
       <div class="contianer-main">
-        <div class="main"><Main></Main></div>
+        <div class="main">
+          <Main></Main>
+        </div>
         <div>
-          <UserInfo></UserInfo>
+          <!-- <UserInfo></UserInfo> -->
         </div>
       </div>
-      <div class="container-footer"><Footer></Footer></div>
+      <div class="container-footer">
+        <Footer></Footer>
+      </div>
     </div>
   </div>
 </template>

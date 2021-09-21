@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-15 13:52:29
+ * @LastEditTime: 2021-09-21 20:10:39
 -->
 <template>
   <div class="app-container">
@@ -32,7 +32,10 @@
         <div class="user-name">
           <span>{{ userNickname }}</span>
         </div>
-        <UserOtherInfo :otherInfo="otherInfo" v-if="isHaveInfo" />
+        <UserOtherInfo
+          :otherInfo="otherInfo"
+          v-if="isHaveInfo"
+        />
       </div>
 
       <!-- 用户登录 -->
@@ -44,39 +47,41 @@
               icon="el-icon-right"
               size="mini"
               @click="login"
-              >登录</el-button
-            >
+            >登录</el-button>
             <el-button
               type="success"
               icon="el-icon-user"
               size="mini"
               @click="register"
-              >注册</el-button
-            >
+            >注册</el-button>
           </div>
-          <div v-else class="operation-options">
+          <div
+            v-else
+            class="operation-options"
+          >
             <el-button
               type="primary"
               icon="el-icon-star-off"
               size="mini"
               @click="toUserInfo"
-              >个人中心</el-button
-            >
+            >个人中心</el-button>
             <el-button
               type="success"
               icon="el-icon-document"
               size="mini"
               v-show="nowRoutePath"
               @click="toWriteArticle"
-              >写文章</el-button
-            >
+            >写文章</el-button>
             <el-popover
               placement="bottom"
               title="消息通知"
               width="250"
               trigger="click"
             >
-              <div class="websocket-container" v-if="socketInfo.length > 0">
+              <div
+                class="websocket-container"
+                v-if="socketInfo.length > 0"
+              >
                 <div
                   class="info-websocket"
                   v-for="(item, index) in socketInfo"
@@ -93,8 +98,16 @@
                   </div>
                 </div>
               </div>
-              <div v-else @click="toNoticePage" class="websocket-emty">
-                <img :src="notInfoImg" width="100%" alt="" />
+              <div
+                v-else
+                @click="toNoticePage"
+                class="websocket-emty"
+              >
+                <img
+                  :src="notInfoImg"
+                  width="100%"
+                  alt=""
+                />
                 <p class="not-info-title">现在没有消息通知你呢</p>
               </div>
               <div slot="reference">
@@ -110,9 +123,11 @@
                     @mouseover.native="mouseoverInfoBtn"
                     @mouseleave.native="mouseLeaveInfoBtn"
                     style="background: #ffd90c; border-color: #ffd90c"
-                    ><i class="el-icon-message-solid" ref="infoIcon"></i>
-                    消息通知</el-button
-                  >
+                  ><i
+                      class="el-icon-message-solid"
+                      ref="infoIcon"
+                    ></i>
+                    消息通知</el-button>
                 </el-badge>
               </div>
             </el-popover>
@@ -320,7 +335,7 @@ export default {
   z-index: 0;
   justify-content: center;
   .contaier {
-    width: 100%;
+    width: 300px;
     border-radius: 10px;
     overflow: hidden;
     height: 500px;
