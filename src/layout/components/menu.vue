@@ -3,13 +3,16 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-16 00:35:16
+ * @LastEditTime: 2021-10-09 17:05:44
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <div class="menu-list">
-        <keep-alive v-for="(item, index) in menuList" :key="index">
+        <keep-alive
+          v-for="(item, index) in menuList"
+          :key="index"
+        >
           <router-link
             :to="item.path"
             tag="div"
@@ -46,7 +49,7 @@ export default {
         },
         {
           id: 3,
-          name: "闲言碎语",
+          name: "奇思妙想",
           path: "/blogAbout",
         },
       ],

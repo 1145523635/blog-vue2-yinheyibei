@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-16 13:01:25
+ * @LastEditTime: 2021-10-12 22:15:03
 -->
 <template>
   <div class="app-container">
@@ -14,7 +14,10 @@
         trigger="hover"
         :visible-arrow="false"
       >
-        <div class="panel" slot="">
+        <div
+          class="panel"
+          slot=""
+        >
           <div class="login-title">
             <h6 v-if="!isLogon && !hasUserInfo">登录方式</h6>
             <h6 v-else>{{ name }}</h6>
@@ -25,10 +28,19 @@
               @click="toLogin"
               v-show="!isLogon && !hasUserInfo"
             >
-              <div class="item-icon" style="background: #e9f4fe">
-                <i class="el-icon-user" style="color: #2997f7"></i>
+              <div
+                class="item-icon"
+                style="background: #e9f4fe"
+              >
+                <i
+                  class="el-icon-user"
+                  style="color: #2997f7"
+                ></i>
               </div>
-              <div class="item-title" style="color: #2997f7">
+              <div
+                class="item-title"
+                style="color: #2997f7"
+              >
                 <span>登录</span>
               </div>
             </div>
@@ -37,10 +49,19 @@
               @click="toRegister"
               v-show="!isLogon && !hasUserInfo"
             >
-              <div class="item-icon" style="background: #eefaf0">
-                <i class="el-icon-plus" style="color: #18a52a"></i>
+              <div
+                class="item-icon"
+                style="background: #eefaf0"
+              >
+                <i
+                  class="el-icon-plus"
+                  style="color: #18a52a"
+                ></i>
               </div>
-              <div class="item-title" style="color: #18a52a">
+              <div
+                class="item-title"
+                style="color: #18a52a"
+              >
                 <span>注册</span>
               </div>
             </div>
@@ -49,10 +70,19 @@
               class="login-container"
               v-show="isLogon && hasUserInfo"
             >
-              <div class="item-icon" style="background: #e9f4fe">
-                <i class="el-icon-user" style="color: #2997f7"></i>
+              <div
+                class="item-icon"
+                style="background: #e9f4fe"
+              >
+                <i
+                  class="el-icon-user"
+                  style="color: #2997f7"
+                ></i>
               </div>
-              <div class="item-title" style="color: #2997f7">
+              <div
+                class="item-title"
+                style="color: #2997f7"
+              >
                 <span>个人中心</span>
               </div>
             </div>
@@ -61,19 +91,34 @@
               @click="toLogOut"
               v-show="isLogon && hasUserInfo"
             >
-              <div class="item-icon" style="background: #fef0f0">
-                <i class="el-icon-right" style="color: #f56c6c"></i>
+              <div
+                class="item-icon"
+                style="background: #fef0f0"
+              >
+                <i
+                  class="el-icon-right"
+                  style="color: #f56c6c"
+                ></i>
               </div>
-              <div class="item-title" style="color: #f56c6c">
+              <div
+                class="item-title"
+                style="color: #f56c6c"
+              >
                 <span>退出</span>
               </div>
             </div>
           </div>
         </div>
-        <div slot="reference" style="height: 60px" @click="toLogin">
+        <div
+          slot="reference"
+          style="height: 60px"
+          @click="toLogin"
+        >
           <!-- 登录信息 -->
-          <span style="line-height: 60px" v-if="!isLogon && !hasUserInfo"
-            >登录
+          <span
+            style="line-height: 60px"
+            v-if="!isLogon && !hasUserInfo"
+          >登录
           </span>
           <!-- 获取用户信息 缓存登录图标 -->
           <i
@@ -82,9 +127,15 @@
             class="el-icon-loading"
           ></i>
           <!-- 展示登录信息 -->
-          <div v-else-if="isLogon && hasUserInfo" class="user-info">
+          <div
+            v-else-if="isLogon && hasUserInfo"
+            class="user-info"
+          >
             <div style="margin-right: 10px">
-              <el-avatar size="medium" :src="$utils.imgUrl(avatar)"></el-avatar>
+              <el-avatar
+                size="medium"
+                :src="$utils.imgUrl(avatar)"
+              ></el-avatar>
             </div>
             <div>
               <span style="line-height: 60px">

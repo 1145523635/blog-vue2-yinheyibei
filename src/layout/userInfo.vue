@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-21 20:10:39
+ * @LastEditTime: 2021-10-12 22:25:04
 -->
 <template>
   <div class="app-container">
@@ -72,6 +72,16 @@
               v-show="nowRoutePath"
               @click="toWriteArticle"
             >写文章</el-button>
+            <el-button
+              ref="infoBtn"
+              type="warning"
+              size="mini"
+              style="margin-left:0"
+            ><i
+                class="el-icon-message-solid"
+                ref="infoIcon"
+              ></i>
+              消息通知</el-button>
             <el-popover
               placement="bottom"
               title="消息通知"
@@ -122,13 +132,14 @@
                     size="mini"
                     @mouseover.native="mouseoverInfoBtn"
                     @mouseleave.native="mouseLeaveInfoBtn"
-                    style="background: #ffd90c; border-color: #ffd90c"
+                    style="background: #ffd90c; border-color: #ffd90c;margin-top:2px"
                   ><i
                       class="el-icon-message-solid"
                       ref="infoIcon"
                     ></i>
                     消息通知</el-button>
                 </el-badge>
+
               </div>
             </el-popover>
           </div>

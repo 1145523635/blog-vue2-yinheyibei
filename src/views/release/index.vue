@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 21:36:04
+ * @LastEditTime: 2021-10-09 19:59:45
 -->
 <template>
   <div class="app-container">
@@ -18,7 +18,10 @@
           placeholder="请输入文章标题"
           class="title-input"
         />
-        <div class="split-line" ref="split-line"></div>
+        <div
+          class="split-line"
+          ref="split-line"
+        ></div>
       </div>
       <!-- 富文编辑器 -->
       <div class="mark-down">
@@ -34,8 +37,14 @@
       </div>
       <!-- 选项文章选项 -->
       <div class="article-option">
-        <div class="article-form" style="margin-right: 10px">
-          <el-form ref="form" :model="articleForm">
+        <div
+          class="article-form"
+          style="margin-right: 10px"
+        >
+          <el-form
+            ref="form"
+            :model="articleForm"
+          >
             <el-form-item label="文章分类">
               <el-select
                 v-model="articleForm.article_classification"
@@ -112,12 +121,13 @@
                   </div>
                 </div>
                 <div v-else>
-                  <el-image
-                    :src="$utils.imgUrl(articleForm.cover_img_url)"
-                  ></el-image>
+                  <el-image :src="$utils.imgUrl(articleForm.cover_img_url)"></el-image>
                 </div>
 
-                <div class="el-upload__tip" slot="tip">
+                <div
+                  class="el-upload__tip"
+                  slot="tip"
+                >
                   只能上传jpg/png文件，且不超过5M
                 </div>
               </el-upload>
@@ -128,16 +138,18 @@
       <!-- 提交保存按钮 -->
       <div class="btn-container">
         <div class="btn">
-          <el-button type="info" icon="el-icon-document-checked" size="small"
-            >保存</el-button
-          >
+          <el-button
+            type="info"
+            icon="el-icon-document-checked"
+            size="small"
+            @click="preservationData"
+          >保存</el-button>
           <el-button
             type="primary"
             @click="saveData"
             icon="el-icon-circle-check"
             size="small"
-            >提交</el-button
-          >
+          >提交</el-button>
         </div>
       </div>
     </div>
@@ -335,6 +347,13 @@ export default {
         });
         return false;
       }
+    },
+
+    /**
+     * 保存文章
+     */
+    preservationData() {
+      this.$message.error("功能开发中");
     },
 
     //鼠标移入输入框

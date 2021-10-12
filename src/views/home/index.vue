@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-21 19:56:31
+ * @LastEditTime: 2021-09-25 21:34:23
 -->
 <template>
   <div class='app-container'>模块开发中</div>
@@ -91,11 +91,6 @@ export default {
         console.log(res);
       });
     },
-  },
-  /* 组件销毁
-   */
-  beforeDestroy() {
-    this.socket.close();
   },
 };
 </script>

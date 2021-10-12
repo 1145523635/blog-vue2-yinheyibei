@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:47:00
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-21 19:58:43
+ * @LastEditTime: 2021-10-09 17:05:17
  */
 
 //引入用户信息模块
@@ -37,7 +37,7 @@ export const layoutUserInfo = [{
         path: 'blogAbout',
         name: 'BlogAbout',
         meta: {
-            title: '关于',
+            title: '奇思妙想',
             keepAlive: true
         },
         components: {
