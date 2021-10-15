@@ -3,17 +3,27 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-11 13:58:55
+ * @LastEditTime: 2021-10-15 23:31:11
 -->
 <template>
   <div class="app-container">
     <div class="container">
-      <div class="not-data" v-if="noticeList.length == 0">
+      <div
+        class="not-data"
+        v-if="noticeList.length == 0"
+      >
         <div class="img-container">
-          <img width="100%" :src="notDataImg" :alt="notDataImg" />
+          <img
+            width="100%"
+            :src="notDataImg"
+            :alt="notDataImg"
+          />
         </div>
       </div>
-      <div class="info-container" v-else>
+      <div
+        class="info-container"
+        v-else
+      >
         <!-- 消息通知列表 -->
         <div class="left-link">
           <div class="item-container">
@@ -23,18 +33,19 @@
               :key="index"
               @click="changeMenu(item)"
             >
-              <p
-                :class="{
+              <p :class="{
                   'router-link-exact-active': item.id == activeNoticId,
-                }"
-              >
-                <span v-if="isNotRead.includes(item.id)" style="color: #e6a23c"
-                  ><i class="el-icon-warning"></i
-                ></span>
-                <span v-else style="color: #67c23a"
-                  ><i class="el-icon-success"></i
-                ></span>
+                }">
+                <span
+                  v-if="isNotRead.includes(item.id)"
+                  style="color: #e6a23c"
+                ><i class="el-icon-warning"></i></span>
+                <span
+                  v-else
+                  style="color: #67c23a"
+                ><i class="el-icon-success"></i></span>
                 <span v-if="item.type == 1">文章审核</span>
+                <span v-if="item.type == 2">资源审核</span>
               </p>
             </div>
           </div>
@@ -56,7 +67,10 @@
           <div class="notice-container">
             <div class="time">
               <p class="delete-notice">
-                <i class="el-icon-delete" @click="deleteNotice"></i>
+                <i
+                  class="el-icon-delete"
+                  @click="deleteNotice"
+                ></i>
               </p>
               <p>{{ noticeTime }}</p>
             </div>

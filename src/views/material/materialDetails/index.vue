@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 22:26:19
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-15 14:13:41
+ * @LastEditTime: 2021-10-15 20:54:37
 -->
 <template>
   <div class='app-container'>
@@ -56,7 +56,7 @@
                   size="small"
                   effect="dark"
                   class='tag'
-                ><i class="el-icon-star-off icon"></i><span>{{materialData.link_num}}</span></el-tag>
+                ><i class="el-icon-star-off icon"></i><span>{{materialData.like_num}}</span></el-tag>
               </el-tooltip>
               <el-tag
                 size="small"
