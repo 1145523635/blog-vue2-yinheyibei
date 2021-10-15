@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-01 14:11:58
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-20 16:22:02
+ * @LastEditTime: 2021-10-14 20:51:13
  */
 
 import baseSetting from '@/config/defaultSettings' // 引入图片基本访问路径
@@ -21,7 +21,7 @@ export function imgUrl(url, isNet = false) {
     if (isNet) {
         return url
     }
-    if (!url) return false
+    if (!url) return require('@/assets/notData/notData.png')
 
     // console.log(url, isNet)
 

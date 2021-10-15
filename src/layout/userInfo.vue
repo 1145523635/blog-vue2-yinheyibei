@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-12 22:25:04
+ * @LastEditTime: 2021-10-13 16:42:26
 -->
 <template>
   <div class="app-container">
@@ -64,24 +64,28 @@
               icon="el-icon-star-off"
               size="mini"
               @click="toUserInfo"
+              style="height:28px"
             >个人中心</el-button>
             <el-button
               type="success"
               icon="el-icon-document"
               size="mini"
-              v-show="nowRoutePath"
+              v-show="nowRoutePath!='/release'"
               @click="toWriteArticle"
+              style="height:28px"
             >写文章</el-button>
             <el-button
               ref="infoBtn"
               type="warning"
               size="mini"
-              style="margin-left:0"
+              style="margin-left:0;height:28px;"
+              v-show="nowRoutePath!='/materialRecommend'"
+              @click="toMaterialRecommend"
             ><i
-                class="el-icon-message-solid"
+                class="el-icon-share"
                 ref="infoIcon"
               ></i>
-              消息通知</el-button>
+              资源分享</el-button>
             <el-popover
               placement="bottom"
               title="消息通知"
@@ -132,7 +136,7 @@
                     size="mini"
                     @mouseover.native="mouseoverInfoBtn"
                     @mouseleave.native="mouseLeaveInfoBtn"
-                    style="background: #ffd90c; border-color: #ffd90c;margin-top:2px"
+                    style="background: #ffd90c; border-color: #ffd90c;height:28px"
                   ><i
                       class="el-icon-message-solid"
                       ref="infoIcon"
@@ -304,6 +308,9 @@ export default {
     toWriteArticle() {
       this.$router.push("/release");
     },
+    toMaterialRecommend() {
+      this.$router.push("/materialRecommend");
+    },
   },
   computed: {
     ...mapGetters(["userInfo"]),
@@ -328,11 +335,7 @@ export default {
     //监听路由 控制发布文章的显示 隐藏
     $route: {
       handler: function (to) {
-        if (to.path == "/release") {
-          this.nowRoutePath = false;
-        } else {
-          this.nowRoutePath = true;
-        }
+        this.nowRoutePath = to.path;
       },
       immediate: true,
     },

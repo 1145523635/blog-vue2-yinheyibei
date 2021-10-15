@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:47:00
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-09 17:05:17
+ * @LastEditTime: 2021-10-14 22:30:03
  */
 
 //引入用户信息模块
@@ -69,6 +69,45 @@ export const layoutUserInfo = [{
         components: {
             default: () =>
                 import ('@/views/readArticle/index.vue'),
+            userInfo: UserInfo
+        }
+    },
+    {
+        path: 'materialRecommend',
+        name: 'MaterialRecommend',
+        meta: {
+            title: '资源推荐',
+            keepAlive: false
+        },
+        components: {
+            default: () =>
+                import ('@/views/material/materialRecommend/index.vue'),
+            userInfo: UserInfo
+        }
+    },
+    {
+        path: 'materialResult',
+        name: 'MaterialResult',
+        meta: {
+            title: '推荐结果',
+            keepAlive: false
+        },
+        components: {
+            default: () =>
+                import ('@/views/material/materialResult/index.vue'),
+            userInfo: UserInfo
+        }
+    },
+    {
+        path: 'materialDetails',
+        name: 'MaterialDetails',
+        meta: {
+            title: '资源详情',
+            keepAlive: false
+        },
+        components: {
+            default: () =>
+                import ('@/views/material/materialDetails/index.vue'),
             userInfo: UserInfo
         }
     }
