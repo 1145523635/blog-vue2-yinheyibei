@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-12 22:43:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-14 22:22:18
+ * @LastEditTime: 2021-10-15 15:57:57
 -->
 <template>
   <div class='app-container'>
@@ -68,7 +68,7 @@
               prop="material_link"
             >
               <el-input
-                placeholder="请输入以HTTP/HTTPS开头的资源链接"
+                placeholder="请输入正确的网址链接"
                 v-model="ruleForm.material_link"
                 size="small"
                 clearable
@@ -150,7 +150,7 @@
                 type="primary"
                 size="small"
                 @click="saveData()"
-                :loading='loading.submitLoading'
+                :loading='loading.saveLoading'
               >立即分享</el-button>
             </el-form-item>
           </el-form>
@@ -165,10 +165,39 @@
       :before-close="handleClose"
     >
       <el-card shadow="hover">
-        <MaertrialItem :materialData='materialData' />
+        <MaertrialItem
+          :materialData='item'
+          v-for='(item,index) in materialData'
+          :key='index'
+        />
       </el-card>
+      <div class='pagination'>
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="pages.total"
+          :page-size='pages.list_rows'
+          :current-page='pages.page'
+          @current-change='currentChange'
+        >
+        </el-pagination>
+      </div>
+      <span
+        slot="footer"
+        v-if='showSubmitUtils'
+      >
+        <el-button
+          @click="handleClose"
+          size="small"
+        >我在想想</el-button>
+        <el-button
+          type="primary"
+          @click="submitSave"
+          size="small"
+          :loading='loading.submitLoading'
+        >确定提交</el-button>
+      </span>
     </el-dialog>
-
   </div>
 </template>
 
@@ -251,15 +280,26 @@ export default {
 
       //loading动画
       loading: {
-        submitLoading: false,
+        saveLoading: false,
         testLoading: false,
+        submitLoading: false,
       },
 
       //弹窗控制变量
       dialogVisible: false,
 
       //资源数据
-      materialData: {},
+      materialData: [],
+
+      //分页参数
+      pages: {
+        page: 1,
+        list_rows: 1,
+        total: 0,
+      },
+
+      //提交工具栏
+      showSubmitUtils: false,
     };
   },
   created() {
@@ -275,30 +315,53 @@ export default {
 
     //提交数据
     saveData() {
-      this.$router.push({
-        path: "/materialResult",
-        query: {
-          id: 40,
-        },
-      });
-      return;
-      this.loading.submitLoading = true;
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          const query = Object.assign({}, this.ruleForm);
-          addNewMaterialRecommend(query).then((res) => {
-            this.loading.submitLoading = false;
+          const testQuery = {
+            name: this.ruleForm.material_name,
+            ...this.pages,
+          };
+          //先验证重复资源
+          getMaterialByName(testQuery).then((res) => {
             if (res.code == 200) {
-              this.$notify({
-                title: "成功",
-                message: "您推荐的资源将在1-3个工作日内被管理人员审核",
-                type: "success",
-              });
+              if (res.data.data.length > 0) {
+                this.pages.total = res.data.total;
+                this.pages.page = res.data.current_page;
+                this.materialData = Object.assign([], res.data.data);
+                this.dialogVisible = true;
+                this.showSubmitUtils = true;
+              } else {
+                this.submitSave();
+              }
             }
           });
         } else {
           this.loading.submitLoading = false;
           return false;
+        }
+      });
+    },
+
+    //确认提交数据
+    submitSave() {
+      this.loading.submitLoading = true;
+      this.loading.saveLoading = true;
+      const query = Object.assign({}, this.ruleForm);
+      addNewMaterialRecommend(query).then((res) => {
+        this.loading.submitLoading = false;
+        this.loading.saveLoading = false;
+        if (res.code == 200) {
+          this.$notify({
+            title: "成功",
+            message: "您推荐的资源将在1-3个工作日内被管理人员审核",
+            type: "success",
+          });
+          this.$router.push({
+            path: "/materialResult",
+            query: {
+              id: res.data,
+            },
+          });
         }
       });
     },
@@ -313,12 +376,14 @@ export default {
         });
         this.loading.testLoading = false;
       } else {
-        const query = { name: this.ruleForm.material_name };
+        const query = { name: this.ruleForm.material_name, ...this.pages };
         getMaterialByName(query).then((res) => {
           this.loading.testLoading = false;
           if (res.code == 200) {
             if (res.data) {
-              this.materialData = Object.assign({}, res.data);
+              this.pages.total = res.data.total;
+              this.pages.page = res.data.current_page;
+              this.materialData = Object.assign([], res.data.data);
               this.dialogVisible = true;
             } else {
               this.$message({
@@ -367,7 +432,20 @@ export default {
 
     //弹窗关闭回调
     handleClose() {
+      this.showSubmitUtils = false;
       this.dialogVisible = false;
+    },
+
+    //分页变化
+    currentChange(current) {
+      this.pages.page = current;
+      const query = { name: this.ruleForm.material_name, ...this.pages };
+      //重新请求赋值
+      getMaterialByName(query).then((res) => {
+        this.pages.total = res.data.total;
+        this.pages.page = res.data.current_page;
+        this.materialData = Object.assign([], res.data.data);
+      });
     },
   },
   computed: {
@@ -460,6 +538,12 @@ export default {
         border-radius: 5px;
       }
     }
+  }
+  .pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
   }
 }
 </style>

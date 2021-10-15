@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 21:04:38
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-14 22:32:11
+ * @LastEditTime: 2021-10-15 10:36:20
 -->
 <template>
   <div
@@ -26,7 +26,7 @@
       <div class='material-type'>
         <el-tag
           v-for="(item,index) in getMaterial.typeId"
-          size='mini'
+          size='small'
           effect="plain"
           style="margin-right:5px;color:#000;border-color:#d9d9d9"
         >{{item.typeName.material_name}}</el-tag>

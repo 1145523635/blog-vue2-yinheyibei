@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-15 11:00:24
+ * @LastEditTime: 2021-10-15 10:25:46
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -38,6 +38,10 @@ Vue.use(ElementUI);
 import { LoginBox } from '@/components/loginBox/index'
 Vue.prototype.$Login = LoginBox.install;
 
+
+//赋值到剪切板插件
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 
 //把自定义的工具类挂载在vue实例上
