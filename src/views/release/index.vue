@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-09 19:59:45
+ * @LastEditTime: 2021-10-18 19:41:20
 -->
 <template>
   <div class="app-container">
@@ -138,12 +138,12 @@
       <!-- 提交保存按钮 -->
       <div class="btn-container">
         <div class="btn">
-          <el-button
+          <!-- <el-button
             type="info"
             icon="el-icon-document-checked"
             size="small"
             @click="preservationData"
-          >保存</el-button>
+          >保存</el-button> -->
           <el-button
             type="primary"
             @click="saveData"

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-15 10:25:46
+ * @LastEditTime: 2021-10-19 18:10:21
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -28,6 +28,11 @@ import { getPastTimes } from "@/utils/time"; //时间处理类
 //音乐播放器全局注册
 import APlayer from "@moefe/vue-aplayer";
 Vue.use(APlayer);
+
+//swiper轮播图全局使用
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.min.css';
+Vue.use(VueAwesomeSwiper);
 
 //引入element-ui库
 import ElementUI from 'element-ui';
