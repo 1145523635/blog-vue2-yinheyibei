@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-14 22:49:01
+ * @LastEditTime: 2021-10-23 15:33:53
  */
 import { request } from '@/utils/request'
 
@@ -30,7 +30,7 @@ export function getMaterialType() {
  */
 export function addNewMaterialRecommend(data) {
     return request({
-        url: '/blog/material/release/addNewMaterialRecommend',
+        url: '/blog/material/verify/addNewMaterialRecommend',
         method: 'POST',
         data
     })
@@ -78,5 +78,125 @@ export function getMaterialDetails(data) {
         url: '/blog/material/release/getMaterialDetails',
         method: 'GET',
         params: data
+    })
+}
+
+/**
+ * @Description: 首页获取资源列表（分页）
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function getMaterialListByPages(data) {
+    return request({
+        url: '/blog/material/release/getMaterialListByPages',
+        method: 'GET',
+        params: data
+    })
+}
+
+/**
+ * @Description: 资源浏览量+1
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function addMaterialBrowse(data) {
+    return request({
+        url: '/blog/material/release/addMaterialBrowse',
+        method: 'PUT',
+        data
+    })
+}
+
+/**
+ * @Description: 资源收藏+1
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function addMaterialLike(data) {
+    return request({
+        url: '/blog/material/verify/addMaterialLike',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ * @Description: 判断用户是否关注该资源
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function hasCollection(data) {
+    return request({
+        url: '/blog/material/verify/hasCollection',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ * @Description: 用户通过状态获取资源
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function getUserMaterialByStatus(data) {
+    return request({
+        url: '/blog/material/verify/getUserMaterialByStatus',
+        method: 'GET',
+        params: data
+    })
+}
+
+/**
+ * @Description: 用户删除资源
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function userDeleteMaterial(data) {
+    return request({
+        url: '/blog/material/verify/userDeleteMaterial',
+        method: 'DELETE',
+        data
+    })
+}
+
+
+/**
+ * @Description: 用户更新资源
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function editMaterialRecommend(data) {
+    return request({
+        url: '/blog/material/verify/editMaterialRecommend',
+        method: 'PUT',
+        data
+    })
+}
+
+/**
+ * @Description: 用户更新资源
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function getUserCollectionMaterial() {
+    return request({
+        url: '/blog/material/verify/getUserCollectionMaterial',
+        method: 'GET',
     })
 }

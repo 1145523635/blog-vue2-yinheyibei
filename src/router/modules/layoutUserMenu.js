@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:52:19
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-11 15:53:16
+ * @LastEditTime: 2021-10-22 17:02:02
  */
 export const layoutUserMenu = [{
     path: '/userInfo',
@@ -49,11 +49,11 @@ export const layoutUserMenu = [{
                 import ('@/views/user/userPages/collection/index.vue'),
         },
         {
-            path: 'comment',
-            name: 'Comment',
-            meta: { title: '用户评论' },
+            path: 'material',
+            name: 'Material',
+            meta: { title: '推荐资源' },
             component: () =>
-                import ('@/views/user/userPages/comment.vue'),
+                import ('@/views/user/userPages/material/index.vue'),
         },
         {
             path: 'follow',

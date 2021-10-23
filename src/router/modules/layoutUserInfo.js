@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:47:00
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-14 22:30:03
+ * @LastEditTime: 2021-10-22 10:30:05
  */
 
 //引入用户信息模块
@@ -12,7 +12,7 @@ export const layoutUserInfo = [{
         path: 'home',
         name: 'Home',
         meta: {
-            title: '时光笔记',
+            title: '资源推荐',
             keepAlive: true
         },
         components: {
@@ -24,7 +24,7 @@ export const layoutUserInfo = [{
         path: 'resources',
         name: 'Resources',
         meta: {
-            title: '编程资源',
+            title: '妙笔生花',
             keepAlive: true
         },
         components: {

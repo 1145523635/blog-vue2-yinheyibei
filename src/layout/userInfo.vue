@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-13 16:42:26
+ * @LastEditTime: 2021-10-23 16:54:09
 -->
 <template>
   <div class="app-container">
@@ -280,7 +280,9 @@ export default {
 
     //去消息详情
     toNoticeDetails({ type, id }) {
-      if (type == 1) {
+      console.log(type, id);
+
+      if (type == 1 || type == 2) {
         this.$router.push({
           path: "/userInfo/articleNews",
           query: {

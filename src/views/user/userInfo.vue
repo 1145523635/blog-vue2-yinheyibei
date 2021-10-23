@@ -3,14 +3,18 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-31 21:55:56
+ * @LastEditTime: 2021-10-23 14:59:07
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <!-- 正上方用户背景图 -->
       <div class="user-cover">
-        <img class="cover-img" :src="userCover" alt="用户背景图" />
+        <img
+          class="cover-img"
+          :src="userCover"
+          alt="用户背景图"
+        />
         <!-- 用户基本信息 -->
         <div class="user-info">
           <div class="user-info-container">
@@ -26,19 +30,28 @@
             <div class="user-name">
               <h2>{{ userInfos.nickname }}</h2>
               <p>文章<span>1</span> | 评论 <span>2</span></p>
-              <p>这家伙很懒，什么都没有写...</p>
+              <p style="font-size:12px">{{userInfos.autograph}}</p>
             </div>
           </div>
 
           <!-- 发表文章按钮 -->
           <div class="btn">
-            <el-button
-              type="primary"
-              icon="el-icon-document"
-              size="mini"
-              @click="toWriteArticle"
-              >写文章</el-button
-            >
+            <div>
+              <el-button
+                type="primary"
+                icon="el-icon-document"
+                size="mini"
+                @click="toWriteArticle"
+              >写文章</el-button>
+            </div>
+            <div style="margin-top:5px">
+              <el-button
+                type="warning"
+                icon="el-icon-postcard"
+                size="mini"
+                @click="toRecommendedResources"
+              >推荐资源</el-button>
+            </div>
           </div>
         </div>
       </div>
@@ -47,54 +60,56 @@
       <div class="menu-link">
         <div class="link-item">
           <div class="item">
-            <router-link tag="div" :to="{ name: 'ReleaseList' }"
-              ><span style="margin-right: 5px"
-                ><i class="el-icon-document-checked"></i
-              ></span>
-              发布</router-link
-            >
+            <router-link
+              tag="div"
+              :to="{ name: 'ReleaseList' }"
+            ><span style="margin-right: 5px"><i class="el-icon-document-checked"></i></span>
+              发布</router-link>
           </div>
           <div class="item">
-            <router-link tag="div" :to="{ name: 'Collection' }"
-              ><span style="margin-right: 5px"
-                ><i class="el-icon-star-off"></i></span
-              >收藏</router-link
-            >
+            <router-link
+              tag="div"
+              :to="{ name: 'Collection' }"
+            ><span style="margin-right: 5px"><i class="el-icon-star-off"></i></span>收藏</router-link>
           </div>
           <div class="item">
-            <router-link tag="div" :to="{ name: 'Comment' }"
-              ><span style="margin-right: 5px">
-                <i class="el-icon-chat-dot-round"></i
-              ></span>
-              评论</router-link
-            >
+            <router-link
+              tag="div"
+              :to="{ name: 'Material' }"
+            ><span style="margin-right: 5px">
+                <i class="el-icon-postcard"></i></span>
+              推荐</router-link>
           </div>
           <div class="item">
-            <router-link tag="div" :to="{ name: 'Follow' }"
-              ><span style="margin-right: 5px">
-                <i class="el-icon-view"></i></span
-              >关注</router-link
-            >
+            <router-link
+              tag="div"
+              :to="{ name: 'Follow' }"
+            ><span style="margin-right: 5px">
+                <i class="el-icon-view"></i></span>关注</router-link>
           </div>
           <div class="item">
-            <router-link tag="div" :to="{ name: 'ArticleNews' }"
-              ><span style="margin-right: 5px">
-                <i class="el-icon-news"></i></span
-              >消息</router-link
-            >
+            <router-link
+              tag="div"
+              :to="{ name: 'ArticleNews' }"
+            ><span style="margin-right: 5px">
+                <i class="el-icon-news"></i></span>消息</router-link>
           </div>
           <div class="item">
-            <router-link tag="div" id="personal" :to="{ name: 'Personal' }"
-              ><span style="margin-right: 5px">
-                <i class="el-icon-user"></i></span
-              >用户</router-link
-            >
+            <router-link
+              tag="div"
+              id="personal"
+              :to="{ name: 'Personal' }"
+            ><span style="margin-right: 5px">
+                <i class="el-icon-user"></i></span>用户</router-link>
           </div>
         </div>
       </div>
       <!-- 子级路由展示 -->
       <div class="router-view">
-        <transition name="el-zoom-in-center" mode="out-in">
+        <transition
+          name="el-zoom-in-center"
+          mode="out-in"
+        >
           <keep-alive>
             <router-view></router-view>
           </keep-alive>
@@ -122,6 +137,9 @@ export default {
   methods: {
     toWriteArticle() {
       this.$router.push("/release");
+    },
+    toRecommendedResources() {
+      this.$router.push("/materialRecommend");
     },
   },
   computed: {
@@ -194,6 +212,10 @@ export default {
       border-radius: 10px;
       overflow: hidden;
       align-items: center;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 60px;
+      z-index: 100;
       .link-item {
         display: flex;
         align-items: center;
@@ -213,7 +235,7 @@ export default {
           height: 30px;
           line-height: 30px;
           border-radius: 20px;
-          background-color: #00a2e3;
+          background-color: #5eadff;
           color: #ffffff;
         }
         .router-link-active {
@@ -222,7 +244,7 @@ export default {
           height: 30px;
           line-height: 30px;
           border-radius: 20px;
-          background-color: #00a2e3;
+          background-color: #5eadff;
           color: #ffffff;
         }
       }

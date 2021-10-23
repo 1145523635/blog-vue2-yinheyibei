@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-12 20:23:27
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 21:49:37
+ * @LastEditTime: 2021-10-22 19:08:49
 -->
 <template>
   <div class="app-container">
@@ -179,7 +179,6 @@ export default {
       getUserFans().then((res) => {
         this.fansUserList = Object.assign([], res.data);
       });
-      console.log(this.isFollow);
     },
 
     //关注或取消用户

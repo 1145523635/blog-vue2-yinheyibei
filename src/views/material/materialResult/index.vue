@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 16:08:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-14 21:45:52
+ * @LastEditTime: 2021-10-23 14:02:18
 -->
 <template>
   <div class='app-container'>
@@ -84,12 +84,14 @@ export default {
 
     //继续推荐
     continueRecommend() {
-      this.$router.go(-1);
+      this.$router.push({
+        path: "/materialRecommend",
+      });
     },
 
     //返回个人中心
     toUserInfo() {
-      this.$router.push("/userInfo/releaseList");
+      this.$router.push("/userInfo/material");
     },
   },
 };

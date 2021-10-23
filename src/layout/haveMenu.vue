@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-25 21:27:53
+ * @LastEditTime: 2021-10-23 14:56:58
 -->
 <template>
   <div class="app-contianer">
@@ -48,12 +48,14 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+
   .contianer {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+
     .contianer-header {
       padding: 0, 10px, 10px, 10px;
       width: 100%;
@@ -62,20 +64,21 @@ export default {
       justify-content: space-around;
       background: #fff;
       margin-bottom: 20px;
-
+      position: fixed;
+      top: 0;
+      z-index: 9999;
       .header {
         min-width: 1380px;
         display: flex;
         justify-content: space-around;
         align-items: center;
-        position: fixed;
-        top: 0;
         z-index: 100;
         backdrop-filter: saturate(180%) blur(20px);
         background-color: rgba(255, 255, 255, 0.82);
       }
     }
     .contianer-main {
+      margin-top: 80px;
       width: 1200px;
       min-height: calc(100vh - 60px);
       display: flex;

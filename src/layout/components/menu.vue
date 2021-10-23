@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-18 19:39:14
+ * @LastEditTime: 2021-10-22 10:29:31
 -->
 <template>
   <div class="app-container">
@@ -39,12 +39,12 @@ export default {
       menuList: [
         {
           id: 1,
-          name: "时光笔记",
+          name: "资源推荐",
           path: "/home",
         },
         {
           id: 2,
-          name: "代码编程",
+          name: "妙笔生花",
           path: "/resources",
         },
         {

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-25 21:27:41
+ * @LastEditTime: 2021-10-23 14:52:39
 -->
 <template>
   <div class="app-contianer">
@@ -82,6 +82,7 @@ export default {
         top: 0;
         backdrop-filter: saturate(180%) blur(20px);
         background-color: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
       }
     }
     .contianer-main {

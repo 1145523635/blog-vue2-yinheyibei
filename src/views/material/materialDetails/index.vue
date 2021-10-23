@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 22:26:19
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-15 20:54:37
+ * @LastEditTime: 2021-10-22 16:45:16
 -->
 <template>
   <div class='app-container'>
@@ -56,7 +56,14 @@
                   size="small"
                   effect="dark"
                   class='tag'
-                ><i class="el-icon-star-off icon"></i><span>{{materialData.like_num}}</span></el-tag>
+                  @click="addMaterialLinkNum()"
+                ><i
+                    class='el-icon-star-on icon'
+                    v-if="isCollection"
+                  ></i><i
+                    class="el-icon-star-off icon"
+                    v-else
+                  ></i><span>{{materialData.like_num}}</span></el-tag>
               </el-tooltip>
               <el-tag
                 size="small"
@@ -144,7 +151,12 @@
 </template>
 
 <script>
-import { getMaterialDetails } from "@/api/material/materialRecommend";
+import {
+  getMaterialDetails,
+  addMaterialBrowse,
+  addMaterialLike,
+  hasCollection,
+} from "@/api/material/materialRecommend";
 export default {
   name: "MaterialDetails",
   data() {
@@ -159,6 +171,12 @@ export default {
 
       //复制链接图标
       copyLinkIcon: false,
+
+      //计时器
+      timer: null,
+
+      //判断用户是否关注
+      isCollection: false,
     };
   },
   created() {
@@ -168,9 +186,23 @@ export default {
   methods: {
     //数据初始化
     init() {
+      this.isCollection = false;
       getMaterialDetails({ id: this.materialId }).then((res) => {
         this.materialData = Object.assign({}, res.data);
+        return;
+        this.timer = setTimeout(() => {
+          addMaterialBrowse({ id: res.data.id });
+        }, 3000);
       });
+      if (this.$store.getters.userInfo) {
+        const query = {
+          materialId: this.materialId,
+          userId: this.$store.getters.userInfo.user.id,
+        };
+        hasCollection(query).then((res) => {
+          this.isCollection = res.data;
+        });
+      }
     },
 
     //复制
@@ -182,12 +214,29 @@ export default {
     },
 
     //复制链接
-    copyLink(e) {
+    copyLink() {
       this.copyLinkIcon = true;
       this.onCopy();
       setTimeout(() => {
         this.copyLinkIcon = false;
       }, 3000);
+    },
+
+    //增加收藏
+    addMaterialLinkNum() {
+      const query = {
+        materialId: this.materialId,
+        userId:
+          this.$store.getters.userInfo && this.$store.getters.userInfo.user.id,
+      };
+      addMaterialLike(query).then((res) => {
+        if (this.isCollection) {
+          this.materialData.like_num--;
+        } else {
+          this.materialData.like_num++;
+        }
+        this.isCollection = !this.isCollection;
+      });
     },
   },
   computed: {

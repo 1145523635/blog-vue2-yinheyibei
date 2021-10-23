@@ -3,14 +3,14 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-01 20:35:19
+ * @LastEditTime: 2021-10-21 22:41:01
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <!-- 头部背景 -->
       <div class="header-container">
-       
+
         <el-image
           style="width: 100%; height: 100%"
           fit="cover"
@@ -19,10 +19,23 @@
         </el-image>
         <div class='describe'>
           <div>
-            <h4><i class="el-icon-edit" v-if='imgContent.status==0'></i>
-            <i class="el-icon-folder-opened" v-if='imgContent.status==1'></i>
-            <i class="el-icon-collection-tag" v-if='imgContent.status==2'></i>
-            <i class="el-icon-s-flag" v-if='imgContent.status==3'></i> {{imgContent.text}}</h4>
+            <h4><i
+                class="el-icon-edit"
+                v-if='imgContent.status==0'
+              ></i>
+              <i
+                class="el-icon-folder-opened"
+                v-if='imgContent.status==1'
+              ></i>
+              <i
+                class="el-icon-collection-tag"
+                v-if='imgContent.status==2'
+              ></i>
+              <i
+                class="el-icon-s-flag"
+                v-if='imgContent.status==3'
+              ></i> {{imgContent.text}}
+            </h4>
             <p>{{imgContent.describe}}</p>
           </div>
         </div>
@@ -38,7 +51,10 @@
             <i class="el-icon-folder-opened"></i> 分类
             <span class="division">|</span>
           </div>
-          <div class="filter-item" v-if="optionsData.classification">
+          <div
+            class="filter-item"
+            v-if="optionsData.classification"
+          >
             <span
               v-for="(item, index) in optionsData.classification"
               :key="index"
@@ -46,8 +62,7 @@
               :class="{
                 'actice-item': item.id == filterForm.article_classification,
               }"
-              >{{ item.classification_name }}</span
-            >
+            >{{ item.classification_name }}</span>
           </div>
         </div>
         <!-- 文章专题过滤 -->
@@ -59,7 +74,10 @@
             <i class="el-icon-collection-tag"></i> 专题
             <span class="division">|</span>
           </div>
-          <div class="filter-item" v-if="optionsData.special">
+          <div
+            class="filter-item"
+            v-if="optionsData.special"
+          >
             <span
               v-for="(item, index) in optionsData.special"
               :key="index"
@@ -67,16 +85,21 @@
               :class="{
                 'actice-item': filterForm.article_special.includes(item.id),
               }"
-              >{{ item.special_name }}</span
-            >
+            >{{ item.special_name }}</span>
           </div>
         </div>
         <!-- 文章标签 -->
-        <div class="filter-classification" v-if="optionsData.label.length > 0">
+        <div
+          class="filter-classification"
+          v-if="optionsData.label.length > 0"
+        >
           <div class="filter-header">
             <i class="el-icon-s-flag"></i> 标签 <span class="division">|</span>
           </div>
-          <div class="filter-item" v-if="optionsData.label">
+          <div
+            class="filter-item"
+            v-if="optionsData.label"
+          >
             <span
               v-for="(item, index) in optionsData.label"
               :key="index"
@@ -84,25 +107,33 @@
               :class="{
                 'actice-item': filterForm.article_label.includes(item.id),
               }"
-              >{{ item.label_name }}</span
-            >
+            >{{ item.label_name }}</span>
           </div>
         </div>
       </div>
       <!-- 内容展示 -->
       <div class="article-container">
         <!-- 没有数据 -->
-        <div class="no-data" v-if="articleList.length == 0">
+        <div
+          class="no-data"
+          v-if="articleList.length == 0"
+        >
           <div><span>找不到文章咯！</span></div>
         </div>
         <!-- 数据展示 -->
-        <div class="article-data" v-else>
+        <div
+          class="article-data"
+          v-else
+        >
           <div
             class="article-item"
             v-for="(item, index) in articleList"
             :key="index"
           >
-            <div class="article-img" @click="toReadArticle(item)">
+            <div
+              class="article-img"
+              @click="toReadArticle(item)"
+            >
               <img
                 width="100%"
                 height="100%"
@@ -110,34 +141,40 @@
                 alt=""
               />
             </div>
-            <div class="article-title" @click="toReadArticle(item)">
+            <div
+              class="article-title"
+              @click="toReadArticle(item)"
+            >
               <h4>{{ item.article_title }}</h4>
             </div>
             <div class="article-tage">
-              <el-tag size="mini" effect="dark" class="item-tag"
-                ><i class="el-icon-folder-opened"></i>
-                {{ item.getArticleClassification.classification_name }}</el-tag
-              >
+              <el-tag
+                size="mini"
+                effect="dark"
+                class="item-tag"
+              ><i class="el-icon-folder-opened"></i>
+                {{ item.getArticleClassification.classification_name }}</el-tag>
               <el-tag
                 size="mini"
                 type="success"
                 effect="dark"
                 class="item-tag"
                 v-for="(value, key) in item.special"
-                ><i class="el-icon-collection-tag"></i>
-                {{ value.special_name }}</el-tag
-              >
+              ><i class="el-icon-collection-tag"></i>
+                {{ value.special_name }}</el-tag>
               <el-tag
                 size="mini"
                 type="info"
                 class="item-tag"
                 v-for="(value, key) in item.label"
-                ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag
-              >
+              ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
             </div>
             <div class="article-time">
               <div class="time">
-                <div class="avatar" style="margin-right: 5px">
+                <div
+                  class="avatar"
+                  style="margin-right: 5px"
+                >
                   <img
                     width="100%"
                     height="100%"
@@ -153,25 +190,24 @@
                 </div>
               </div>
               <div class="other">
-                <span class="other-item"
-                  ><i class="el-icon-chat-dot-square"></i> {{item.articleCommentNum}}</span
-                >
-                <span class="other-item"
-                  ><i class="el-icon-view"></i> {{ item.browse_num }}</span
-                >
-                <span class="other-item"
-                  ><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span
-                >
-                 <span class="other-item"
-                  ><i class="el-icon-collection-tag"></i> {{ item.collection_num }}</span
-                >
+                <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{item.articleCommentNum}}</span>
+                <span class="other-item"><i class="el-icon-view"></i> {{ item.browse_num }}</span>
+                <span class="other-item"><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span>
+                <span class="other-item"><i class="el-icon-collection-tag"></i> {{ item.collection_num }}</span>
               </div>
             </div>
           </div>
         </div>
         <!-- 加载跟多按钮 -->
         <div class="load-more">
-          <el-button :type="showGetMoreBtn?'primary':'info'" round size="mini" @click="getMoreArticle()" :disabled='!showGetMoreBtn'><span v-if='showGetMoreBtn'>加载更多</span><span v-else>没有更多了</span></el-button></el-button>
+          <el-button
+            :type="showGetMoreBtn?'primary':'info'"
+            round
+            size="mini"
+            @click="getMoreArticle()"
+            :disabled='!showGetMoreBtn'
+          ><span v-if='showGetMoreBtn'>加载更多</span><span v-else>没有更多了</span></el-button>
+          </el-button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-12 22:43:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-15 15:57:57
+ * @LastEditTime: 2021-10-23 13:55:44
 -->
 <template>
   <div class='app-container'>
@@ -151,7 +151,7 @@
                 size="small"
                 @click="saveData()"
                 :loading='loading.saveLoading'
-              >立即分享</el-button>
+              ><span v-if='isAdd'>立即分享</span><span v-else>重新提交</span></el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -208,6 +208,7 @@ import {
   getMaterialType,
   addNewMaterialRecommend,
   getMaterialByName,
+  editMaterialRecommend,
 } from "@/api/material/materialRecommend";
 export default {
   name: "MaterialRecommend",
@@ -300,9 +301,20 @@ export default {
 
       //提交工具栏
       showSubmitUtils: false,
+
+      //判断是添加还行编辑
+      isAdd: true,
     };
   },
   created() {
+    this.isAdd = true;
+    //将当前页面变为编辑页面
+    if (this.$route.query.status == "edit") {
+      this.isAdd = false;
+      this.ruleForm = Object.assign({}, JSON.parse(this.$route.query.data));
+    }
+    console.log(this.$route.query);
+
     this.init();
   },
   methods: {
@@ -347,23 +359,41 @@ export default {
       this.loading.submitLoading = true;
       this.loading.saveLoading = true;
       const query = Object.assign({}, this.ruleForm);
-      addNewMaterialRecommend(query).then((res) => {
-        this.loading.submitLoading = false;
-        this.loading.saveLoading = false;
-        if (res.code == 200) {
-          this.$notify({
-            title: "成功",
-            message: "您推荐的资源将在1-3个工作日内被管理人员审核",
-            type: "success",
-          });
-          this.$router.push({
-            path: "/materialResult",
-            query: {
-              id: res.data,
-            },
-          });
-        }
-      });
+      if (this.isAdd) {
+        addNewMaterialRecommend(query).then((res) => {
+          this.loading.submitLoading = false;
+          this.loading.saveLoading = false;
+          if (res.code == 200) {
+            this.$notify({
+              title: "成功",
+              message: "您推荐的资源将在1-3个工作日内被管理人员审核",
+              type: "success",
+            });
+            this.$router.push({
+              path: "/materialResult",
+              query: {
+                id: res.data,
+              },
+            });
+          }
+        });
+      } else {
+        editMaterialRecommend(query).then((res) => {
+          if (res.code == 200) {
+            this.$notify({
+              title: "成功",
+              message: "你的资源已重新编辑，但是资源审核状态不会改变！",
+              type: "success",
+            });
+            this.$router.push({
+              path: "/materialResult",
+              query: {
+                id: query.id,
+              },
+            });
+          }
+        });
+      }
     },
 
     //检测重复资源
@@ -380,14 +410,14 @@ export default {
         getMaterialByName(query).then((res) => {
           this.loading.testLoading = false;
           if (res.code == 200) {
-            if (res.data) {
+            if (res.data.data.length > 0) {
               this.pages.total = res.data.total;
               this.pages.page = res.data.current_page;
               this.materialData = Object.assign([], res.data.data);
               this.dialogVisible = true;
             } else {
               this.$message({
-                message: "未发现用重复资源",
+                message: "未发现有重复资源",
                 type: "success",
               });
             }
