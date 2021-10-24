@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-22 17:00:59
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-23 17:00:40
+ * @LastEditTime: 2021-10-24 15:37:04
 -->
 <template>
   <div class='app-container'>
@@ -63,6 +63,7 @@
           <el-card
             class="box-card"
             shadow="hover"
+            v-if='item.constructor === Object'
           >
             <MaertrialItem :materialData='item' />
             <div class='material-operation'>
@@ -90,6 +91,34 @@
               </el-popconfirm>
             </div>
           </el-card>
+          <el-card
+            class="box-card"
+            shadow="hover"
+            v-else
+          >
+            <div
+              slot="header"
+              class="clearfix"
+            >
+              <el-button
+                style="float: right; padding: 0 0;color:red"
+                type="text"
+                class="delete-btn"
+                @click="deleteCollection(item)"
+              >删除</el-button>
+            </div>
+            <div class='delete-container'>
+              <img
+                :src="deleteDataImg"
+                alt="资源不存在"
+                width="105"
+              >
+            </div>
+            <div>
+              <p style="color:#CFCFCF;font-size:12px">资源已被删除</p>
+            </div>
+
+          </el-card>
         </div>
       </div>
 
@@ -98,7 +127,10 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="1000"
+          :total="filterForm.total"
+          :page-size='filterForm.list_rows'
+          :current-page='filterForm.page'
+          @current-change='currentChange'
           small
         >
         </el-pagination>
@@ -112,6 +144,7 @@ import {
   getUserMaterialByStatus,
   userDeleteMaterial,
   getUserCollectionMaterial,
+  deleteUserCollectionMaterial,
 } from "@/api/material/materialRecommend";
 import MaertrialItem from "@/components/materialItem/index.vue";
 export default {
@@ -124,8 +157,9 @@ export default {
       //过滤表单
       filterForm: {
         status: 2,
-        list_rows: 4,
+        list_rows: 8,
         page: 1,
+        total: 0,
       },
 
       //资源列表
@@ -133,6 +167,9 @@ export default {
 
       //没有数据图片
       notDataImg: require("@/assets/notData/notData.png"),
+
+      //以被删除
+      deleteDataImg: require("@/assets/notData/hasDelete.png"),
     };
   },
   created() {
@@ -143,27 +180,47 @@ export default {
       const query = Object.assign({}, this.filterForm);
       //收藏数据
       if (query.status == 5) {
-        getUserCollectionMaterial().then((res) => {
-          this.materialList = Object.assign([], res.data);
+        getUserCollectionMaterial(query).then((res) => {
+          this.materialList = Object.assign([], res.data.data);
+          this.filterForm.total = res.data.total;
         });
       } else {
         getUserMaterialByStatus(query).then((res) => {
-          this.materialList = Object.assign([], res.data);
+          this.materialList = Object.assign([], res.data.data);
         });
       }
     },
 
     //切换资源状态
     changeMaterialStatus(status) {
-      this.filterForm = {
-        status,
-      };
+      this.filterForm.status = status;
       this.init();
     },
 
     //删除资源
-    deletMaterial(item) {
-      console.log(item);
+    deletMaterial({ id }) {
+      userDeleteMaterial({ id }).then((res) => {
+        if (res.code == 200) {
+          this.init();
+          this.$notify({
+            title: "成功",
+            message: "资源已删除",
+            type: "success",
+          });
+        }
+      });
+    },
+
+    //删除不存在的资源
+    deleteCollection(item) {
+      deleteUserCollectionMaterial({ materialId: item }).then((res) => {
+        this.init();
+        this.$notify({
+          title: "成功",
+          message: "资源已移除",
+          type: "success",
+        });
+      });
     },
 
     //编辑资源
@@ -193,6 +250,12 @@ export default {
         },
       });
     },
+
+    //分页切换
+    currentChange(page) {
+      this.filterForm.page = page;
+      this.init();
+    },
   },
 };
 </script>
@@ -205,7 +268,6 @@ export default {
   .container {
     width: calc(100% - 40px);
     padding: 20px;
-    width: 100%;
     .material-status {
       width: 100%;
       display: flex;
@@ -228,6 +290,7 @@ export default {
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
+      min-height: 400px;
       .material-item {
         margin: 5px;
         .box-card {

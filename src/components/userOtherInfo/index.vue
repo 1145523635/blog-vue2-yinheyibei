@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-14 21:11:13
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 21:44:36
+ * @LastEditTime: 2021-10-24 15:43:18
 -->
 <template>
   <div class="app-container">
@@ -20,8 +20,7 @@
           effect="dark"
           @click="toArticleRelease"
         >
-          {{ otherInfo.articleNum.value }}</el-tag
-        >
+          {{ otherInfo.articleNum.value }}</el-tag>
       </el-tooltip>
     </div>
     <div class="other-item">
@@ -37,8 +36,23 @@
           effect="dark"
           @click="toArticleFollow"
         >
-          {{ otherInfo.articleFollowNum.value }}</el-tag
+          {{ otherInfo.articleFollowNum.value }}</el-tag>
+      </el-tooltip>
+    </div>
+    <div class="other-item">
+      <el-tooltip
+        effect="dark"
+        :content="otherInfo.material.label"
+        placement="bottom"
+      >
+        <el-tag
+          size="mini"
+          class="el-icon-menu"
+          type=""
+          effect="dark"
+          @click="toMaterialRecommend"
         >
+          {{ otherInfo.material.value }}</el-tag>
       </el-tooltip>
     </div>
     <div class="other-item">
@@ -54,8 +68,7 @@
           effect="dark"
           @click="toUserFollow(true)"
         >
-          {{ otherInfo.followNum.value }}</el-tag
-        >
+          {{ otherInfo.followNum.value }}</el-tag>
       </el-tooltip>
     </div>
     <div class="other-item">
@@ -71,8 +84,7 @@
           effect="dark"
           @click="toUserFollow(false)"
         >
-          {{ otherInfo.fansNum.value }}</el-tag
-        >
+          {{ otherInfo.fansNum.value }}</el-tag>
       </el-tooltip>
     </div>
   </div>
@@ -103,6 +115,11 @@ export default {
     //文章收藏页
     toArticleFollow() {
       this.$router.push("/userInfo/collection");
+    },
+
+    //资源页
+    toMaterialRecommend() {
+      this.$router.push("/userInfo/material");
     },
 
     //用户关注页

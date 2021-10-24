@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-22 10:25:28
+ * @LastEditTime: 2021-10-24 15:28:18
 -->
 <template>
   <div class="app-container">
@@ -16,7 +16,10 @@
       <!-- 资源部分-->
       <div class='material-container'>
         <!-- 过滤部分 -->
-        <div class='material-filter'>
+        <div
+          class='material-filter'
+          v-if='materialTypeList.length>0'
+        >
           <div
             class='filter-container'
             v-for='(item,index) in materialTypeList'
@@ -53,6 +56,10 @@
           </div>
 
         </div>
+        <div
+          v-else
+          class='material-filter'
+        >请等待资源加载</div>
         <div
           class='material'
           v-if='materialList.length>0'

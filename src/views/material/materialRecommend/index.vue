@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-12 22:43:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-23 13:55:44
+ * @LastEditTime: 2021-10-24 15:30:45
 -->
 <template>
   <div class='app-container'>
@@ -327,6 +327,7 @@ export default {
 
     //提交数据
     saveData() {
+      this.loading.submitLoading = true;
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           const testQuery = {

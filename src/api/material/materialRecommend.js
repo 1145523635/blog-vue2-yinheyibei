@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-23 15:33:53
+ * @LastEditTime: 2021-10-24 15:04:45
  */
 import { request } from '@/utils/request'
 
@@ -194,9 +194,25 @@ export function editMaterialRecommend(data) {
  * @param {*} 
  * @return {*}
  */
-export function getUserCollectionMaterial() {
+export function getUserCollectionMaterial(data) {
     return request({
         url: '/blog/material/verify/getUserCollectionMaterial',
         method: 'GET',
+        params: data
+    })
+}
+
+/**
+ * @Description: 移除用户关注
+ * @Author: 银河以北
+ * @Date: 2021-06-11 22:31:59
+ * @param {*} 
+ * @return {*}
+ */
+export function deleteUserCollectionMaterial(data) {
+    return request({
+        url: '/blog/material/verify/deleteUserCollectionMaterial',
+        method: 'DELETE',
+        data
     })
 }

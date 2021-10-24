@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-23 14:59:07
+ * @LastEditTime: 2021-10-24 15:52:22
 -->
 <template>
   <div class="app-container">
@@ -29,28 +29,38 @@
             <!-- 用户姓名 -->
             <div class="user-name">
               <h2>{{ userInfos.nickname }}</h2>
-              <p>文章<span>1</span> | 评论 <span>2</span></p>
-              <p style="font-size:12px">{{userInfos.autograph}}</p>
+              <p style="font-size:14px">文章<span>{{other.articleNum.value}}</span> | 资源 <span>{{other.material.value}}</span></p>
+              <p style="font-size:12px"><span v-if='userInfos.autograph'>{{userInfos.autograph}}</span><span v-else>这个人很懒，什么都没有留下！</span></p>
             </div>
           </div>
 
           <!-- 发表文章按钮 -->
           <div class="btn">
             <div>
-              <el-button
-                type="primary"
-                icon="el-icon-document"
-                size="mini"
-                @click="toWriteArticle"
-              >写文章</el-button>
-            </div>
-            <div style="margin-top:5px">
-              <el-button
-                type="warning"
-                icon="el-icon-postcard"
-                size="mini"
-                @click="toRecommendedResources"
-              >推荐资源</el-button>
+              <el-tooltip
+                effect="dark"
+                content="写文章"
+                placement="top-start"
+              >
+                <el-button
+                  type="primary"
+                  icon="el-icon-document"
+                  size="mini"
+                  @click="toWriteArticle"
+                ></el-button>
+              </el-tooltip>
+              <el-tooltip
+                effect="dark"
+                content="推荐资源"
+                placement="top-start"
+              >
+                <el-button
+                  type="warning"
+                  icon="el-icon-postcard"
+                  size="mini"
+                  @click="toRecommendedResources"
+                ></el-button>
+              </el-tooltip>
             </div>
           </div>
         </div>
@@ -78,7 +88,7 @@
               :to="{ name: 'Material' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-postcard"></i></span>
-              推荐</router-link>
+              资源</router-link>
           </div>
           <div class="item">
             <router-link
@@ -129,10 +139,15 @@ export default {
 
       //用户信息
       userInfos: {},
+
+      //用户其他信息
+      other: {},
     };
   },
   created() {
     this.userInfos = this.userInfo.user;
+    this.other = this.userInfo.other;
+    console.log(this.other);
   },
   methods: {
     toWriteArticle() {
@@ -197,6 +212,10 @@ export default {
           .user-name {
             text-align: left;
             color: #ffffff;
+            cursor: pointer;
+            h2:hover {
+              color: #5eadff;
+            }
           }
         }
       }
