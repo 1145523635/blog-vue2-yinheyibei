@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:37:28
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-23 14:56:58
+ * @LastEditTime: 2021-10-24 16:41:48
 -->
 <template>
   <div class="app-contianer">
@@ -66,7 +66,7 @@ export default {
       margin-bottom: 20px;
       position: fixed;
       top: 0;
-      z-index: 9999;
+      z-index: 100;
       .header {
         min-width: 1380px;
         display: flex;

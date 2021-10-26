@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 22:26:19
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-22 16:45:16
+ * @LastEditTime: 2021-10-25 19:33:02
 -->
 <template>
   <div class='app-container'>
@@ -131,7 +131,10 @@
             <div class='material-link'>
               <div class='recommender'>
                 <div>推荐人：</div>
-                <div class='user-info'>
+                <div
+                  class='user-info'
+                  @click="toUserInfo(materialData.userInfo)"
+                >
                   <div class='user-avatar'><img
                       :src="$utils.imgUrl(materialData.userInfo.avatar_url)"
                       alt="avatar"
@@ -210,6 +213,19 @@ export default {
       this.$message({
         message: "内容已成功复制到剪切板！",
         type: "success",
+      });
+    },
+
+    //去用户中心，访客的
+    toUserInfo(item) {
+      const USERID = item.id;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/releaseList`,
+        query: {
+          activeArticleType: 1,
+        },
       });
     },
 
@@ -337,6 +353,7 @@ export default {
             .user-info {
               display: flex;
               align-items: center;
+              cursor: pointer;
               .user-avatar {
                 width: 32px;
                 height: 32px;

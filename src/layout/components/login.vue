@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 12:41:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-12 22:15:03
+ * @LastEditTime: 2021-10-25 19:22:03
 -->
 <template>
   <div class="app-container">
@@ -241,7 +241,15 @@ export default {
 
     //跳去个人用户界面
     toUserInfo() {
-      this.$router.push("/user");
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/releaseList`,
+        query: {
+          activeArticleType: 1,
+        },
+      });
     },
   },
 };

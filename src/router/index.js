@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-21 19:57:31
+ * @LastEditTime: 2021-10-24 20:21:52
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -44,7 +44,7 @@ const routes = [{
         path: '/user',
         name: 'user',
         meta: { title: '个人中心' },
-        redirect: '/userInfo',
+        redirect: '/userInfo/:userId',
         component: LayoutUserMenu,
         meta: { title: 'layoutMenu' },
         children: layoutUserMenu

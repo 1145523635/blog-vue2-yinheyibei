@@ -3,40 +3,56 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 21:42:32
+ * @LastEditTime: 2021-10-25 22:01:13
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <div class="left-link">
         <div
-          class="link-item"
           v-for="(item, index) in articleType"
           :key="index"
-          @click="changeMenu(item)"
         >
-          <p
-            :class="{
-              'router-link-exact-active': item.id == activeArticleType,
-            }"
+          <div
+            @click="changeMenu(item)"
+            class="link-item"
+            v-if="item.id!=1?isSelf:true"
           >
-            <span>{{ item.label }}</span>
-          </p>
-        </div>
-      </div>
-      <div class="right-container">
-        <div class="not-data" v-if="articleList.length == 0">
-          <div class="img-container">
-            <img width="100%" :src="notDataImg" :alt="notDataImg" />
+            <p :class="{
+              'router-link-exact-active': item.id == activeArticleType,
+            }">
+              <span>{{ item.label }}</span>
+            </p>
           </div>
         </div>
-        <div class="article-container" v-else>
+
+      </div>
+      <div class="right-container">
+        <div
+          class="not-data"
+          v-if="articleList.length == 0"
+        >
+          <div class="img-container">
+            <img
+              width="100%"
+              :src="notDataImg"
+              :alt="notDataImg"
+            />
+          </div>
+        </div>
+        <div
+          class="article-container"
+          v-else
+        >
           <div
             class="article-item"
             v-for="(item, index) in articleList"
             :key="index"
           >
-            <div class="article-img" @click="toReadArticle(item)">
+            <div
+              class="article-img"
+              @click="toReadArticle(item)"
+            >
               <img
                 width="100%"
                 height="100%"
@@ -44,50 +60,45 @@
                 alt=""
               />
             </div>
-            <div class="article-title" @click="toReadArticle(item)">
+            <div
+              class="article-title"
+              @click="toReadArticle(item)"
+            >
               <h4>{{ item.article_title }}</h4>
             </div>
             <div class="article-tage">
-              <el-tag size="mini" effect="dark" class="item-tag"
-                ><i class="el-icon-folder-opened"></i>
-                {{ item.getArticleClassification.classification_name }}</el-tag
-              >
+              <el-tag
+                size="mini"
+                effect="dark"
+                class="item-tag"
+              ><i class="el-icon-folder-opened"></i>
+                {{ item.getArticleClassification.classification_name }}</el-tag>
               <el-tag
                 size="mini"
                 type="success"
                 effect="dark"
                 class="item-tag"
                 v-for="(value, key) in item.special"
-                ><i class="el-icon-collection-tag"></i>
-                {{ value.special_name }}</el-tag
-              >
+              ><i class="el-icon-collection-tag"></i>
+                {{ value.special_name }}</el-tag>
               <el-tag
                 size="mini"
                 type="info"
                 class="item-tag"
                 v-for="(value, key) in item.label"
-                ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag
-              >
+              ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
             </div>
             <div class="article-time">
               <div class="time">
                 <span>{{ $utils.getPastTimes(item.create_time) }}</span>
               </div>
               <div class="other">
-                <span class="other-item"
-                  ><i class="el-icon-chat-dot-square"></i>
-                  {{ item.articleCommentNum }}</span
-                >
-                <span class="other-item"
-                  ><i class="el-icon-view"></i> {{ item.browse_num }}</span
-                >
-                <span class="other-item"
-                  ><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span
-                >
-                <span class="other-item"
-                  ><i class="el-icon-collection-tag"></i>
-                  {{ item.collection_num }}</span
-                >
+                <span class="other-item"><i class="el-icon-chat-dot-square"></i>
+                  {{ item.articleCommentNum }}</span>
+                <span class="other-item"><i class="el-icon-view"></i> {{ item.browse_num }}</span>
+                <span class="other-item"><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span>
+                <span class="other-item"><i class="el-icon-collection-tag"></i>
+                  {{ item.collection_num }}</span>
                 <el-dropdown
                   v-show="activeArticleType == 2 || activeArticleType == 3"
                   style="margin-left: 20px"
@@ -98,8 +109,7 @@
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item @click.native="articleAppeal(item)">
-                      申诉</el-dropdown-item
-                    >
+                      申诉</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -116,8 +126,7 @@
     >
       <template slot="title">
         <div class="appeal-title">
-          关于对文章的<span>{{ appealArticleTitle }}</span
-          >申诉内容
+          关于对文章的<span>{{ appealArticleTitle }}</span>申诉内容
         </div>
       </template>
       <div class="appeal-container">
@@ -132,15 +141,20 @@
         >
         </el-input>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose" size="mini">取 消</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          @click="handleClose"
+          size="mini"
+        >取 消</el-button>
         <el-button
           type="primary"
           @click="saveData()"
           size="mini"
           :loading="btnLoading"
-          >确 定</el-button
-        >
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -149,11 +163,13 @@
 <script>
 import { getArticleReleaseOption } from "@/api/article/releaseArticle";
 import { getArticleTypeList, appealArticle } from "@/api/article/articleList";
-
+import { mapGetters } from "vuex";
 export default {
   name: "ReleaseList",
   data() {
     return {
+      //判断是不是自己
+      isSelf: undefined,
       //文章类型
       articleType: [
         { id: 0, label: "待审核", color: "#f50" },
@@ -197,20 +213,28 @@ export default {
 
       //按钮加载状态
       btnLoading: false,
+
+      //当前用户
+      userId: undefined,
     };
   },
   created() {
-    this.activeArticleType = this.$route.query.activeArticleType || 0;
-
+    this.activeArticleType = this.$route.query.activeArticleType || 1;
     this.init();
-    // this.getConfigData();
   },
   methods: {
     /**
      * 初始化函数
      */
     init() {
-      const query = { status: this.activeArticleType };
+      this.userId = this.$route.params.userId;
+      if (this.userId != this.$store.getters.userId) {
+        this.isSelf = false;
+      } else {
+        this.isSelf = true;
+      }
+
+      const query = { status: this.activeArticleType, userId: this.userId };
       getArticleTypeList(query).then((res) => {
         this.articleList = res.data;
       });
@@ -285,7 +309,13 @@ export default {
       this.appealShow = false;
     },
   },
+  computed: {
+    ...mapGetters(["visitorId"]),
+  },
   watch: {
+    visitorId() {
+      this.init();
+    },
     activeArticleType() {
       this.init();
     },

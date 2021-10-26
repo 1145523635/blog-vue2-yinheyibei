@@ -3,23 +3,36 @@
  * @Author: 银河以北
  * @Date: 2021-08-28 22:24:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-14 21:38:50
+ * @LastEditTime: 2021-10-25 19:40:11
 -->
 <template>
   <div class="app-container">
     <div class="container">
-      <div class="not-data" v-if="articleList.length == 0">
+      <div
+        class="not-data"
+        v-if="articleList.length == 0"
+      >
         <div class="img-container">
-          <img width="100%" :src="notDataImg" :alt="notDataImg" />
+          <img
+            width="100%"
+            :src="notDataImg"
+            :alt="notDataImg"
+          />
         </div>
       </div>
-      <div class="article-container" v-else>
+      <div
+        class="article-container"
+        v-else
+      >
         <div
           class="article-item"
           v-for="(item, index) in articleList"
           :key="index"
         >
-          <div class="article-img" @click="toReadArticle(item)">
+          <div
+            class="article-img"
+            @click="toReadArticle(item)"
+          >
             <img
               width="100%"
               height="100%"
@@ -27,30 +40,33 @@
               alt=""
             />
           </div>
-          <div class="article-title" @click="toReadArticle(item)">
+          <div
+            class="article-title"
+            @click="toReadArticle(item)"
+          >
             <h4>{{ item.articleContent.article_title }}</h4>
           </div>
           <div class="article-tage">
-            <el-tag size="mini" effect="dark" class="item-tag"
-              ><i class="el-icon-folder-opened"></i>
-              {{ item.articleContent.getArticleClassification.classification_name }}</el-tag
-            >
+            <el-tag
+              size="mini"
+              effect="dark"
+              class="item-tag"
+            ><i class="el-icon-folder-opened"></i>
+              {{ item.articleContent.getArticleClassification.classification_name }}</el-tag>
             <el-tag
               size="mini"
               type="success"
               effect="dark"
               class="item-tag"
               v-for="(value, key) in item.articleContent.special"
-              ><i class="el-icon-collection-tag"></i>
-              {{ value.special_name }}</el-tag
-            >
+            ><i class="el-icon-collection-tag"></i>
+              {{ value.special_name }}</el-tag>
             <el-tag
               size="mini"
               type="info"
               class="item-tag"
               v-for="(value, key) in item.articleContent.label"
-              ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag
-            >
+            ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
           </div>
           <div class="article-time">
             <div class="time">
@@ -59,21 +75,13 @@
               }}</span>
             </div>
             <div class="other">
-              <span class="other-item"
-                ><i class="el-icon-chat-dot-square"></i> {{item.articleContent.articleCommentNum}}</span
-              >
-              <span class="other-item"
-                ><i class="el-icon-view"></i>
-                {{ item.articleContent.browse_num }}</span
-              >
-              <span class="other-item"
-                ><i class="el-icon-star-off"></i>
-                {{ item.articleContent.thumbs_num }}</span
-              >
-              <span class="other-item"
-                ><i class="el-icon-collection-tag"></i>
-                {{ item.articleContent.collection_num }}</span
-              >
+              <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{item.articleContent.articleCommentNum}}</span>
+              <span class="other-item"><i class="el-icon-view"></i>
+                {{ item.articleContent.browse_num }}</span>
+              <span class="other-item"><i class="el-icon-star-off"></i>
+                {{ item.articleContent.thumbs_num }}</span>
+              <span class="other-item"><i class="el-icon-collection-tag"></i>
+                {{ item.articleContent.collection_num }}</span>
               <!-- <el-dropdown
                 style="margin-left: 20px"
                 size="mini"
@@ -106,15 +114,19 @@ export default {
 
       //没有数据图片
       notDataImg: require("@/assets/notData/notData.png"),
+
+      //访客ID
+      userId: undefined,
     };
   },
   created() {
+    this.userId = this.$route.params.userId;
     this.init();
   },
   methods: {
     init() {
       //数据初始化
-      getUserArticleCollection().then((res) => {
+      getUserArticleCollection({ userId: this.userId }).then((res) => {
         this.articleList = Object.assign([], res.data);
       });
     },

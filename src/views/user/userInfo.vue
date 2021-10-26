@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 15:52:22
+ * @LastEditTime: 2021-10-25 22:15:22
 -->
 <template>
   <div class="app-container">
@@ -36,7 +36,7 @@
 
           <!-- 发表文章按钮 -->
           <div class="btn">
-            <div>
+            <div v-if="isSelf">
               <el-tooltip
                 effect="dark"
                 content="写文章"
@@ -72,45 +72,68 @@
           <div class="item">
             <router-link
               tag="div"
-              :to="{ name: 'ReleaseList' }"
+              :to="{ path: '/userInfo/'+visitorId+'/releaseList' }"
             ><span style="margin-right: 5px"><i class="el-icon-document-checked"></i></span>
               发布</router-link>
           </div>
-          <div class="item">
+          <div
+            class="item"
+            v-if='isSelf'
+          >
             <router-link
               tag="div"
-              :to="{ name: 'Collection' }"
+              :to="{ path: '/userInfo/'+visitorId+'/collection' }"
             ><span style="margin-right: 5px"><i class="el-icon-star-off"></i></span>收藏</router-link>
           </div>
           <div class="item">
             <router-link
               tag="div"
-              :to="{ name: 'Material' }"
+              :to="{ path: '/userInfo/'+visitorId+'/material' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-postcard"></i></span>
               资源</router-link>
           </div>
-          <div class="item">
+          <div
+            class="item"
+            v-if='isSelf'
+          >
             <router-link
               tag="div"
-              :to="{ name: 'Follow' }"
+              :to="{ path:'/userInfo/'+visitorId+'/follow' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-view"></i></span>关注</router-link>
           </div>
-          <div class="item">
+          <div
+            class="item"
+            v-if='isSelf'
+          >
             <router-link
               tag="div"
-              :to="{ name: 'ArticleNews' }"
+              :to="{ path: '/userInfo/'+visitorId+'/articleNews' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-news"></i></span>消息</router-link>
           </div>
-          <div class="item">
+          <div
+            class="item"
+            v-if='isSelf'
+          >
             <router-link
               tag="div"
               id="personal"
-              :to="{ name: 'Personal' }"
+              :to="{ path: '/userInfo/'+visitorId+'/personal'  }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span>用户</router-link>
+          </div>
+          <div
+            class="item"
+            v-if='!isSelf'
+          >
+            <router-link
+              tag="div"
+              id="personal"
+              :to="{ path: '/userInfo/'+visitorId+'/personalData'  }"
+            ><span style="margin-right: 5px">
+                <i class="el-icon-user"></i></span>个人资料</router-link>
           </div>
         </div>
       </div>
@@ -130,6 +153,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { getVisitorInfo } from "@/api/login/index";
 export default {
   name: "UserInfo",
   data() {
@@ -141,15 +165,38 @@ export default {
       userInfos: {},
 
       //用户其他信息
-      other: {},
+      other: {
+        articleNum: {},
+        material: {},
+      },
+
+      //访客ID
+      userId: undefined,
+
+      //判断是不是用户自己
+      isSelf: false,
     };
   },
   created() {
-    this.userInfos = this.userInfo.user;
-    this.other = this.userInfo.other;
-    console.log(this.other);
+    // this.userInfos = this.userInfo.user;
+    // this.other = this.userInfo.other;
+    this.init();
   },
   methods: {
+    //初始化信息 加载访客信息
+    init() {
+      this.userId = this.$route.params.userId;
+      if (this.userId != this.$store.getters.userId) {
+        this.isSelf = false;
+      } else {
+        this.isSelf = true;
+      }
+      getVisitorInfo({ userId: this.userId }).then((res) => {
+        this.$store.commit("SET_VISITOR_INFO", res.data);
+        this.userInfos = Object.assign({}, res.data.user);
+        this.other = Object.assign({}, res.data.other);
+      });
+    },
     toWriteArticle() {
       this.$router.push("/release");
     },
@@ -158,7 +205,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["userInfo"]),
+    ...mapGetters(["visitorId"]),
+  },
+  watch: {
+    visitorId(value) {
+      this.init();
+    },
   },
 };
 </script>
@@ -174,7 +226,7 @@ export default {
     flex-wrap: wrap;
     .user-cover {
       width: 100%;
-      height: 370px;
+      height: 300px;
       background: white;
       border-radius: 10px;
       overflow: hidden;

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-12 20:20:23
+ * @LastEditTime: 2021-10-25 21:46:02
 -->
 <template>
   <div class="app-container">
@@ -14,13 +14,18 @@
           <h2>{{ articleData.article_title }}</h2>
         </div>
         <div>
-          <span class="back" @click="goBack"
-            >返回 <i class="el-icon-s-home"></i>
+          <span
+            class="back"
+            @click="goBack"
+          >返回 <i class="el-icon-s-home"></i>
           </span>
         </div>
       </div>
       <div class="article-info">
-        <div class="user-info">
+        <div
+          class="user-info"
+          @click.stop="toUserInfo(articleData.getUserInfo)"
+        >
           <div class="user-avatar">
             <img
               width="100%"
@@ -41,36 +46,39 @@
                 articleData.isFollow ? 'el-icon-star-on' : 'el-icon-star-off'
               "
               :loading="followBtnLoading"
-              @click="followUser"
-              ><span v-if="articleData.isFollow"> 已关注</span>
-              <span v-else>关注</span></el-button
-            >
+              @click.stop ="followUser"
+            ><span v-if="articleData.isFollow"> 已关注</span>
+              <span v-else>关注</span>
+            </el-button>
           </div>
         </div>
         <div class="article-data">
-          <span class="other-item"
-            ><i class="el-icon-chat-dot-square"></i> 0
+          <span class="other-item"><i class="el-icon-chat-dot-square"></i> 0
             <!-- <a href="#article-comment" class="comment-anchor">
               {{ commentNum }}</a
             > -->
           </span>
-          <span class="other-item"
-            ><i class="el-icon-view"></i> {{ articleData.browse_num }}
+          <span class="other-item"><i class="el-icon-view"></i> {{ articleData.browse_num }}
           </span>
 
           <span
             class="other-item"
             @click="changeThumbs()"
             :class="{ 'thumbs-item': articleData.isThumbs }"
-            ><i class="el-icon-star-on" v-if="articleData.isThumbs"></i
-            ><i class="el-icon-star-off" v-else></i>
+          ><i
+              class="el-icon-star-on"
+              v-if="articleData.isThumbs"
+            ></i><i
+              class="el-icon-star-off"
+              v-else
+            ></i>
             {{ articleData.thumbs_num }}
           </span>
           <span
             class="other-item"
             @click="changeCollection()"
             :class="{ 'is-Collection': articleData.isCollection }"
-            ><i class="el-icon-collection-tag"></i>
+          ><i class="el-icon-collection-tag"></i>
             {{ articleData.collection_num }}
           </span>
         </div>
@@ -89,26 +97,34 @@
         />
       </div>
       <!-- 文章版权 -->
-      <div class="article-copyright" v-if="!isAuthor">
+      <div
+        class="article-copyright"
+        v-if="!isAuthor"
+      >
         <p>© 版权声明</p>
         <p>分享是一种美德，转载请保留原链接。</p>
         <p>
           当前链接：<span>
-            <el-link :href="articleLink" type="primary">{{
+            <el-link
+              :href="articleLink"
+              type="primary"
+            >{{
               articleLink
-            }}</el-link></span
-          >
+            }}</el-link>
+          </span>
         </p>
       </div>
       <!-- 文章分类 -->
       <div class="article-tag">
         <p>
-          <el-tag size="mini" effect="dark" class="item-tag"
-            ><i class="el-icon-folder-opened"></i>
+          <el-tag
+            size="mini"
+            effect="dark"
+            class="item-tag"
+          ><i class="el-icon-folder-opened"></i>
             {{
               articleData.getArticleClassification.classification_name
-            }}</el-tag
-          >
+            }}</el-tag>
         </p>
         <p>
           <el-tag
@@ -117,9 +133,8 @@
             effect="dark"
             class="item-tag"
             v-for="(value, key) in articleData.special"
-            ><i class="el-icon-collection-tag"></i>
-            {{ value.special_name }}</el-tag
-          >
+          ><i class="el-icon-collection-tag"></i>
+            {{ value.special_name }}</el-tag>
         </p>
         <p>
           <el-tag
@@ -127,13 +142,15 @@
             type="info"
             class="item-tag"
             v-for="(value, key) in articleData.label"
-            ><i class="el-icon-collection-tag"></i>
-            {{ value.label_name }}</el-tag
-          >
+          ><i class="el-icon-collection-tag"></i>
+            {{ value.label_name }}</el-tag>
         </p>
       </div>
       <!-- 评论 -->
-      <div class="article-comment" id="article-comment">
+      <div
+        class="article-comment"
+        id="article-comment"
+      >
         <comment
           :avatar="$utils.imgUrl(userInfo.avatar_url)"
           :authorId="articleData.getUserInfo.id"
@@ -430,6 +447,21 @@ export default {
         if (res.code == 200) {
           this.articleData.browse_num++;
         }
+      });
+    },
+
+    /**
+     * 去用户中心 访客
+     */
+    toUserInfo(item) {
+      const USERID = item.id;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/releaseList`,
+        query: {
+          activeArticleType: 1,
+        },
       });
     },
   },

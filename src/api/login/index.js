@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-07-21 00:24:01
+ * @LastEditTime: 2021-10-25 19:56:24
  */
 import { request } from '@/utils/request'
 
@@ -78,5 +78,20 @@ export function userRegister(data) {
         url: '/blog/userRegister',
         method: 'POST',
         data
+    })
+}
+
+/**
+ * @Description: 获取前台访客信息
+ * @Author: 银河以北
+ * @Date: 2021-10-25 19:53:24
+ * @param {*} data
+ * @return {*}
+ */
+export function getVisitorInfo(data) {
+    return request({
+        url: '/blog/getVisitorInfo',
+        method: 'GET',
+        params: data
     })
 }

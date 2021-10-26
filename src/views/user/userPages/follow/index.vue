@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-12 20:23:27
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-22 19:08:49
+ * @LastEditTime: 2021-10-25 22:43:59
 -->
 <template>
   <div class="app-container">
@@ -28,12 +28,16 @@
       </div>
       <!-- 关注 粉丝数据内容 -->
       <!-- 关注 -->
-      <div class="follow-container" v-if="isFollow">
+      <div
+        class="follow-container"
+        v-if="isFollow"
+      >
         <div v-if="followUserList.length > 0">
           <div
             class="follow-item"
             v-for="(item, index) in followUserList"
             :key="index"
+            @click="toUserInfo(item,'isFollow')"
           >
             <div class="follow-background">
               <img
@@ -59,36 +63,46 @@
                     class="is-follow"
                     @click="followUser(item)"
                     v-if="item.isFollow"
-                    ><i class="el-icon-error"></i>取消关注</span
-                  >
-                  <span class="not-follow" @click="followUser(item)" v-else
-                    ><i class="el-icon-success"></i>点击关注</span
-                  >
+                  ><i class="el-icon-error"></i>取消关注</span>
+                  <span
+                    class="not-follow"
+                    @click="followUser(item)"
+                    v-else
+                  ><i class="el-icon-success"></i>点击关注</span>
                 </h4>
                 <p class="user-autograph">
                   <span v-if="item.getFollowInfo.autograph">{{
                     item.getFollowInfo.autograph
-                  }}</span
-                  ><span v-else>这个人很懒，什么都没有留下</span>
+                  }}</span><span v-else>这个人很懒，什么都没有留下</span>
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div v-else class="empty-data">
+        <div
+          v-else
+          class="empty-data"
+        >
           <div>
-            <img :src="emptyFollows" alt="" />
+            <img
+              :src="emptyFollows"
+              alt=""
+            />
             <p>暂无关注</p>
           </div>
         </div>
       </div>
       <!-- 粉丝 -->
-      <div class="follow-container" v-else>
+      <div
+        class="follow-container"
+        v-else
+      >
         <div v-if="fansUserList.length > 0">
           <div
             class="follow-item"
             v-for="(item, index) in fansUserList"
             :key="index"
+            @click="toUserInfo(item,'isFans')"
           >
             <div class="follow-background">
               <img
@@ -114,25 +128,31 @@
                     class="is-follow"
                     @click="followUser(item)"
                     v-if="item.isFollow"
-                    ><i class="el-icon-error"></i>取消关注</span
-                  >
-                  <span class="not-follow" @click="followUser(item)" v-else
-                    ><i class="el-icon-success"></i>点击关注</span
-                  >
+                  ><i class="el-icon-error"></i>取消关注</span>
+                  <span
+                    class="not-follow"
+                    @click="followUser(item)"
+                    v-else
+                  ><i class="el-icon-success"></i>点击关注</span>
                 </h4>
                 <p class="user-autograph">
                   <span v-if="item.getFansInfo.autograph">{{
                     item.getFansInfo.autograph
-                  }}</span
-                  ><span v-else>这个人很懒，什么都没有留下</span>
+                  }}</span><span v-else>这个人很懒，什么都没有留下</span>
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div v-else class="empty-data">
+        <div
+          v-else
+          class="empty-data"
+        >
           <div>
-            <img :src="emptyFans" alt="" />
+            <img
+              :src="emptyFans"
+              alt=""
+            />
             <p>暂无粉丝</p>
           </div>
         </div>
@@ -210,6 +230,24 @@ export default {
             type: "success",
           });
         }
+      });
+    },
+
+    //去用户页面
+    toUserInfo(item, status) {
+      let userId = undefined;
+      if (status == "isFans") {
+        userId = item.user_id;
+      } else {
+        userId = item.follow_id;
+      }
+      this.$store.commit("SET_VISITOR_ID", userId);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/releaseList`,
+        query: {
+          activeArticleType: 1,
+        },
       });
     },
   },

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-14 21:11:13
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 15:43:18
+ * @LastEditTime: 2021-10-26 08:37:15
 -->
 <template>
   <div class="app-container">
@@ -104,8 +104,11 @@ export default {
   methods: {
     //去文章发布页
     toArticleRelease() {
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
       this.$router.push({
-        path: "/userInfo/releaseList",
+        path: `/userInfo/${VISITORID}/releaseList`,
         query: {
           activeArticleType: 1,
         },
@@ -114,21 +117,34 @@ export default {
 
     //文章收藏页
     toArticleFollow() {
-      this.$router.push("/userInfo/collection");
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/collection`,
+      });
     },
 
     //资源页
     toMaterialRecommend() {
-      this.$router.push("/userInfo/material");
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/material`,
+      });
     },
 
     //用户关注页
     toUserFollow(status = true) {
+       const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
       this.$router.push({
-        path: "/userInfo/follow",
-        query: {
+        path: `/userInfo/${VISITORID}/follow`,
+         query: {
           isFollow: status,
-        },
+        }
       });
     },
   },

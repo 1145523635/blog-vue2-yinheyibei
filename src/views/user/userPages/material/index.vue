@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-22 17:00:59
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 15:37:04
+ * @LastEditTime: 2021-10-25 21:18:53
 -->
 <template>
   <div class='app-container'>
@@ -15,22 +15,26 @@
             :type="filterForm.status==1?'primary':''"
             size="small"
             @click="changeMaterialStatus(1)"
+            :disabled='!isSelf'
           ><i class='el-icon-remove-outline'></i> 待审核</el-button>
           <el-button
             :type="filterForm.status==2?'success':''"
             size="small"
             @click="changeMaterialStatus(2)"
+            :disabled='!isSelf'
           ><i class='el-icon-circle-check'></i> 已审核</el-button>
           <el-button
             type=""
             size="small"
             :type="filterForm.status==4?'warning':''"
             @click="changeMaterialStatus(4)"
+            :disabled='!isSelf'
           ><i class='el-icon-circle-close'></i> 未通过</el-button>
           <el-button
             :type="filterForm.status==3?'danger':''"
             size="small"
             @click="changeMaterialStatus(3)"
+            :disabled='!isSelf'
           ><i class='el-icon-warning-outline'></i> 下架</el-button>
           <el-button
             size="small"
@@ -140,6 +144,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import {
   getUserMaterialByStatus,
   userDeleteMaterial,
@@ -170,6 +175,12 @@ export default {
 
       //以被删除
       deleteDataImg: require("@/assets/notData/hasDelete.png"),
+
+      //访客ID
+      userId: undefined,
+
+      //判断是否是本人
+      isSelf: false,
     };
   },
   created() {
@@ -177,9 +188,19 @@ export default {
   },
   methods: {
     init() {
+      //判断当前用户是本人还是访客 并判断是否禁用按钮
+      this.userId = this.$route.params.userId;
+      if (this.userId != this.$store.getters.userId) {
+        this.isSelf = false;
+        this.filterForm.status = 5;
+      } else {
+        this.isSelf = true;
+      }
+
       const query = Object.assign({}, this.filterForm);
       //收藏数据
       if (query.status == 5) {
+        query.userId = this.userId;
         getUserCollectionMaterial(query).then((res) => {
           this.materialList = Object.assign([], res.data.data);
           this.filterForm.total = res.data.total;
@@ -254,6 +275,19 @@ export default {
     //分页切换
     currentChange(page) {
       this.filterForm.page = page;
+      this.init();
+    },
+  },
+  computed: {
+    ...mapGetters(["visitorId"]),
+  },
+  watch: {
+    visitorId(value) {
+      if (value == this.$store.getters.userId) {
+        this.filterForm.status = 2;
+      } else {
+        this.filterForm.status = 5;
+      }
       this.init();
     },
   },

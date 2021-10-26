@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-21 19:42:43
+ * @LastEditTime: 2021-10-24 21:06:09
  */
 
 //引入element-ui 提示框
@@ -34,6 +34,7 @@ const whiteList = ['/', '/resources', '/404', '/home', '/readArticle', '/materia
 
 //前置路由钩子
 router.beforeEach(async(to, from, next) => {
+
     // 开始进度条
     NProgress.start()
 
