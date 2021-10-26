@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-21 13:29:36
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-21 15:59:43
+ * @LastEditTime: 2021-10-26 19:38:20
 -->
 <template>
   <div class='app-container'>
@@ -11,6 +11,7 @@
       <swiper
         class="wrapper"
         :options="swiperOptions"
+        style="z-index:1"
       >
         <swiper-slide
           v-for="(item,index) in getImg"

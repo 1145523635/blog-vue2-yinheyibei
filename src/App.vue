@@ -3,16 +3,15 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-21 19:43:33
+ * @LastEditTime: 2021-10-26 21:53:32
 -->
 <template>
   <div id="app">
-
     <transition
       name="slide-fade"
       mode="out-in"
     >
-      <div>
+      <div style="z-index:100">
         <router-view />
       </div>
 
@@ -26,11 +25,20 @@
       fixed
       float
     />
+    <!-- 拖拽按钮 -->
+    <div>
+      <DragBtn />
+    </div>
+
   </div>
 </template>
 <script>
+import DragBtn from "@/components/DragBtn/index";
 export default {
   name: "App",
+  components: {
+    DragBtn,
+  },
   data() {
     return {
       audio: [
@@ -196,7 +204,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" >
+<style lang="scss"  >
 * {
   padding: 0;
   margin: 0;
@@ -208,6 +216,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   background: rgb(245, 246, 247);
+  height: 100%;
 }
 
 .slide-fade-enter-active {
