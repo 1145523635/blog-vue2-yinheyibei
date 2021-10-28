@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 21:06:09
+ * @LastEditTime: 2021-10-27 20:05:48
  */
 
 //引入element-ui 提示框
@@ -28,7 +28,7 @@ import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 // 白名单重定向
-const whiteList = ['/', '/resources', '/404', '/home', '/readArticle', '/materialDetails', '/blogAbout']
+const whiteList = ['/', '/resources', '/404', '/home', '/readArticle', '/materialDetails', '/blogAbout', '/achievements']
 
 
 

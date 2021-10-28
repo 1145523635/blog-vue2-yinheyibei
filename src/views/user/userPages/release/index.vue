@@ -236,7 +236,7 @@ export default {
 
       const query = { status: this.activeArticleType, userId: this.userId };
       getArticleTypeList(query).then((res) => {
-        this.articleList = res.data;
+        this.articleList = Object.assign([], res.data);
       });
     },
 

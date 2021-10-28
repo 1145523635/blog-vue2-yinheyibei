@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-25 21:29:49
+ * @LastEditTime: 2021-10-28 21:22:10
 -->
 <template>
   <div class="app-container">
@@ -11,7 +11,10 @@
       name="slide-fade"
       mode="out-in"
     >
-      <keep-alive exclude="ReadArticle">
+      <keep-alive
+        exclude="ReadArticle"
+        include='Achievements,Home'
+      >
         <div class='mian-container'>
           <router-view />
           <router-view

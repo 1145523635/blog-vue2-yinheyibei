@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 16:08:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-23 14:02:18
+ * @LastEditTime: 2021-10-28 20:34:54
 -->
 <template>
   <div class='app-container'>
@@ -98,6 +98,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "@/style/commonStyle.less";
 .app-container {
   width: 100%;
   .container {
@@ -106,32 +107,7 @@ export default {
       width: 100%;
       margin-bottom: 20px;
       text-align: left;
-      @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-        .recommend-title {
-          background-image: -webkit-linear-gradient(
-            left,
-            #409eff,
-            #ffd90c 25%,
-            #409eff 50%,
-            #ffd90c 75%,
-            #409eff
-          );
-          -webkit-text-fill-color: transparent;
-          -webkit-background-clip: text;
-          -webkit-background-size: 200% 100%;
-          -webkit-animation: masked-animation 1s infinite linear;
-        }
-      }
-
-      @-webkit-keyframes masked-animation {
-        0% {
-          background-position: 0 0;
-        }
-        100% {
-          background-position: -100% 0;
-        }
-      }
-
+      .title-color-scroll-style();
       .recommend-title {
         font-weight: 800;
       }

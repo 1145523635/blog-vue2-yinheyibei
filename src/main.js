@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-19 18:10:21
+ * @LastEditTime: 2021-10-28 20:34:20
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -33,6 +33,10 @@ Vue.use(APlayer);
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.min.css';
 Vue.use(VueAwesomeSwiper);
+
+// npm install animate.css --save安装，再引入
+import animated from 'animate.css'
+Vue.use(animated)
 
 //引入element-ui库
 import ElementUI from 'element-ui';

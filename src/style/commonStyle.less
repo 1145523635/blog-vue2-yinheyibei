@@ -1,0 +1,27 @@
+//标题滚动样式
+.title-color-scroll-style() {
+    @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+        .recommend-title {
+            background-image: -webkit-linear-gradient(left,
+                    #409eff,
+                    #ffd90c 25%,
+                    #409eff 50%,
+                    #ffd90c 75%,
+                    #409eff);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-background-size: 200% 100%;
+            -webkit-animation: masked-animation 1s infinite linear;
+        }
+    }
+
+    @-webkit-keyframes masked-animation {
+        0% {
+            background-position: 0 0;
+        }
+
+        100% {
+            background-position: -100% 0;
+        }
+    }
+}

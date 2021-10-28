@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-20 22:02:52
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-15 12:58:47
+ * @LastEditTime: 2021-10-28 20:33:05
  */
 const path = require('path')
 
@@ -17,6 +17,7 @@ module.exports = {
         open: true
     },
     chainWebpack(config) {
+
 
         //提高第一屏加载速度
         config.plugin('preload').tap(() => [{
@@ -42,4 +43,6 @@ module.exports = {
             })
             .end()
     },
+
+
 }

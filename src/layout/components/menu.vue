@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 19:58:57
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-22 10:29:31
+ * @LastEditTime: 2021-10-27 20:06:51
 -->
 <template>
   <div class="app-container">
@@ -50,7 +50,7 @@ export default {
         {
           id: 3,
           name: "奇思妙想",
-          path: "/blogAbout",
+          path: "/achievements",
         },
       ],
 

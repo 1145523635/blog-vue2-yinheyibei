@@ -13,19 +13,19 @@
           :visible-arrow='false'
         >
           <div class='menu-container'>
-            <div class='menu-item'>
+            <div class='menu-item  animate__animated animate__lightSpeedInLeft'>
               <span><i class='el-icon-s-opportunity icon'></i> 意见反馈</span>
             </div>
-            <div class='menu-item'>
+            <div class='menu-item  animate__animated animate__lightSpeedInRight'>
               <span><i class='el-icon-headset icon'></i> 联系我们</span>
             </div>
             <div
-              class='menu-item'
+              class='menu-item  animate__animated animate__lightSpeedInLeft'
               @click="getUpdateRecord()"
             >
               <span><i class='el-icon-warning icon'></i> 版本更新</span>
             </div>
-            <div class='menu-item'>
+            <div class='menu-item  animate__animated animate__lightSpeedInRight'>
               <span>
                 <svg-icon
                   icon-class="github-fill"
