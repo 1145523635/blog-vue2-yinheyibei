@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 19:21:49
+ * @LastEditTime: 2021-10-29 10:27:24
 -->
 <template>
   <div class="app-container">
@@ -280,11 +280,12 @@ export default {
 
     //去消息详情
     toNoticeDetails({ type, id }) {
-      console.log(type, id);
-
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
       if (type == 1 || type == 2) {
         this.$router.push({
-          path: "/userInfo/articleNews",
+          path: `/userInfo/${VISITORID}/articleNews`,
           query: {
             id,
           },
@@ -293,8 +294,11 @@ export default {
     },
     //去消息页面 不带参数
     toNoticePage() {
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
       this.$router.push({
-        path: "/userInfo/articleNews",
+        path: `/userInfo/${VISITORID}/articleNews`,
       });
     },
     login() {

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-15 10:11:06
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-15 12:54:28
+ * @LastEditTime: 2021-10-30 10:32:23
  */
 
 /**
@@ -80,4 +80,17 @@ export function isArray(arg) {
         return Object.prototype.toString.call(arg) === '[object Array]'
     }
     return Array.isArray(arg)
+}
+
+/**
+ * @param {Object} obj
+ * @returns {Boolean}
+ */
+export function isObject(obj) {
+    if (Object.prototype.toString.call(obj) === '[object Object]') {
+        return true
+    } else {
+        return false
+    }
+
 }

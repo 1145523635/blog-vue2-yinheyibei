@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-10 00:01:55
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 19:40:37
+ * @LastEditTime: 2021-10-30 11:15:27
  */
 import { request } from '@/utils/request'
 
@@ -64,6 +64,21 @@ export function getUserArticleCollection(data) {
     return request({
         url: '/blog/article/verify/getUserArticleCollection',
         method: 'GET',
+        params: data
+    })
+}
+
+/**
+ * @Description: 删除文章数据
+ * @Author: 银河以北
+ * @Date: 2021-08-03 00:59:12
+ * @param {*} data
+ * @return {*}
+ */
+export function deleteArticle(data) {
+    return request({
+        url: '/blog/article/verify/deleteArticle',
+        method: 'DELETE',
         params: data
     })
 }

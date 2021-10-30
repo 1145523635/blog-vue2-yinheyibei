@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-28 22:24:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 19:40:11
+ * @LastEditTime: 2021-10-30 16:50:30
 -->
 <template>
   <div class="app-container">
@@ -25,64 +25,67 @@
         v-else
       >
         <div
-          class="article-item"
           v-for="(item, index) in articleList"
           :key="index"
         >
           <div
-            class="article-img"
-            @click="toReadArticle(item)"
+            v-if="item.articleContent"
+            class="article-item"
           >
-            <img
-              width="100%"
-              height="100%"
-              :src="$utils.imgUrl(item.articleContent.cover_img_url)"
-              alt=""
-            />
-          </div>
-          <div
-            class="article-title"
-            @click="toReadArticle(item)"
-          >
-            <h4>{{ item.articleContent.article_title }}</h4>
-          </div>
-          <div class="article-tage">
-            <el-tag
-              size="mini"
-              effect="dark"
-              class="item-tag"
-            ><i class="el-icon-folder-opened"></i>
-              {{ item.articleContent.getArticleClassification.classification_name }}</el-tag>
-            <el-tag
-              size="mini"
-              type="success"
-              effect="dark"
-              class="item-tag"
-              v-for="(value, key) in item.articleContent.special"
-            ><i class="el-icon-collection-tag"></i>
-              {{ value.special_name }}</el-tag>
-            <el-tag
-              size="mini"
-              type="info"
-              class="item-tag"
-              v-for="(value, key) in item.articleContent.label"
-            ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
-          </div>
-          <div class="article-time">
-            <div class="time">
-              <span>{{
+            <div
+              class="article-img"
+              @click="toReadArticle(item)"
+            >
+              <img
+                width="100%"
+                height="100%"
+                :src="$utils.imgUrl(item.articleContent.cover_img_url)"
+                alt=""
+              />
+            </div>
+            <div
+              class="article-title"
+              @click="toReadArticle(item)"
+            >
+              <h4>{{ item.articleContent.article_title }}</h4>
+            </div>
+            <div class="article-tage">
+              <el-tag
+                size="mini"
+                effect="dark"
+                class="item-tag"
+              ><i class="el-icon-folder-opened"></i>
+                {{ item.articleContent.getArticleClassification.classification_name }}</el-tag>
+              <el-tag
+                size="mini"
+                type="success"
+                effect="dark"
+                class="item-tag"
+                v-for="(value, key) in item.articleContent.special"
+              ><i class="el-icon-collection-tag"></i>
+                {{ value.special_name }}</el-tag>
+              <el-tag
+                size="mini"
+                type="info"
+                class="item-tag"
+                v-for="(value, key) in item.articleContent.label"
+              ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
+            </div>
+            <div class="article-time">
+              <div class="time">
+                <span>{{
                 $utils.getPastTimes(item.articleContent.create_time)
               }}</span>
-            </div>
-            <div class="other">
-              <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{item.articleContent.articleCommentNum}}</span>
-              <span class="other-item"><i class="el-icon-view"></i>
-                {{ item.articleContent.browse_num }}</span>
-              <span class="other-item"><i class="el-icon-star-off"></i>
-                {{ item.articleContent.thumbs_num }}</span>
-              <span class="other-item"><i class="el-icon-collection-tag"></i>
-                {{ item.articleContent.collection_num }}</span>
-              <!-- <el-dropdown
+              </div>
+              <div class="other">
+                <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{item.articleContent.articleCommentNum}}</span>
+                <span class="other-item"><i class="el-icon-view"></i>
+                  {{ item.articleContent.browse_num }}</span>
+                <span class="other-item"><i class="el-icon-star-off"></i>
+                  {{ item.articleContent.thumbs_num }}</span>
+                <span class="other-item"><i class="el-icon-collection-tag"></i>
+                  {{ item.articleContent.collection_num }}</span>
+                <!-- <el-dropdown
                 style="margin-left: 20px"
                 size="mini"
               >
@@ -95,8 +98,32 @@
                   >
                 </el-dropdown-menu>
               </el-dropdown> -->
+              </div>
             </div>
           </div>
+
+          <!-- -->
+          <div
+            v-else
+            class='dont-look'
+          >
+            <el-card
+              style="width:100%"
+              shadow="never"
+            >
+              <div slot="header">
+                <el-button
+                  style="float: right; padding: 0px 0"
+                  type="text"
+                  @click="cancelCollection(item)"
+                >取消收藏</el-button>
+              </div>
+              <div>
+                <p>很抱歉！由于某种特殊原因，当前文章处于不可见状态，如需阅读，请联系文章作者，或耐心等待作者处理、管理员审核。如若不需要可删除。</p>
+              </div>
+            </el-card>
+          </div>
+
         </div>
       </div>
     </div>
@@ -105,6 +132,7 @@
 
 <script>
 import { getUserArticleCollection } from "@/api/article/articleList";
+import { changArticleCollection } from "@/api/article/recommendArticle";
 export default {
   name: "Collection",
   data() {
@@ -128,6 +156,20 @@ export default {
       //数据初始化
       getUserArticleCollection({ userId: this.userId }).then((res) => {
         this.articleList = Object.assign([], res.data);
+      });
+    },
+
+    //取消收藏
+    cancelCollection({ article_id }) {
+      changArticleCollection({ article_id }).then((res) => {
+        if (res.code == 200) {
+          this.init();
+          this.$notify({
+            title: "成功",
+            message: "你已取消关注！",
+            type: "success",
+          });
+        }
       });
     },
 
@@ -177,6 +219,7 @@ export default {
         overflow: hidden;
         transition: 0.5s;
         margin-right: 10px;
+
         .article-img {
           width: 100%;
           height: 150px;
@@ -245,6 +288,15 @@ export default {
           .other-item {
             margin-right: 5px;
           }
+        }
+      }
+      .dont-look {
+        width: 270px;
+        p {
+          font-size: 14px;
+          text-indent: 2em;
+          text-align: left;
+          color: rgb(177, 177, 177);
         }
       }
       .article-item:hover {

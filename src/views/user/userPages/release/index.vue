@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 22:01:13
+ * @LastEditTime: 2021-10-30 16:57:49
 -->
 <template>
   <div class="app-container">
@@ -66,13 +66,17 @@
             >
               <h4>{{ item.article_title }}</h4>
             </div>
-            <div class="article-tage">
+            <div
+              class="article-tage"
+              v-if="$utils.isObject(item.getArticleClassification)"
+            >
               <el-tag
                 size="mini"
                 effect="dark"
                 class="item-tag"
               ><i class="el-icon-folder-opened"></i>
-                {{ item.getArticleClassification.classification_name }}</el-tag>
+                <span>{{item.getArticleClassification.classification_name}}</span>
+              </el-tag>
               <el-tag
                 size="mini"
                 type="success"
@@ -100,16 +104,29 @@
                 <span class="other-item"><i class="el-icon-collection-tag"></i>
                   {{ item.collection_num }}</span>
                 <el-dropdown
-                  v-show="activeArticleType == 2 || activeArticleType == 3"
                   style="margin-left: 20px"
                   size="mini"
                 >
                   <span class="el-dropdown-link">
                     <i class="el-icon-setting"></i>
                   </span>
+
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="articleAppeal(item)">
+                    <el-dropdown-item
+                      @click.native="articleAppeal(item)"
+                      v-show="activeArticleType == 2 || activeArticleType == 3 "
+                    >
                       申诉</el-dropdown-item>
+                    <el-dropdown-item @click.native="articleEdit(item)">
+                      编辑</el-dropdown-item>
+                    <el-popconfirm
+                      title="你确定要删除这篇文章吗？"
+                      @cancel='cancelDelete()'
+                      @confirm='deleteItem(item)'
+                    >
+                      <el-dropdown-item slot="reference">
+                        删除</el-dropdown-item>
+                    </el-popconfirm>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -162,7 +179,11 @@
 
 <script>
 import { getArticleReleaseOption } from "@/api/article/releaseArticle";
-import { getArticleTypeList, appealArticle } from "@/api/article/articleList";
+import {
+  getArticleTypeList,
+  appealArticle,
+  deleteArticle,
+} from "@/api/article/articleList";
 import { mapGetters } from "vuex";
 export default {
   name: "ReleaseList",
@@ -176,6 +197,7 @@ export default {
         { id: 1, label: "审核通过", color: "#2db7f5" },
         { id: 2, label: "审核未通过", color: "#87d068" },
         { id: 3, label: "下架", color: "#87d068" },
+        { id: 4, label: "草稿", color: "#87d068" },
         { id: 5, label: "申诉", color: "#108ee9" },
       ],
 
@@ -233,7 +255,6 @@ export default {
       } else {
         this.isSelf = true;
       }
-
       const query = { status: this.activeArticleType, userId: this.userId };
       getArticleTypeList(query).then((res) => {
         this.articleList = Object.assign([], res.data);
@@ -267,6 +288,34 @@ export default {
       });
     },
 
+    /**
+     *编辑文章
+     */
+    articleEdit(item) {
+      this.$router.push({
+        path: "/release",
+        query: {
+          id: item.id,
+          status: "edit",
+        },
+      });
+    },
+
+    /**
+     * 删除文章
+     */
+    deleteItem({ id }) {
+      deleteArticle({ id }).then((res) => {
+        if (res.code == 200) {
+          this.init();
+          this.$notify({
+            title: "成功",
+            message: "你的文章已被删除！",
+            type: "success",
+          });
+        }
+      });
+    },
     /**
      * 点击下拉菜单(申诉)
      */
@@ -307,6 +356,11 @@ export default {
     handleClose() {
       this.appealContainer = "";
       this.appealShow = false;
+    },
+
+    //取消删除
+    cancelDelete() {
+      return false;
     },
   },
   computed: {

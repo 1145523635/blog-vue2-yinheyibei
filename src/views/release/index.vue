@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 20:15:07
+ * @LastEditTime: 2021-10-30 15:25:50
 -->
 <template>
   <div class="app-container">
@@ -54,7 +54,7 @@
                 placeholder="请选择当前文章的类型"
               >
                 <el-option
-                  v-for="item in classificationOptions"
+                  v-for="(item,index) in classificationOptions"
                   :key="item.id"
                   :label="item.classification_name"
                   :value="item.id"
@@ -72,8 +72,8 @@
                 placeholder="请选择当前文章的专题"
               >
                 <el-option
-                  v-for="item in specialOptions"
-                  :key="item.id"
+                  v-for="(item,index) in specialOptions"
+                  :key="index"
                   :label="item.special_name"
                   :value="item.id"
                 >
@@ -90,8 +90,8 @@
                 placeholder="请选择当前文章的标签"
               >
                 <el-option
-                  v-for="item in labelOptions"
-                  :key="item.id"
+                  v-for="(item,index) in labelOptions"
+                  :key="index"
                   :label="item.label_name"
                   :value="item.id"
                 >
@@ -138,12 +138,12 @@
       <!-- 提交保存按钮 -->
       <div class="btn-container">
         <div class="btn">
-          <!-- <el-button
+          <el-button
             type="info"
             icon="el-icon-document-checked"
             size="small"
             @click="preservationData"
-          >保存</el-button> -->
+          >保存</el-button>
           <el-button
             type="primary"
             @click="saveData"
@@ -170,7 +170,9 @@ import defaultSettings from "@/config/defaultSettings.js";
 import {
   getArticleReleaseOption,
   blogUserReleaseContent,
+  getEditArticle,
 } from "@/api/article/releaseArticle";
+
 export default {
   name: "Release",
   components: {
@@ -183,9 +185,9 @@ export default {
         article_title: "", //文章标题
         article_content: "", //文章主题内容
         article_classification: "", //文章分类ID
-        article_special: "", //文章专题ID
+        article_special: [], //文章专题ID
         article_label: [], //文章标签ID
-        cover_img_id: [], //封面ID
+        cover_img_id: "", //封面ID
         cover_img_url: "", //封面路
       },
 
@@ -209,6 +211,10 @@ export default {
   },
   created() {
     this.init();
+    if (this.$route.query.status == "edit") {
+      this.articleForm.id = this.$route.query.id;
+      this.getEditData();
+    }
   },
 
   methods: {
@@ -218,6 +224,19 @@ export default {
         this.classificationOptions = res.data.classification;
         this.specialOptions = res.data.special;
         this.labelOptions = res.data.label;
+      });
+    },
+
+    /**
+     * 获取需要修改的数据
+     */
+    getEditData() {
+      const query = { id: this.articleForm.id };
+      getEditArticle(query).then((res) => {
+        this.articleForm = Object.assign({}, res.data);
+        if (this.articleForm.article_classification == 0) {
+          this.articleForm.article_classification = undefined;
+        }
       });
     },
 
@@ -242,6 +261,8 @@ export default {
         return;
       }
       const data = Object.assign({}, this.articleForm);
+      data.status = 0;
+      data.is_appeal = 0;
       blogUserReleaseContent(data).then((res) => {
         if (res) {
           this.articleForm.article_title = "";
@@ -249,7 +270,10 @@ export default {
           this.articleForm.article_classification = "";
           this.articleForm.article_label = "";
           this.articleForm.article_special = "";
-          this.$router.push("/userInfo/releaseList");
+          const USERID = this.$store.getters.userId;
+          this.$store.commit("SET_VISITOR_ID", USERID);
+          const VISITORID = this.$store.getters.visitorId;
+          this.$router.push(`/userInfo/${VISITORID}/releaseList`);
           this.$notify({
             title: "成功",
             message: "你的文章已提交至后台管理员审核，请耐心等待！",
@@ -264,6 +288,7 @@ export default {
      */
     saveMd(value) {
       this.articleForm.article_content = value;
+      // this.preservationData();
     },
 
     /**
@@ -353,7 +378,17 @@ export default {
      * 保存文章
      */
     preservationData() {
-      this.$message.error("功能开发中");
+      const data = Object.assign({}, this.articleForm);
+      data.status = 4;
+      blogUserReleaseContent(data).then((res) => {
+        if (res.code == 200) {
+          this.articleForm.id = res.data;
+          this.$notify.success({
+            title: "成功",
+            message: "文章保存成功",
+          });
+        }
+      });
     },
 
     //鼠标移入输入框

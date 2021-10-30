@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 22:15:22
+ * @LastEditTime: 2021-10-30 19:39:51
 -->
 <template>
   <div class="app-container">
@@ -72,7 +72,7 @@
           <div class="item">
             <router-link
               tag="div"
-              :to="{ path: '/userInfo/'+visitorId+'/releaseList' }"
+              :to="{ path: '/userInfo/'+userId+'/releaseList' }"
             ><span style="margin-right: 5px"><i class="el-icon-document-checked"></i></span>
               发布</router-link>
           </div>
@@ -82,13 +82,13 @@
           >
             <router-link
               tag="div"
-              :to="{ path: '/userInfo/'+visitorId+'/collection' }"
+              :to="{ path: '/userInfo/'+userId+'/collection' }"
             ><span style="margin-right: 5px"><i class="el-icon-star-off"></i></span>收藏</router-link>
           </div>
           <div class="item">
             <router-link
               tag="div"
-              :to="{ path: '/userInfo/'+visitorId+'/material' }"
+              :to="{ path: '/userInfo/'+userId+'/material' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-postcard"></i></span>
               资源</router-link>
@@ -99,7 +99,7 @@
           >
             <router-link
               tag="div"
-              :to="{ path:'/userInfo/'+visitorId+'/follow' }"
+              :to="{ path:'/userInfo/'+userId+'/follow' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-view"></i></span>关注</router-link>
           </div>
@@ -109,7 +109,7 @@
           >
             <router-link
               tag="div"
-              :to="{ path: '/userInfo/'+visitorId+'/articleNews' }"
+              :to="{ path: '/userInfo/'+userId+'/articleNews' }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-news"></i></span>消息</router-link>
           </div>
@@ -120,7 +120,7 @@
             <router-link
               tag="div"
               id="personal"
-              :to="{ path: '/userInfo/'+visitorId+'/personal'  }"
+              :to="{ path: '/userInfo/'+userId+'/personal'  }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span>用户</router-link>
           </div>
@@ -131,7 +131,7 @@
             <router-link
               tag="div"
               id="personal"
-              :to="{ path: '/userInfo/'+visitorId+'/personalData'  }"
+              :to="{ path: '/userInfo/'+userId+'/personalData'  }"
             ><span style="margin-right: 5px">
                 <i class="el-icon-user"></i></span>个人资料</router-link>
           </div>
@@ -178,14 +178,13 @@ export default {
     };
   },
   created() {
-    // this.userInfos = this.userInfo.user;
-    // this.other = this.userInfo.other;
     this.init();
   },
   methods: {
     //初始化信息 加载访客信息
     init() {
       this.userId = this.$route.params.userId;
+
       if (this.userId != this.$store.getters.userId) {
         this.isSelf = false;
       } else {
@@ -212,6 +211,7 @@ export default {
       this.init();
     },
   },
+
 };
 </script>
 <style lang="scss" scoped>

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-22 17:00:59
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 21:18:53
+ * @LastEditTime: 2021-10-29 13:13:21
 -->
 <template>
   <div class='app-container'>
@@ -208,6 +208,7 @@ export default {
       } else {
         getUserMaterialByStatus(query).then((res) => {
           this.materialList = Object.assign([], res.data.data);
+          this.filterForm.total = res.data.total;
         });
       }
     },

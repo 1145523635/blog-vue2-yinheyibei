@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-28 20:34:20
+ * @LastEditTime: 2021-10-30 10:34:38
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -52,12 +52,16 @@ Vue.prototype.$Login = LoginBox.install;
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
+//验证是否是对象
+import { isObject } from "@/utils/validate";
+
 
 //把自定义的工具类挂载在vue实例上
 Vue.prototype.$utils = {
     md5,
     imgUrl,
-    getPastTimes
+    getPastTimes,
+    isObject
 };
 
 
