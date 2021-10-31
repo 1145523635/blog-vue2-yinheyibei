@@ -25,7 +25,13 @@
             >
               <span><i class='el-icon-warning icon'></i> 版本更新</span>
             </div>
-            <div class='menu-item  animate__animated animate__lightSpeedInRight'>
+            <div
+              class='menu-item  animate__animated animate__lightSpeedInRight'
+              @click="getDisclaimers()"
+            >
+              <span><i class='el-icon-info icon'></i> 免责声明</span>
+            </div>
+            <div class='menu-item  animate__animated animate__lightSpeedInLeft'>
               <span>
                 <svg-icon
                   icon-class="github-fill"
@@ -100,6 +106,11 @@ export default {
         this.recordList = Object.assign([], res.data);
       });
       this.updateRecordShow = true;
+    },
+
+    //去免责声明页面
+    getDisclaimers(){
+    this.$router.push('/disclaimers')
     },
 
     mousedowm(e) {

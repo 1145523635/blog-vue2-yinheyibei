@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 15:25:50
+ * @LastEditTime: 2021-10-31 14:02:15
 -->
 <template>
   <div class="app-container">
@@ -244,9 +244,6 @@ export default {
      *提交文章数据
      */
     async saveData() {
-      //设置延迟时间
-      await this.uploadMdImgs();
-
       if (this.articleForm.article_title == "") {
         this.$message.error("你不会忘记了文章标题吧！");
         return;
@@ -260,6 +257,9 @@ export default {
         this.$message.error("记得上传文章封面哦！");
         return;
       }
+      this.$refs.md.save();
+      //设置延迟时间
+      await this.uploadMdImgs();
       const data = Object.assign({}, this.articleForm);
       data.status = 0;
       data.is_appeal = 0;
@@ -377,9 +377,11 @@ export default {
     /**
      * 保存文章
      */
-    preservationData() {
+    async preservationData() {
+      this.$refs.md.save();
       const data = Object.assign({}, this.articleForm);
       data.status = 4;
+      await this.uploadMdImgs();
       blogUserReleaseContent(data).then((res) => {
         if (res.code == 200) {
           this.articleForm.id = res.data;

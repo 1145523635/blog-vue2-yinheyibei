@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-12 20:23:27
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 22:43:59
+ * @LastEditTime: 2021-10-31 10:46:29
 -->
 <template>
   <div class="app-container">
@@ -32,12 +32,14 @@
         class="follow-container"
         v-if="isFollow"
       >
-        <div v-if="followUserList.length > 0">
+        <div
+          v-if="followUserList.length > 0"
+          class='follow'
+        >
           <div
             class="follow-item"
             v-for="(item, index) in followUserList"
             :key="index"
-            @click="toUserInfo(item,'isFollow')"
           >
             <div class="follow-background">
               <img
@@ -53,6 +55,7 @@
                   width="100%"
                   height="100%"
                   alt=""
+                  @click="toUserInfo(item,'isFollow')"
                 />
               </div>
               <div class="user-name">
@@ -97,12 +100,14 @@
         class="follow-container"
         v-else
       >
-        <div v-if="fansUserList.length > 0">
+        <div
+          v-if="fansUserList.length > 0"
+          class='follow'
+        >
           <div
             class="follow-item"
             v-for="(item, index) in fansUserList"
             :key="index"
-            @click="toUserInfo(item,'isFans')"
           >
             <div class="follow-background">
               <img
@@ -118,6 +123,7 @@
                   width="100%"
                   height="100%"
                   alt=""
+                  @click="toUserInfo(item,'isFans')"
                 />
               </div>
               <div class="user-name">
@@ -289,57 +295,65 @@ export default {
       width: calc(100% - 20px);
       display: flex;
       justify-content: center;
-      .follow-item {
-        width: 230px;
-        height: 65px;
-        padding: 5px;
-        border-radius: 5px;
-        overflow: hidden;
-        cursor: pointer;
-        position: relative;
-        .follow-background {
-          opacity: 0.2;
-          filter: blur(4px);
-          width: 100%;
-        }
-        .user-info {
-          position: absolute;
-          top: 0;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
+      .follow {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        .follow-item {
+          width: 230px;
+          height: 65px;
           padding: 5px;
-          width: calc(100% - 10px);
-          height: calc(100% - 10px);
-          .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-right: 10px;
+          border-radius: 5px;
+          margin: 5px;
+          overflow: hidden;
+          cursor: pointer;
+          position: relative;
+          .follow-background {
+            opacity: 0.2;
+            filter: blur(4px);
+            width: 100%;
           }
-          .user-name {
-            text-align: left;
-            .user-autograph {
-              width: 150px;
-              white-space: nowrap;
+          .user-info {
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 5px;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            .user-avatar {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
               overflow: hidden;
-              text-overflow: ellipsis;
-              color: #777;
-              font-size: 12px;
-              margin: 5px;
+              margin-right: 10px;
             }
-            .is-follow {
-              margin-left: 5px;
-              color: #3390ff;
-            }
-            .not-follow {
-              margin-left: 5px;
-              color: #67c23a;
+            .user-name {
+              text-align: left;
+              .user-autograph {
+                width: 150px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #777;
+                font-size: 12px;
+                margin: 5px;
+              }
+              .is-follow {
+                margin-left: 5px;
+                color: #3390ff;
+              }
+              .not-follow {
+                margin-left: 5px;
+                color: #67c23a;
+              }
             }
           }
         }
       }
+
       .empty-data {
         width: 100%;
         display: flex;

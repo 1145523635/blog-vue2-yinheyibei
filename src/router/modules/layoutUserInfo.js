@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:47:00
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-27 20:05:36
+ * @LastEditTime: 2021-10-31 20:58:00
  */
 
 //引入用户信息模块
@@ -108,6 +108,19 @@ export const layoutUserInfo = [{
         components: {
             default: () =>
                 import ('@/views/material/materialDetails/index.vue'),
+            userInfo: UserInfo
+        }
+    },
+    {
+        path: 'disclaimers',
+        name: 'Disclaimers',
+        meta: {
+            title: '免责声明',
+            keepAlive: false
+        },
+        components: {
+            default: () =>
+                import ('@/views/disclaimers/index.vue'),
             userInfo: UserInfo
         }
     }

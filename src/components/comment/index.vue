@@ -1,10 +1,16 @@
 <template>
   <div class="hbl-fa">
     <div class="hbl-comm">
-      <div class="comment-avatar" v-if="showAvatar">
+      <div
+        class="comment-avatar"
+        v-if="showAvatar"
+      >
         <avatar :avatar="avatar"></avatar>
       </div>
-      <div class="comment" :style="{ width: commentWidth }">
+      <div
+        class="comment"
+        :style="{ width: commentWidth }"
+      >
         <el-input
           @focus="showButton(0)"
           type="textarea"
@@ -14,13 +20,19 @@
         >
         </el-input>
 
-        <div v-if="buttonMap[0]" class="hbl-owo flex-owo">
+        <div
+          v-if="buttonMap[0]"
+          class="hbl-owo flex-owo"
+        >
           <div
             :class="pBodyMap[0] ? 'OwO' : 'OwO OwO-open'"
             class="emoj publish"
             :style="{ width: emojiWidth }"
           >
-            <div class="OwO-logo" @click="pBodyStatus(0)">
+            <div
+              class="OwO-logo"
+              @click="pBodyStatus(0)"
+            >
               <span @blur="blur">Emoji表情</span>
             </div>
             <div class="OwO-body">
@@ -31,27 +43,31 @@
                   :key="'oitem' + index"
                   @click="choseEmoji(0, oitem.title)"
                 >
-                  <img :src="require('./img/face/' + oitem.url)" alt="" />
+                  <img
+                    :src="require('./img/face/' + oitem.url)"
+                    alt=""
+                  />
                 </li>
               </ul>
             </div>
           </div>
 
-          <div class="publish publish-btn" style="display: flex">
+          <div
+            class="publish publish-btn"
+            style="display: flex"
+          >
             <el-button
               type="primary"
               icon="el-icon-circle-check"
               @click="doSend()"
               size="mini"
-              >评论</el-button
-            >
+            >评论</el-button>
             <el-button
               type="info"
               @click="cancel(0)"
               icon="el-icon-circle-close"
               size="mini"
-              >取消</el-button
-            >
+            >取消</el-button>
           </div>
         </div>
       </div>
@@ -64,8 +80,12 @@
       </div>
     </div>
 
-    <div v-for="(item, index) in commentList" class="hbl-child">
+    <div
+      v-for="(item, index) in commentList"
+      class="hbl-child"
+    >
       <div class="reply"></div>
+
       <div class="content">
         <div class="comment-f">
           <avatar
@@ -74,15 +94,22 @@
                 ? $utils.imgUrl(item.userInfo.avatar_url)
                 : avatar
             "
+            @click="toUserInfo(item.userInfo.id)"
           ></avatar>
         </div>
 
         <div class="comment-f">
           <div>
-            <div class="nickname author">
+            <div
+              class="nickname author"
+              @click="toUserInfo(item.userInfo.id)"
+            >
               {{ item.userInfo.nickname }}
             </div>
-            <div v-if="item.userInfo.id === authorId" class="icon author">
+            <div
+              v-if="item.userInfo.id === authorId"
+              class="icon author"
+            >
               {{ label }}
             </div>
             <div class="date">
@@ -91,16 +118,23 @@
           </div>
         </div>
 
-        <div class="reply-content" v-html="analyzeEmoji(item.content)">
+        <div
+          class="reply-content"
+          v-html="analyzeEmoji(item.content)"
+        >
           {{ analyzeEmoji(item.content) }}
         </div>
         <div class="reply-content reply-fa">
-          <div class="reply-font" @click="doReply(item.id)">
+          <div
+            class="reply-font"
+            @click="doReply(item.id)"
+          >
             <div>
-              <img src="./img/icon/reply.png" class="icon-reply" /><font
-                class="icon-reply icon-hf"
-                >回复</font
-              >
+              <img
+                src="./img/icon/reply.png"
+                class="icon-reply"
+              />
+              <font class="icon-reply icon-hf">回复</font>
             </div>
           </div>
 
@@ -119,13 +153,19 @@
             >
             </el-input>
 
-            <div v-if="buttonMap[item.id]" class="hbl-owo flex-owo">
+            <div
+              v-if="buttonMap[item.id]"
+              class="hbl-owo flex-owo"
+            >
               <div
                 :class="pBodyMap[item.id] ? 'OwO' : 'OwO OwO-open'"
                 class="emoj publish"
                 :style="{ width: emojiWidth }"
               >
-                <div class="OwO-logo" @click="pBodyStatus(item.id)">
+                <div
+                  class="OwO-logo"
+                  @click="pBodyStatus(item.id)"
+                >
                   <span>Emoji表情</span>
                 </div>
                 <div class="OwO-body">
@@ -136,44 +176,49 @@
                       :key="'oitem' + index"
                       @click="choseEmoji(item.id, oitem.title)"
                     >
-                      <img :src="require('./img/face/' + oitem.url)" alt="" />
+                      <img
+                        :src="require('./img/face/' + oitem.url)"
+                        alt=""
+                      />
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <div class="publish publish-btn" style="display: flex">
+              <div
+                class="publish publish-btn"
+                style="display: flex"
+              >
                 <el-button
                   type="primary"
                   icon="el-icon-circle-check"
                   @click="doChidSend(item.id, item.userInfo.id, item.id)"
                   size="mini"
-                  >评论</el-button
-                >
+                >评论</el-button>
                 <el-button
                   type="info"
                   @click="cancel(item.id)"
                   icon="el-icon-circle-close"
                   size="mini"
-                  >取消</el-button
-                >
+                >取消</el-button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="children" v-for="(ritem, jndex) in item.children">
+      <div
+        class="children"
+        v-for="(ritem, jndex) in item.children"
+      >
         <div class="reply"></div>
         <div class="content">
           <div class="comment-f">
-            <avatar
-              :avatar="
+            <avatar :avatar="
                 ritem.userInfo.avatar_url
                   ? $utils.imgUrl(ritem.userInfo.avatar_url)
                   : avatar
-              "
-            ></avatar>
+              "></avatar>
           </div>
 
           <div class="comment-f">
@@ -181,7 +226,10 @@
               <div class="nickname author">
                 {{ ritem.userInfo.nickname }}
               </div>
-              <div v-if="ritem.userInfo.id === authorId" class="icon author">
+              <div
+                v-if="ritem.userInfo.id === authorId"
+                class="icon author"
+              >
                 {{ label }}
               </div>
               <div class="date">
@@ -191,24 +239,35 @@
           </div>
 
           <div class="reply-content">
-            <div class="cc cc-to">
-              <a href="#" v-if="ritem.targetUser.nickname"
-                >@{{ ritem.targetUser.nickname }}</a
-              >
+            <div
+              class="cc cc-to"
+              @click="toUserInfo( ritem.targetUser.id)"
+            >
+              <a
+                href="#"
+                v-if="ritem.targetUser.nickname"
+              >@{{ ritem.targetUser.nickname }}</a>
             </div>
 
-            <div class="cc" v-html="analyzeEmoji(ritem.content)">
+            <div
+              class="cc"
+              v-html="analyzeEmoji(ritem.content)"
+            >
               {{ analyzeEmoji(ritem.content) }}
             </div>
           </div>
 
           <div class="reply-content reply-fa">
-            <div class="reply-font" @click="doReply(ritem.id)">
+            <div
+              class="reply-font"
+              @click="doReply(ritem.id)"
+            >
               <div>
-                <img src="./img/icon/reply.png" class="icon-reply" /><font
-                  class="icon-reply icon-hf"
-                  >回复</font
-                >
+                <img
+                  src="./img/icon/reply.png"
+                  class="icon-reply"
+                />
+                <font class="icon-reply icon-hf">回复</font>
               </div>
             </div>
 
@@ -227,13 +286,19 @@
               >
               </el-input>
 
-              <div v-if="buttonMap[ritem.id]" class="hbl-owo flex-owo">
+              <div
+                v-if="buttonMap[ritem.id]"
+                class="hbl-owo flex-owo"
+              >
                 <div
                   :class="pBodyMap[ritem.id] ? 'OwO' : 'OwO OwO-open'"
                   class="emoj publish"
                   :style="{ width: emojiWidth }"
                 >
-                  <div class="OwO-logo" @click="pBodyStatus(ritem.id)">
+                  <div
+                    class="OwO-logo"
+                    @click="pBodyStatus(ritem.id)"
+                  >
                     <span>Emoji表情</span>
                   </div>
                   <div class="OwO-body">
@@ -244,27 +309,31 @@
                         :key="'oitem' + index"
                         @click="choseEmoji(ritem.id, oitem.title)"
                       >
-                        <img :src="require('./img/face/' + oitem.url)" alt="" />
+                        <img
+                          :src="require('./img/face/' + oitem.url)"
+                          alt=""
+                        />
                       </li>
                     </ul>
                   </div>
                 </div>
 
-                <div class="publish publish-btn" style="display: flex">
+                <div
+                  class="publish publish-btn"
+                  style="display: flex"
+                >
                   <el-button
                     type="primary"
                     icon="el-icon-circle-check"
                     @click="doChidSend(ritem.id, ritem.userInfo.id, item.id)"
                     size="mini"
-                    >评论</el-button
-                  >
+                  >评论</el-button>
                   <el-button
                     type="info"
                     @click="cancel(ritem.id)"
                     icon="el-icon-circle-close"
                     size="mini"
-                    >取消</el-button
-                  >
+                  >取消</el-button>
                 </div>
               </div>
             </div>
@@ -433,6 +502,21 @@ export default {
     doChidSend(index, commentUserId, pid) {
       this.$emit("doChidSend", this.textareaMap[index], commentUserId, pid);
       this.$set(this.textareaMap, index, "");
+    },
+
+    /**
+     * 去用户中心 访客
+     */
+    toUserInfo(userId) {
+      const USERID = userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/releaseList`,
+        query: {
+          activeArticleType: 1,
+        },
+      });
     },
 
     //选择表情包
