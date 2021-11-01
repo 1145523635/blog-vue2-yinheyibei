@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-09-12 20:23:27
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-31 10:46:29
+ * @LastEditTime: 2021-11-01 20:56:31
 -->
 <template>
   <div class="app-container">
@@ -163,13 +163,31 @@
           </div>
         </div>
       </div>
+      <div
+        class='pags-container'
+        v-if="(!isFollow&&fansUserList.length>0)||(isFollow&&followUserList.length>0)"
+      >
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="filterForm.total"
+          :page-size='filterForm.list_rows'
+          :current-page='filterForm.page'
+          @current-change='currentChange'
+          small
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { blogUserFollowUser, getUserFans } from "@/api/user/followUser";
-import { getUserFollow } from "@/api/user/followUser";
+import {
+  blogUserFollowUser,
+  getUserFans,
+  getUserFollow,
+} from "@/api/user/followUser";
 export default {
   name: "Follow",
   data() {
@@ -188,6 +206,15 @@ export default {
 
       //没有关注图片
       emptyFollows: require("@/assets/notData/notFollows.png"),
+
+      //分页
+      filterForm: {
+        list_rows: 6,
+        page: 1,
+        total: 0,
+      },
+      //展示分页
+      isShowPages: false,
     };
   },
   created() {
@@ -196,14 +223,33 @@ export default {
   },
   methods: {
     init() {
-      getUserFollow().then((res) => {
+      this.isShowPages = false;
+      const query = {
+        ...this.filterForm,
+      };
+      this.getFollow();
+      this.getFans();
+    },
+    getFollow() {
+      const query = {
+        ...this.filterForm,
+      };
+      getUserFollow(query).then((res) => {
         res.data.forEach((item) => {
           item.isFollow = true;
         });
-        this.followUserList = Object.assign([], res.data);
+        this.followUserList = Object.assign([], res.data.data);
+        this.filterForm.total = res.data.total;
       });
-      getUserFans().then((res) => {
-        this.fansUserList = Object.assign([], res.data);
+    },
+    getFans() {
+      const query = {
+        ...this.filterForm,
+      };
+      getUserFans(query).then((res) => {
+        this.fansUserList = Object.assign([], res.data.data);
+        // this.fansUserList = Array(8).fill(res.data[0]);
+        this.filterForm.total = res.data.total;
       });
     },
 
@@ -255,6 +301,25 @@ export default {
           activeArticleType: 1,
         },
       });
+    },
+
+    //分页切换
+    currentChange(page) {
+      this.filterForm.page = page;
+      if (this.isFollow) {
+        this.getFollow();
+      } else {
+        this.getFans();
+      }
+    },
+  },
+  watch: {
+    isFollow() {
+      this.filterForm = {
+        list_rows: 6,
+        page: 1,
+        total: 0,
+      };
     },
   },
 };
@@ -366,6 +431,12 @@ export default {
           display: block;
         }
       }
+    }
+    .pags-container {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
     }
   }
 }

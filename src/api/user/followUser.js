@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-14 14:38:51
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-13 22:03:06
+ * @LastEditTime: 2021-11-01 20:57:08
  */
 
 import { request } from '@/utils/request'
@@ -30,10 +30,11 @@ export function blogUserFollowUser(data) {
  * @param {*} data
  * @return {*}
  */
-export function getUserFollow() {
+export function getUserFollow(data) {
     return request({
         url: '/blog/blogUser/getUserFollow',
         method: 'GET',
+        params: data
     })
 }
 
@@ -44,9 +45,10 @@ export function getUserFollow() {
  * @param {*} data
  * @return {*}
  */
-export function getUserFans() {
+export function getUserFans(data) {
     return request({
         url: '/blog/blogUser/getUserFans',
         method: 'GET',
+        params: data
     })
 }

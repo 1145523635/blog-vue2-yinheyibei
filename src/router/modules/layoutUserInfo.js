@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:47:00
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-31 20:58:00
+ * @LastEditTime: 2021-11-01 12:30:17
  */
 
 //引入用户信息模块
@@ -121,6 +121,19 @@ export const layoutUserInfo = [{
         components: {
             default: () =>
                 import ('@/views/disclaimers/index.vue'),
+            userInfo: UserInfo
+        }
+    },
+    {
+        path: 'about',
+        name: 'About',
+        meta: {
+            title: '关于我们',
+            keepAlive: false
+        },
+        components: {
+            default: () =>
+                import ('@/views/about/index.vue'),
             userInfo: UserInfo
         }
     }

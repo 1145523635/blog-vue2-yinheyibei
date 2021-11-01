@@ -16,22 +16,31 @@
             <div class='menu-item  animate__animated animate__lightSpeedInLeft'>
               <span><i class='el-icon-s-opportunity icon'></i> 意见反馈</span>
             </div>
-            <div class='menu-item  animate__animated animate__lightSpeedInRight'>
+            <div
+              class='menu-item  animate__animated animate__lightSpeedInRight'
+              @click="contactusShow=true"
+            >
               <span><i class='el-icon-headset icon'></i> 联系我们</span>
             </div>
             <div
               class='menu-item  animate__animated animate__lightSpeedInLeft'
+              @click="toAbout()"
+            >
+              <span><i class='el-icon-user icon'></i> 关于我们</span>
+            </div>
+            <div
+              class='menu-item  animate__animated animate__lightSpeedInRight'
               @click="getUpdateRecord()"
             >
               <span><i class='el-icon-warning icon'></i> 版本更新</span>
             </div>
             <div
-              class='menu-item  animate__animated animate__lightSpeedInRight'
+              class='menu-item  animate__animated animate__lightSpeedInLeft'
               @click="getDisclaimers()"
             >
               <span><i class='el-icon-info icon'></i> 免责声明</span>
             </div>
-            <div class='menu-item  animate__animated animate__lightSpeedInLeft'>
+            <div class='menu-item  animate__animated animate__lightSpeedInRight'>
               <span>
                 <svg-icon
                   icon-class="github-fill"
@@ -82,6 +91,27 @@
           </el-steps>
         </div>
       </el-dialog>
+      <el-dialog
+        title="联系我们"
+        :visible.sync="contactusShow"
+        width="30%"
+      >
+        <div class='contactus'>
+          <div><img
+              width="150px"
+              height="220px"
+              :src="imgs.QQ"
+              alt="QQ"
+            ></div>
+          <div><img
+              width="150px"
+              height="220px"
+              :src="imgs.WX"
+              alt="WX"
+            ></div>
+        </div>
+
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -94,9 +124,16 @@ export default {
     return {
       //更新记录弹窗
       updateRecordShow: false,
+      contactusShow: false,
 
       //更新记录
       recordList: [],
+
+      //需要用到的图片
+      imgs: {
+        QQ: require("@/assets/author/QQ.png"),
+        WX: require("@/assets/author/WX.png"),
+      },
     };
   },
   methods: {
@@ -109,8 +146,13 @@ export default {
     },
 
     //去免责声明页面
-    getDisclaimers(){
-    this.$router.push('/disclaimers')
+    getDisclaimers() {
+      this.$router.push("/disclaimers");
+    },
+
+    //去关于页面
+    toAbout() {
+      this.$router.push("/about");
     },
 
     mousedowm(e) {
@@ -232,5 +274,11 @@ export default {
   &::-webkit-scrollbar-thumb:active {
     background-color: rgba(144, 147, 153, 0.9);
   }
+}
+.contactus {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 </style>

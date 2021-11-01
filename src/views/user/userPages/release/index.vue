@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-09 23:03:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 16:57:49
+ * @LastEditTime: 2021-11-01 19:17:07
 -->
 <template>
   <div class="app-container">
@@ -44,93 +44,109 @@
           class="article-container"
           v-else
         >
-          <div
-            class="article-item"
-            v-for="(item, index) in articleList"
-            :key="index"
-          >
+          <div class='article'>
             <div
-              class="article-img"
-              @click="toReadArticle(item)"
+              class="article-item"
+              v-for="(item, index) in articleList"
+              :key="index"
             >
-              <img
-                width="100%"
-                height="100%"
-                :src="$utils.imgUrl(item.cover_img_url)"
-                alt=""
-              />
-            </div>
-            <div
-              class="article-title"
-              @click="toReadArticle(item)"
-            >
-              <h4>{{ item.article_title }}</h4>
-            </div>
-            <div
-              class="article-tage"
-              v-if="$utils.isObject(item.getArticleClassification)"
-            >
-              <el-tag
-                size="mini"
-                effect="dark"
-                class="item-tag"
-              ><i class="el-icon-folder-opened"></i>
-                <span>{{item.getArticleClassification.classification_name}}</span>
-              </el-tag>
-              <el-tag
-                size="mini"
-                type="success"
-                effect="dark"
-                class="item-tag"
-                v-for="(value, key) in item.special"
-              ><i class="el-icon-collection-tag"></i>
-                {{ value.special_name }}</el-tag>
-              <el-tag
-                size="mini"
-                type="info"
-                class="item-tag"
-                v-for="(value, key) in item.label"
-              ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
-            </div>
-            <div class="article-time">
-              <div class="time">
-                <span>{{ $utils.getPastTimes(item.create_time) }}</span>
+              <div
+                class="article-img"
+                @click="toReadArticle(item)"
+              >
+                <img
+                  width="100%"
+                  height="100%"
+                  :src="$utils.imgUrl(item.cover_img_url)"
+                  alt=""
+                />
               </div>
-              <div class="other">
-                <span class="other-item"><i class="el-icon-chat-dot-square"></i>
-                  {{ item.articleCommentNum }}</span>
-                <span class="other-item"><i class="el-icon-view"></i> {{ item.browse_num }}</span>
-                <span class="other-item"><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span>
-                <span class="other-item"><i class="el-icon-collection-tag"></i>
-                  {{ item.collection_num }}</span>
-                <el-dropdown
-                  style="margin-left: 20px"
+              <div
+                class="article-title"
+                @click="toReadArticle(item)"
+              >
+                <h4>{{ item.article_title }}</h4>
+              </div>
+              <div
+                class="article-tage"
+                v-if="$utils.isObject(item.getArticleClassification)"
+              >
+                <el-tag
                   size="mini"
-                >
-                  <span class="el-dropdown-link">
-                    <i class="el-icon-setting"></i>
-                  </span>
+                  effect="dark"
+                  class="item-tag"
+                ><i class="el-icon-folder-opened"></i>
+                  <span>{{item.getArticleClassification.classification_name}}</span>
+                </el-tag>
+                <el-tag
+                  size="mini"
+                  type="success"
+                  effect="dark"
+                  class="item-tag"
+                  v-for="(value, key) in item.special"
+                ><i class="el-icon-collection-tag"></i>
+                  {{ value.special_name }}</el-tag>
+                <el-tag
+                  size="mini"
+                  type="info"
+                  class="item-tag"
+                  v-for="(value, key) in item.label"
+                ><i class="el-icon-s-flag"></i>{{ value.label_name }}</el-tag>
+              </div>
+              <div class="article-time">
+                <div class="time">
+                  <span>{{ $utils.getPastTimes(item.create_time) }}</span>
+                </div>
+                <div class="other">
+                  <span class="other-item"><i class="el-icon-chat-dot-square"></i>
+                    {{ item.articleCommentNum }}</span>
+                  <span class="other-item"><i class="el-icon-view"></i> {{ item.browse_num }}</span>
+                  <span class="other-item"><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span>
+                  <span class="other-item"><i class="el-icon-collection-tag"></i>
+                    {{ item.collection_num }}</span>
+                  <el-dropdown
+                    style="margin-left: 20px"
+                    size="mini"
+                  >
+                    <span class="el-dropdown-link">
+                      <i class="el-icon-setting"></i>
+                    </span>
 
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item
-                      @click.native="articleAppeal(item)"
-                      v-show="activeArticleType == 2 || activeArticleType == 3 "
-                    >
-                      申诉</el-dropdown-item>
-                    <el-dropdown-item @click.native="articleEdit(item)">
-                      编辑</el-dropdown-item>
-                    <el-popconfirm
-                      title="你确定要删除这篇文章吗？"
-                      @cancel='cancelDelete()'
-                      @confirm='deleteItem(item)'
-                    >
-                      <el-dropdown-item slot="reference">
-                        删除</el-dropdown-item>
-                    </el-popconfirm>
-                  </el-dropdown-menu>
-                </el-dropdown>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item
+                        @click.native="articleAppeal(item)"
+                        v-show="activeArticleType == 2 || activeArticleType == 3 "
+                      >
+                        申诉</el-dropdown-item>
+                      <el-dropdown-item @click.native="articleEdit(item)">
+                        编辑</el-dropdown-item>
+                      <el-popconfirm
+                        title="你确定要删除这篇文章吗？"
+                        @cancel='cancelDelete()'
+                        @confirm='deleteItem(item)'
+                      >
+                        <el-dropdown-item slot="reference">
+                          删除</el-dropdown-item>
+                      </el-popconfirm>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </div>
               </div>
             </div>
+          </div>
+
+          <!-- 分页 -->
+          <div class='pags-container'>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="filterForm.total"
+              :page-size='filterForm.list_rows'
+              :current-page='filterForm.page'
+              @current-change='currentChange'
+              small
+            >
+            </el-pagination>
           </div>
         </div>
       </div>
@@ -203,6 +219,12 @@ export default {
 
       //当前文章类型
       activeArticleType: 0,
+      //过滤表单
+      filterForm: {
+        list_rows: 6,
+        page: 1,
+        total: 0,
+      },
 
       //文章数据
       articleList: [],
@@ -255,9 +277,14 @@ export default {
       } else {
         this.isSelf = true;
       }
-      const query = { status: this.activeArticleType, userId: this.userId };
+      const query = {
+        status: this.activeArticleType,
+        userId: this.userId,
+        ...this.filterForm,
+      };
       getArticleTypeList(query).then((res) => {
-        this.articleList = Object.assign([], res.data);
+        this.articleList = Object.assign([], res.data.data);
+        this.filterForm.total = res.data.total;
       });
     },
 
@@ -362,6 +389,12 @@ export default {
     cancelDelete() {
       return false;
     },
+
+    //分页切换
+    currentChange(page) {
+      this.filterForm.page = page;
+      this.init();
+    },
   },
   computed: {
     ...mapGetters(["visitorId"]),
@@ -426,91 +459,106 @@ export default {
         justify-content: flex-start;
         align-items: top;
         flex-wrap: wrap;
-        .article-item {
-          padding: 10px;
-          width: 250px;
-          cursor: pointer;
+        .article {
+          width: 100%;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           flex-wrap: wrap;
-          background: #fff;
-          border-radius: 5px;
-          overflow: hidden;
-          transition: 0.5s;
-          margin-right: 10px;
-          .article-img {
-            width: 100%;
-            height: 150px;
+          height: 560px;
+          .article-item {
+            padding: 10px;
+            width: 250px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: #fff;
             border-radius: 5px;
             overflow: hidden;
-          }
-          .article-title {
-            width: 100%;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            text-align: left;
-            height: 60px;
-            h4 {
+            transition: 0.5s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            height: 255px;
+            .article-img {
+              width: 100%;
+              height: 150px;
+              border-radius: 5px;
+              overflow: hidden;
+            }
+            .article-title {
+              width: 100%;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              text-align: left;
+              height: 60px;
+              h4 {
+                margin-top: 10px;
+              }
+            }
+            .article-title:hover {
+              color: #3390ff;
+            }
+            .article-tage {
+              display: flex;
+              justify-content: flex-start;
+              width: 100%;
+              overflow-x: auto;
+              &::-webkit-scrollbar {
+                height: 4px;
+              }
+              &::-webkit-scrollbar-thumb {
+                background-color: rgba(144, 147, 153, 0.3);
+                border-radius: 2px;
+              }
+              &::-webkit-scrollbar-track {
+                background-color: #f0f2f5;
+              }
+              &::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(144, 147, 153, 0.6);
+              }
+              &::-webkit-scrollbar-thumb:active {
+                background-color: rgba(144, 147, 153, 0.9);
+              }
+              .item-tag {
+                margin-right: 3px;
+              }
+            }
+            .article-time {
               margin-top: 10px;
-            }
-          }
-          .article-title:hover {
-            color: #3390ff;
-          }
-          .article-tage {
-            display: flex;
-            justify-content: flex-start;
-            width: 100%;
-            overflow-x: auto;
-            &::-webkit-scrollbar {
-              height: 4px;
-            }
-            &::-webkit-scrollbar-thumb {
-              background-color: rgba(144, 147, 153, 0.3);
-              border-radius: 2px;
-            }
-            &::-webkit-scrollbar-track {
-              background-color: #f0f2f5;
-            }
-            &::-webkit-scrollbar-thumb:hover {
-              background-color: rgba(144, 147, 153, 0.6);
-            }
-            &::-webkit-scrollbar-thumb:active {
-              background-color: rgba(144, 147, 153, 0.9);
-            }
-            .item-tag {
-              margin-right: 3px;
-            }
-          }
-          .article-time {
-            margin-top: 10px;
-            font-size: 12px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            .time::before {
+              font-size: 12px;
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
               position: relative;
-              content: " ";
-              display: inline-block;
-              width: 5px;
-              height: 5px;
-              background-color: #409eff;
-              border-radius: 50%;
-              margin-right: 5px;
-              top: -1px;
+              .time::before {
+                position: relative;
+                content: " ";
+                display: inline-block;
+                width: 5px;
+                height: 5px;
+                background-color: #409eff;
+                border-radius: 50%;
+                margin-right: 5px;
+                top: -1px;
+              }
+              .other-item {
+                margin-right: 5px;
+              }
             }
-            .other-item {
-              margin-right: 5px;
-            }
+          }
+          .article-item:hover {
+            box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.22),
+              0 0 6px rgba(0, 0, 0, 0.14);
           }
         }
-        .article-item:hover {
-          box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.22),
-            0 0 6px rgba(0, 0, 0, 0.14);
+
+        .pags-container {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
         }
       }
       .not-data {

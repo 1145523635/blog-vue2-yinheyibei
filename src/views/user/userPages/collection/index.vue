@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-28 22:24:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 16:50:30
+ * @LastEditTime: 2021-11-01 20:18:41
 -->
 <template>
   <div class="app-container">
@@ -125,6 +125,19 @@
           </div>
 
         </div>
+        <!-- 分页 -->
+        <div class='pags-container'>
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="filterForm.total"
+            :page-size='filterForm.list_rows'
+            :current-page='filterForm.page'
+            @current-change='currentChange'
+            small
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -145,6 +158,13 @@ export default {
 
       //访客ID
       userId: undefined,
+
+      //分页
+      filterForm: {
+        list_rows: 4,
+        page: 1,
+        total: 0,
+      },
     };
   },
   created() {
@@ -154,8 +174,13 @@ export default {
   methods: {
     init() {
       //数据初始化
-      getUserArticleCollection({ userId: this.userId }).then((res) => {
-        this.articleList = Object.assign([], res.data);
+      const query = {
+        userId: this.userId,
+        ...this.filterForm,
+      };
+      getUserArticleCollection(query).then((res) => {
+        this.articleList = Object.assign([], res.data.data);
+        this.filterForm.total = res.data.total;
       });
     },
 
@@ -182,6 +207,12 @@ export default {
         query: { id: item.article_id },
       });
     },
+
+    //分页切换
+    currentChange(page) {
+      this.filterForm.page = page;
+      this.init();
+    },
   },
 };
 </script>
@@ -206,7 +237,6 @@ export default {
       justify-content: flex-start;
       align-items: top;
       flex-wrap: wrap;
-
       .article-item {
         padding: 10px;
         width: 250px;
@@ -289,6 +319,11 @@ export default {
             margin-right: 5px;
           }
         }
+      }
+      .pags-container {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
       }
       .dont-look {
         width: 270px;

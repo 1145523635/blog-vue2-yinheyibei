@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 21:46:02
+ * @LastEditTime: 2021-11-01 21:37:19
 -->
 <template>
   <div class="app-container">
@@ -46,18 +46,20 @@
                 articleData.isFollow ? 'el-icon-star-on' : 'el-icon-star-off'
               "
               :loading="followBtnLoading"
-              @click.stop ="followUser"
+              @click.stop="followUser"
             ><span v-if="articleData.isFollow"> 已关注</span>
               <span v-else>关注</span>
             </el-button>
           </div>
         </div>
         <div class="article-data">
-          <span class="other-item"><i class="el-icon-chat-dot-square"></i> 0
-            <!-- <a href="#article-comment" class="comment-anchor">
-              {{ commentNum }}</a
-            > -->
-          </span>
+          <a
+            href="#article-comment"
+            style=" text-decoration: none;color:#000"
+          >
+            <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{ articleData.articleCommentNum }}
+            </span>
+          </a>
           <span class="other-item"><i class="el-icon-view"></i> {{ articleData.browse_num }}
           </span>
 
