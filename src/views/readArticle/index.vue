@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-01 21:37:19
+ * @LastEditTime: 2021-11-02 19:45:48
 -->
 <template>
   <div class="app-container">
@@ -95,7 +95,7 @@
           :subfield="false"
           :scrollStyle="true"
           :editable="false"
-          style="height: 100%; z-index: 1"
+          style="height: 100%; z-index: 1,width:100%"
         />
       </div>
       <!-- 文章版权 -->
@@ -569,6 +569,7 @@ export default {
     max-height: 500px;
     overflow: hidden;
     margin-bottom: 10px;
+    width: 100%;
   }
   .article-copyright {
     width: 100%;
