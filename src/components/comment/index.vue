@@ -17,6 +17,8 @@
           :autosize="{ minRows: minRows, maxRows: maxRows }"
           :placeholder="placeholder"
           v-model="textareaMap[0]"
+          maxlength="200"
+          show-word-limit
         >
         </el-input>
 
@@ -150,6 +152,8 @@
               :autosize="{ minRows: minRows, maxRows: maxRows }"
               :placeholder="placeholder"
               v-model="textareaMap[item.id]"
+              maxlength="200"
+              show-word-limit
             >
             </el-input>
 
@@ -283,6 +287,8 @@
                 :autosize="{ minRows: minRows, maxRows: maxRows }"
                 :placeholder="placeholder"
                 v-model="textareaMap[ritem.id]"
+                maxlength="200"
+                show-word-limit
               >
               </el-input>
 

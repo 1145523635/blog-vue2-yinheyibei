@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-31 14:02:15
+ * @LastEditTime: 2021-11-02 21:19:50
 -->
 <template>
   <div class="app-container">
@@ -70,7 +70,9 @@
                 multiple
                 clearable
                 placeholder="请选择当前文章的专题"
+                :multiple-limit='5'
               >
+
                 <el-option
                   v-for="(item,index) in specialOptions"
                   :key="index"
@@ -88,6 +90,7 @@
                 multiple
                 clearable
                 placeholder="请选择当前文章的标签"
+                :multiple-limit='5'
               >
                 <el-option
                   v-for="(item,index) in labelOptions"

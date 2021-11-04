@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-27 20:03:41
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 10:45:58
+ * @LastEditTime: 2021-11-04 09:32:56
 -->
 <template>
   <div class='app-container'>
@@ -92,6 +92,7 @@
             </div>
           </el-card>
         </div>
+       
 
       </div>
     </div>
@@ -113,6 +114,7 @@ export default {
 
       //emptyData
       emptyData: require("@/assets/notData/notfind.png"),
+
     };
   },
   created() {

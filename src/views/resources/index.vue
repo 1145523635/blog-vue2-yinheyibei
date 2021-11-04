@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-21 22:41:01
+ * @LastEditTime: 2021-11-03 11:08:58
 -->
 <template>
   <div class="app-container">
@@ -83,7 +83,7 @@
               :key="index"
               @click="changeSpecialFilter(item)"
               :class="{
-                'actice-item': filterForm.article_special.includes(item.id),
+                'actice-item': filterForm.article_special==item.id,
               }"
             >{{ item.special_name }}</span>
           </div>
@@ -105,7 +105,7 @@
               :key="index"
               @click="changeLabelFilter(item)"
               :class="{
-                'actice-item': filterForm.article_label.includes(item.id),
+                'actice-item': filterForm.article_label==item.id,
               }"
             >{{ item.label_name }}</span>
           </div>
@@ -190,7 +190,7 @@
                 </div>
               </div>
               <div class="other">
-                <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{item.articleCommentNum}}</span>
+                <!-- <span class="other-item"><i class="el-icon-chat-dot-square"></i> {{item.articleCommentNum}}</span> -->
                 <span class="other-item"><i class="el-icon-view"></i> {{ item.browse_num }}</span>
                 <span class="other-item"><i class="el-icon-star-off"></i> {{ item.thumbs_num }}</span>
                 <span class="other-item"><i class="el-icon-collection-tag"></i> {{ item.collection_num }}</span>
@@ -235,14 +235,14 @@ export default {
       //过滤表单
       filterForm: {
         article_classification: "",
-        article_special: [],
-        article_label: [],
+        article_special: "",
+        article_label: "",
       },
 
       //分页参数
       pages: {
         list_rows: 3,
-        page: 0,
+        page: 1,
       },
 
       //显示加载跟多按钮
@@ -300,6 +300,13 @@ export default {
       this.imgContent.describe = item.special_describe;
       this.imgContent.text = item.special_name;
       this.imgContent.status = 2;
+      if (this.filterForm.article_special == item.id) {
+        this.filterForm.article_special = "";
+      } else {
+        this.filterForm.article_special = item.id;
+      }
+
+      return;
       const index = this.filterForm.article_special.indexOf(item.id);
       if (index == -1) {
         this.filterForm.article_special.push(item.id);
@@ -314,6 +321,13 @@ export default {
       this.imgContent.describe = item.label_describe;
       this.imgContent.text = item.label_name;
       this.imgContent.status = 3;
+      if (this.filterForm.article_label == item.id) {
+        this.filterForm.article_label = "";
+      } else {
+        this.filterForm.article_label = item.id;
+      }
+
+      return;
       const index = this.filterForm.article_label.indexOf(item.id);
       if (index == -1) {
         this.filterForm.article_label.push(item.id);

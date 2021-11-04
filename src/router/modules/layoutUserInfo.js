@@ -116,7 +116,7 @@ export const layoutUserInfo = [{
         name: 'Disclaimers',
         meta: {
             title: '免责声明',
-            keepAlive: false
+            keepAlive: true
         },
         components: {
             default: () =>
@@ -129,7 +129,7 @@ export const layoutUserInfo = [{
         name: 'About',
         meta: {
             title: '关于我们',
-            keepAlive: false
+            keepAlive: true
         },
         components: {
             default: () =>
