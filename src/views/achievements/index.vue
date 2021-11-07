@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-27 20:03:41
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-04 09:32:56
+ * @LastEditTime: 2021-11-06 22:02:50
 -->
 <template>
   <div class='app-container'>
@@ -60,17 +60,17 @@
             :key='index'
             style="margin: 5px;"
           >
-            <div class='achievements-item'>
+            <div
+              class='achievements-item'
+              @click="openAchievements(item)"
+            >
               <div class='item-img'>
                 <div><img
                     :src="$utils.imgUrl(item.img_url)"
                     alt=""
                   ></div>
               </div>
-              <div
-                class='item-title'
-                @click="openAchievements(item)"
-              >
+              <div class='item-title'>
                 <h4>{{item.achievements_name}}</h4>
               </div>
               <div class='item-user'>
@@ -92,7 +92,6 @@
             </div>
           </el-card>
         </div>
-       
 
       </div>
     </div>
@@ -114,7 +113,6 @@ export default {
 
       //emptyData
       emptyData: require("@/assets/notData/notfind.png"),
-
     };
   },
   created() {

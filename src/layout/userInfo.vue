@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-12 16:44:04
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-29 10:27:24
+ * @LastEditTime: 2021-11-07 18:50:12
 -->
 <template>
   <div class="app-container">
@@ -149,6 +149,14 @@
           </div>
         </div>
       </div>
+      <!-- hitokoto -->
+      <div
+        class="hitokoto"
+        @click="configData"
+      >
+        <p class='hitokoto-container'>{{hitokoto.hitokoto}} </p>
+        <p>『 <span v-if='hitokoto.from'>{{hitokoto.from}}</span><span v-else>--</span> 』-- <span v-if='hitokoto.from_who'>{{hitokoto.from_who}} </span><span v-else>未知</span></p>
+      </div>
     </div>
   </div>
 </template>
@@ -156,6 +164,7 @@
 import { mapGetters } from "vuex";
 import base from "@/config/defaultSettings";
 import UserOtherInfo from "@/components/userOtherInfo/index.vue";
+import { getHitokoto } from "@/utils/hitokoto";
 export default {
   name: "UserInfo",
   components: {
@@ -198,9 +207,13 @@ export default {
 
       //判断是否需要渲染UserOtherInfo组件
       isHaveInfo: false,
+
+      //hitokoto 内容
+      hitokoto: {},
     };
   },
   created() {
+    this.configData();
     if (this.userInfo && this.userInfo.user.avatar_url != undefined) {
       this.havaUserInfo = true;
       this.isNetImg = false;
@@ -220,6 +233,12 @@ export default {
   },
 
   methods: {
+    configData() {
+      getHitokoto().then((res) => {
+        this.hitokoto = Object.assign({}, res);
+      });
+    },
+
     initWebSocket() {
       //没有用户信息不执行
       if (!this.userInfo) {
@@ -476,6 +495,14 @@ export default {
           }
         }
       }
+    }
+    .hitokoto {
+      padding: 10px;
+      width: calc(100% - 20px);
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgb(177, 177, 177);
+      cursor: pointer;
     }
   }
 }

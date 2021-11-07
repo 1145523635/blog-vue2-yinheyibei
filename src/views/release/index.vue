@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-02 21:19:50
+ * @LastEditTime: 2021-11-06 21:10:12
 -->
 <template>
   <div class="app-container">
@@ -146,10 +146,12 @@
             icon="el-icon-document-checked"
             size="small"
             @click="preservationData"
+            :loading='loading.preservationLoading'
           >保存</el-button>
           <el-button
             type="primary"
             @click="saveData"
+            :loading='loading.saveDataLoading'
             icon="el-icon-circle-check"
             size="small"
           >提交</el-button>
@@ -192,6 +194,12 @@ export default {
         article_label: [], //文章标签ID
         cover_img_id: "", //封面ID
         cover_img_url: "", //封面路
+      },
+
+      //loading动画
+      loading: {
+        preservationLoading: false,
+        saveDataLoading: false,
       },
 
       //文章分类选项 （单选）
@@ -381,10 +389,13 @@ export default {
      * 保存文章
      */
     async preservationData() {
+      this.loading.preservationLoading = true;
       this.$refs.md.save();
       const data = Object.assign({}, this.articleForm);
       data.status = 4;
       await this.uploadMdImgs();
+      this.loading.preservationLoading = false;
+      // return;
       blogUserReleaseContent(data).then((res) => {
         if (res.code == 200) {
           this.articleForm.id = res.data;

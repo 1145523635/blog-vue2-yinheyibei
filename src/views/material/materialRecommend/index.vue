@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-12 22:43:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 16:50:00
+ * @LastEditTime: 2021-11-07 20:46:33
 -->
 <template>
   <div class='app-container'>
@@ -58,7 +58,7 @@
                 v-model="ruleForm.material_describe"
                 size="small"
                 clearable
-                maxlength="20"
+                maxlength="40"
                 show-word-limit
               >
               </el-input>
@@ -243,7 +243,7 @@ export default {
           { required: true, message: "请输入资源描述", trigger: "blur" },
           {
             min: 1,
-            max: 20,
+            max: 40,
             message: "描述长度在1到20之间",
             trigger: "blur",
           },
@@ -313,7 +313,6 @@ export default {
       this.isAdd = false;
       this.ruleForm = Object.assign({}, JSON.parse(this.$route.query.data));
     }
-    console.log(this.$route.query);
 
     this.init();
   },
@@ -327,7 +326,6 @@ export default {
 
     //提交数据
     saveData() {
-      
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           const testQuery = {
@@ -364,6 +362,8 @@ export default {
         addNewMaterialRecommend(query).then((res) => {
           this.loading.submitLoading = false;
           this.loading.saveLoading = false;
+          this.dialogVisible = false;
+          this.loading.submitLoading = false;
           if (res.code == 200) {
             this.$notify({
               title: "成功",
@@ -380,6 +380,10 @@ export default {
         });
       } else {
         editMaterialRecommend(query).then((res) => {
+          this.loading.submitLoading = false;
+          this.loading.saveLoading = false;
+          this.dialogVisible = false;
+          this.loading.submitLoading = false;
           if (res.code == 200) {
             this.$notify({
               title: "成功",

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 20:42:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-15 23:31:11
+ * @LastEditTime: 2021-11-06 22:11:27
 -->
 <template>
   <div class="app-container">
@@ -215,6 +215,7 @@ export default {
     activeNoticId(value) {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
+        // return;
         isReadNotice({ id: value }).then((res) => {
           this.isNotRead = this.isNotRead.filter((item) => {
             return item != value;

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 21:26:05
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-04 22:52:57
+ * @LastEditTime: 2021-11-07 20:49:47
 -->
 <template>
   <div class="app-container">
@@ -12,7 +12,7 @@
         name="slide-fade"
         mode="out-in"
       >
-        <keep-alive>
+        <keep-alive exclude='MaterialRecommend'>
           <router-view />
         </keep-alive>
       </transition>

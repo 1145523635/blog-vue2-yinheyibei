@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 16:08:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-28 20:34:54
+ * @LastEditTime: 2021-11-07 20:39:07
 -->
 <template>
   <div class='app-container'>
@@ -91,7 +91,15 @@ export default {
 
     //返回个人中心
     toUserInfo() {
-      this.$router.push("/userInfo/material");
+      const USERID = this.$store.getters.userId;
+      this.$store.commit("SET_VISITOR_ID", USERID);
+      const VISITORID = this.$store.getters.visitorId;
+      this.$router.push({
+        path: `/userInfo/${VISITORID}/material`,
+        query: {
+          activeArticleType: 1,
+        },
+      });
     },
   },
 };
