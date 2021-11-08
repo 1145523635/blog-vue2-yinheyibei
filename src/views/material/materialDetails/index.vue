@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-14 22:26:19
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-28 20:33:36
+ * @LastEditTime: 2021-11-08 20:23:54
 -->
 <template>
   <div class='app-container'>
@@ -192,7 +192,6 @@ export default {
       this.isCollection = false;
       getMaterialDetails({ id: this.materialId }).then((res) => {
         this.materialData = Object.assign({}, res.data);
-        return;
         this.timer = setTimeout(() => {
           addMaterialBrowse({ id: res.data.id });
         }, 3000);

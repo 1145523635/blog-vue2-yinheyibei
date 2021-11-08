@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-26 19:37:48
+ * @LastEditTime: 2021-11-08 21:16:25
 -->
 <template>
   <div class="app-container">
@@ -16,10 +16,53 @@
       <!-- 资源部分-->
       <div class='material-container'>
         <!-- 过滤部分 -->
+
         <div
           class='material-filter'
           v-if='materialTypeList.length>0'
         >
+          <div class='filter-status'>
+            <div
+              class='status-item'
+              :class="{'excellent':filterForm.status=='excellent'}"
+              @click="changeFilterFormStatus('excellent')"
+            >
+              <svg-icon
+                icon-class="excellent"
+                class="svg-icon"
+              />
+              <span>
+                推荐
+              </span>
+            </div>
+            <div
+              class='status-item'
+              :class="{'hot':filterForm.status=='hot'}"
+              @click="changeFilterFormStatus('hot')"
+            >
+              <svg-icon
+                icon-class="hot"
+                class="svg-icon"
+              />
+              <span>
+                最火
+              </span>
+            </div>
+            <div
+              class='status-item'
+              :class="{'new':filterForm.status=='new'}"
+              @click="changeFilterFormStatus('new')"
+            >
+              <svg-icon
+                icon-class="new"
+                class="svg-icon"
+              />
+              <span>
+                最新
+              </span>
+            </div>
+
+          </div>
           <div
             class='filter-container'
             v-for='(item,index) in materialTypeList'
@@ -56,6 +99,7 @@
           </div>
 
         </div>
+
         <div
           v-else
           class='material-filter'
@@ -86,7 +130,6 @@
               :disabled='!showGetMoreBtn'
             ><span v-if='showGetMoreBtn'>加载更多</span><span v-else>没有更多了</span></el-button>
           </div>
-
         </div>
         <div
           class="no-data"
@@ -94,6 +137,7 @@
         >
           <div><span>找不到资源咯！</span></div>
         </div>
+
       </div>
 
     </div>
@@ -126,6 +170,7 @@ export default {
 
       //过滤表单
       filterForm: {
+        status: "excellent", //最新 最热 推荐
         materialTypeId: undefined, //类型ID
         list_rows: 6, //每页数量
         page: 1, //当前页
@@ -198,6 +243,14 @@ export default {
       }
       this.init();
     },
+
+    //改变排序方式
+    changeFilterFormStatus(status) {
+      this.showGetMoreBtn = true;
+      this.filterForm.page = 1;
+      this.filterForm.status = status;
+      this.init();
+    },
   },
 };
 </script>
@@ -251,6 +304,31 @@ export default {
               color: #409eff;
               font-weight: 600;
             }
+          }
+        }
+        .filter-status {
+          width: 100%;
+          display: flex;
+          .status-item {
+            color: #777;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 20px;
+            .svg-icon {
+              font-size: 18px;
+            }
+          }
+          .excellent {
+            font-weight: 600;
+            color: #ffd90c;
+          }
+          .hot {
+            font-weight: 600;
+            color: #f56c6c;
+          }
+          .new {
+            font-weight: 600;
+            color: #409eff;
           }
         }
       }

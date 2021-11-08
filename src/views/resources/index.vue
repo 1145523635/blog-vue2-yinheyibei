@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-03 11:08:58
+ * @LastEditTime: 2021-11-08 21:13:17
 -->
 <template>
   <div class="app-container">
@@ -42,6 +42,48 @@
       </div>
       <!-- 过滤方法 -->
       <div class="filter-container">
+        <div class='filter-status'>
+          <div
+            class='status-item'
+            :class="{'excellent':filterForm.status=='excellent'}"
+            @click="changeFilterFormStatus('excellent')"
+          >
+            <svg-icon
+              icon-class="excellent"
+              class="svg-icon"
+            />
+            <span>
+              推荐
+            </span>
+          </div>
+          <div
+            class='status-item'
+            :class="{'hot':filterForm.status=='hot'}"
+            @click="changeFilterFormStatus('hot')"
+          >
+            <svg-icon
+              icon-class="hot"
+              class="svg-icon"
+            />
+            <span>
+              最火
+            </span>
+          </div>
+          <div
+            class='status-item'
+            :class="{'new':filterForm.status=='new'}"
+            @click="changeFilterFormStatus('new')"
+          >
+            <svg-icon
+              icon-class="new"
+              class="svg-icon"
+            />
+            <span>
+              最新
+            </span>
+          </div>
+
+        </div>
         <!-- 文章分类过滤 -->
         <div
           class="filter-classification"
@@ -234,6 +276,7 @@ export default {
 
       //过滤表单
       filterForm: {
+        status: "excellent",
         article_classification: "",
         article_special: "",
         article_label: "",
@@ -265,6 +308,7 @@ export default {
   methods: {
     //初始化函数
     init(status = true) {
+      console.log(true);
       const query = Object.assign({}, this.filterForm, this.pages);
       //文章数据
       getRecommendArticle(query).then((res) => {
@@ -292,6 +336,10 @@ export default {
       } else {
         this.filterForm.article_classification = item.id;
       }
+      // this.articleList = [];
+      this.pages.page = 1;
+      this.showGetMoreBtn = true;
+      this.init(true);
     },
 
     //更改过滤表单参数 （文章专题）
@@ -305,6 +353,10 @@ export default {
       } else {
         this.filterForm.article_special = item.id;
       }
+      // this.articleList = [];
+      this.pages.page = 1;
+      this.showGetMoreBtn = true;
+      this.init(true);
 
       return;
       const index = this.filterForm.article_special.indexOf(item.id);
@@ -326,6 +378,10 @@ export default {
       } else {
         this.filterForm.article_label = item.id;
       }
+      // this.articleList = [];
+      this.pages.page = 1;
+      this.showGetMoreBtn = true;
+      this.init(true);
 
       return;
       const index = this.filterForm.article_label.indexOf(item.id);
@@ -334,6 +390,13 @@ export default {
       } else {
         this.filterForm.article_label.splice(index, 1);
       }
+    },
+    //改变排序方式
+    changeFilterFormStatus(status) {
+      this.filterForm.status = status;
+      this.showGetMoreBtn = true;
+      this.pages.page = 1;
+      this.init(true);
     },
 
     //查看详细文章
@@ -355,16 +418,16 @@ export default {
       });
     },
   },
-  watch: {
-    filterForm: {
-      handler() {
-        this.showGetMoreBtn = true;
-        this.pages.page = 0;
-        this.init(true);
-      },
-      deep: true,
-    },
-  },
+  // watch: {
+  //   filterForm: {
+  //     handler() {
+  //       this.showGetMoreBtn = true;
+  //       this.pages.page = 0;
+  //       this.init(true);
+  //     },
+  //     deep: true,
+  //   },
+  // },
 };
 </script>
 
@@ -422,6 +485,7 @@ export default {
         .filter-item {
           color: #999;
           font-size: 14px;
+          text-align: left;
           span {
             margin-left: 5px;
             margin-right: 5px;
@@ -434,6 +498,31 @@ export default {
         .actice-item {
           color: #409eff;
           font-weight: 600;
+        }
+      }
+      .filter-status {
+        width: 100%;
+        display: flex;
+        .status-item {
+          color: #777;
+          font-size: 14px;
+          cursor: pointer;
+          margin-right: 20px;
+          .svg-icon {
+            font-size: 18px;
+          }
+        }
+        .excellent {
+          font-weight: 600;
+          color: #ffd90c;
+        }
+        .hot {
+          font-weight: 600;
+          color: #f56c6c;
+        }
+        .new {
+          font-weight: 600;
+          color: #409eff;
         }
       }
     }
