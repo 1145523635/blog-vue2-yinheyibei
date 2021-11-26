@@ -41,12 +41,23 @@
               <span><i class='el-icon-info icon'></i> 免责声明</span>
             </div>
             <div class='menu-item  animate__animated animate__lightSpeedInRight'>
-              <span>
-                <svg-icon
-                  icon-class="github-fill"
-                  class="icon"
-                /> 本站源码（前端）
-              </span>
+              <el-popconfirm
+                confirm-button-text='gitHub'
+                cancel-button-text='gitee'
+                cancel-button-type='success'
+                icon="el-icon-info"
+                icon-color="#409EFF"
+                title="gitHub 、gitee代码已同步，如有需要请自取！"
+                @confirm='toGitHub()'
+                @cancel='toGitee()'
+              >
+                <span slot="reference">
+                  <svg-icon
+                    icon-class="github-fill"
+                    class="icon"
+                  /> 本站源码（前端）
+                </span>
+              </el-popconfirm>
             </div>
           </div>
           <div
@@ -118,6 +129,7 @@
 
 <script>
 import { getUpdateRecordList } from "@/api/common/index";
+import blogSetting from "@/config/blogSetting";
 export default {
   name: "DragBtn",
   data() {
@@ -153,6 +165,16 @@ export default {
     //去关于页面
     toAbout() {
       this.$router.push("/about");
+    },
+
+    //去网站源码 gitee
+    toGitee() {
+      window.open(blogSetting.giteeUrl);
+    },
+
+    //去网站源码 github
+    toGitHub() {
+      window.open(blogSetting.gitHubUrl);
     },
 
     mousedowm(e) {
