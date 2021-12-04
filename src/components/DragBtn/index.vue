@@ -14,7 +14,7 @@
         >
           <div class='menu-container'>
             <div class='menu-item  animate__animated animate__lightSpeedInLeft'>
-              <span><i class='el-icon-s-opportunity icon'></i> 意见反馈</span>
+              <span @click="toMessage()"><i class='el-icon-s-opportunity icon'></i> 意见反馈</span>
             </div>
             <div
               class='menu-item  animate__animated animate__lightSpeedInRight'
@@ -175,6 +175,11 @@ export default {
     //去网站源码 github
     toGitHub() {
       window.open(blogSetting.gitHubUrl);
+    },
+
+    //去意见反馈
+    toMessage() {
+      this.$router.push("/message");
     },
 
     mousedowm(e) {

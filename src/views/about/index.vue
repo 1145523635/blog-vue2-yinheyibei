@@ -3,10 +3,27 @@
  * @Author: 银河以北
  * @Date: 2021-10-31 20:55:15
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-31 22:06:15
+ * @LastEditTime: 2021-12-04 13:57:10
 -->
 <template>
   <div class='app-container'>
+    <div class='header'>
+      <div class='header-img'>
+        <img
+          src='@/assets/defaultData/other/aboutHeader.jpg'
+          alt=""
+          style="width:100%;height:100%"
+        >
+        <div class='message-text'>
+          <div>
+            <p>关于我们</p>
+          </div>
+          <div class='under-line'>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class='container'>
       <mavonEditor
         v-model="mdContent"
@@ -55,6 +72,39 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
+  .header {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+    .header-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      .message-text {
+        position: absolute;
+        color: #ffffff;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        font-size: 24px;
+        transform: translate(-50%, -50%);
+        .under-line {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          div {
+            width: 90px;
+            height: 3px;
+            background: #18b2ff;
+            margin-top: 5px;
+            border-radius: 20px;
+          }
+        }
+      }
+    }
+  }
   .container {
     width: 100%;
     background: #ffffff;

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-03 14:59:09
+ * @LastEditTime: 2021-11-30 14:10:44
 -->
 <template>
   <div class="app-container">
@@ -286,7 +286,7 @@ export default {
         }
         //获取当前完整路径
         this.articleLink = window.location.href;
-        return;
+        // return;
         //阅读时间为5秒
         if (this.articleData.user_id != this.userInfo.id) {
           this.timer = setTimeout(this.reading, 5000);
