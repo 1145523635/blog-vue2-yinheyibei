@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-29 19:25:01
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-06 21:10:12
+ * @LastEditTime: 2021-12-04 14:55:14
 -->
 <template>
   <div class="app-container">
@@ -271,6 +271,7 @@ export default {
       this.$refs.md.save();
       //设置延迟时间
       await this.uploadMdImgs();
+      this.$refs.md.save();
       const data = Object.assign({}, this.articleForm);
       data.status = 0;
       data.is_appeal = 0;
@@ -391,9 +392,10 @@ export default {
     async preservationData() {
       this.loading.preservationLoading = true;
       this.$refs.md.save();
+      await this.uploadMdImgs();
       const data = Object.assign({}, this.articleForm);
       data.status = 4;
-      await this.uploadMdImgs();
+      this.$refs.md.save();
       this.loading.preservationLoading = false;
       // return;
       blogUserReleaseContent(data).then((res) => {
