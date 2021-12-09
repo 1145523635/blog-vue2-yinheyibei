@@ -1,3 +1,10 @@
+<!--
+ * @Descripttion:
+ * @Author: 银河以北
+ * @Date: 2021-09-15 10:10:20
+ * @LastEditors: 银河以北
+ * @LastEditTime: 2021-12-08 21:23:46
+-->
 <template>
   <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
@@ -44,7 +51,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .svg-icon {
   width: 1em;
