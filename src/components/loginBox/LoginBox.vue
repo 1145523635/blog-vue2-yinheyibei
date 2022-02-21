@@ -243,7 +243,7 @@ export default {
           {
             min: 1,
             max: 10,
-            message: "用户名长度在3到12之间哦~",
+            message: "用户名长度在1到10之间哦~",
             trigger: "blur",
           },
         ],

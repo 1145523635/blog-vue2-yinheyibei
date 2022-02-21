@@ -3,13 +3,13 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:53:27
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 19:40:09
+ * @LastEditTime: 2022-02-21 21:21:36
  */
 
 
 export default {
-    baseURL: process.env.NODE_ENV == 'development' ? 'http://yinheyibei.serve.yinheyibei.cn/' : 'http://yinheyibei.serve.yinheyibei.cn/', // 开发环境 基本请求路径,
-    baseImg: process.env.NODE_ENV == 'development' ? 'http://yinheyibei.serve.yinheyibei.cn/' : 'http://yinheyibei.serve.yinheyibei.cn/', // 开发环境 图片基础访问路径
+    baseURL: process.env.NODE_ENV == 'development' ? 'https://yinheyibei.serve.yinheyibei.cn/' : 'https://yinheyibei.serve.yinheyibei.cn/', // 开发环境 基本请求路径,
+    baseImg: process.env.NODE_ENV == 'development' ? 'https://yinheyibei.serve.yinheyibei.cn/' : 'https://yinheyibei.serve.yinheyibei.cn/', // 开发环境 图片基础访问路径
     websocketUrl: 'ws://8.131.60.32:2348', //长链接接口
     uploadImgUrl: '/blog/common/uploadImages', // 上传图片的接口
     module: 'blog', // 上传时携带的 模块表标识

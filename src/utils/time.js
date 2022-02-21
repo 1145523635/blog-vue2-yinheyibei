@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-10 22:47:31
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-08 22:29:41
+ * @LastEditTime: 2022-02-18 16:41:10
  */
 
 
@@ -15,10 +15,8 @@
  * @return {*}
  */
 export function getPastTimes(time = getCurrentTime()) {
-
     //服务器返回时间 || 默认时间
     const itemTime = new Date(time).getTime()
-
     //当前时间
     const nowTime = new Date().getTime()
     let timeInterval = Math.ceil((nowTime - itemTime) / 1000)

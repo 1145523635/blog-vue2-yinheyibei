@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-14 13:17:01
+ * @LastEditTime: 2022-02-21 21:16:03
 -->
 <template>
   <div id="app">
@@ -17,11 +17,12 @@
 
     </transition>
     <!-- 音乐播放器 -->
+    <!--  :lrcType="3" -->
     <aplayer
       :audio="audio"
       @update:volume="onListHide"
       :autoplay="true"
-      :lrcType="3"
+     
       fixed
       float
     />

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-20 22:02:52
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-15 19:48:14
+ * @LastEditTime: 2022-01-20 19:56:48
  */
 const path = require('path')
 
@@ -14,7 +14,7 @@ module.exports = {
     devServer: {
         disableHostCheck: true,
         //自动打开浏览器
-        open: true
+        open: true,
     },
     chainWebpack(config) {
 

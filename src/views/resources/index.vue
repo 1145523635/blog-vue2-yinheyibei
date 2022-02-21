@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-26 21:17:48
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-08 21:13:17
+ * @LastEditTime: 2022-02-11 20:07:05
 -->
 <template>
   <div class="app-container">
@@ -249,7 +249,6 @@
             @click="getMoreArticle()"
             :disabled='!showGetMoreBtn'
           ><span v-if='showGetMoreBtn'>加载更多</span><span v-else>没有更多了</span></el-button>
-          </el-button>
         </div>
       </div>
     </div>
