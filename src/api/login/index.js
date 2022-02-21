@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 19:56:24
+ * @LastEditTime: 2022-02-21 21:39:20
  */
 import { request } from '@/utils/request'
 
@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function login(data) {
     return request({
-        url: '/blog/login',
+        url: 'blog/login',
         method: 'POST',
         data
     })
@@ -31,7 +31,7 @@ export function login(data) {
  */
 export function getUserInfo() {
     return request({
-        url: '/blog/getUserInfo',
+        url: 'blog/getUserInfo',
         method: 'GET',
     })
 }
@@ -45,7 +45,7 @@ export function getUserInfo() {
  */
 export function logout() {
     return request({
-        url: '/blog/userLogout',
+        url: 'blog/userLogout',
         method: 'POST',
     })
 }
@@ -60,7 +60,7 @@ export function logout() {
  */
 export function getRegisterCode(data) {
     return request({
-        url: '/blog/getRegisterCode',
+        url: 'blog/getRegisterCode',
         method: 'POST',
         data
     })
@@ -75,7 +75,7 @@ export function getRegisterCode(data) {
  */
 export function userRegister(data) {
     return request({
-        url: '/blog/userRegister',
+        url: 'blog/userRegister',
         method: 'POST',
         data
     })
@@ -90,7 +90,7 @@ export function userRegister(data) {
  */
 export function getVisitorInfo(data) {
     return request({
-        url: '/blog/getVisitorInfo',
+        url: 'blog/getVisitorInfo',
         method: 'GET',
         params: data
     })

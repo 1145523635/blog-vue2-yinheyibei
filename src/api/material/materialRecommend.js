@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-24 15:04:45
+ * @LastEditTime: 2022-02-21 21:39:57
  */
 import { request } from '@/utils/request'
 
@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function getMaterialType() {
     return request({
-        url: '/blog/material/release/getMaterialType',
+        url: 'blog/material/release/getMaterialType',
         method: 'GET',
     })
 }
@@ -30,7 +30,7 @@ export function getMaterialType() {
  */
 export function addNewMaterialRecommend(data) {
     return request({
-        url: '/blog/material/verify/addNewMaterialRecommend',
+        url: 'blog/material/verify/addNewMaterialRecommend',
         method: 'POST',
         data
     })
@@ -45,7 +45,7 @@ export function addNewMaterialRecommend(data) {
  */
 export function getMaterialById(data) {
     return request({
-        url: '/blog/material/release/getMaterialById',
+        url: 'blog/material/release/getMaterialById',
         method: 'GET',
         params: data
     })
@@ -60,7 +60,7 @@ export function getMaterialById(data) {
  */
 export function getMaterialByName(data) {
     return request({
-        url: '/blog/material/release/getMaterialByName',
+        url: 'blog/material/release/getMaterialByName',
         method: 'GET',
         params: data
     })
@@ -75,7 +75,7 @@ export function getMaterialByName(data) {
  */
 export function getMaterialDetails(data) {
     return request({
-        url: '/blog/material/release/getMaterialDetails',
+        url: 'blog/material/release/getMaterialDetails',
         method: 'GET',
         params: data
     })
@@ -90,7 +90,7 @@ export function getMaterialDetails(data) {
  */
 export function getMaterialListByPages(data) {
     return request({
-        url: '/blog/material/release/getMaterialListByPages',
+        url: 'blog/material/release/getMaterialListByPages',
         method: 'GET',
         params: data
     })
@@ -105,7 +105,7 @@ export function getMaterialListByPages(data) {
  */
 export function addMaterialBrowse(data) {
     return request({
-        url: '/blog/material/release/addMaterialBrowse',
+        url: 'blog/material/release/addMaterialBrowse',
         method: 'PUT',
         data
     })
@@ -120,7 +120,7 @@ export function addMaterialBrowse(data) {
  */
 export function addMaterialLike(data) {
     return request({
-        url: '/blog/material/verify/addMaterialLike',
+        url: 'blog/material/verify/addMaterialLike',
         method: 'POST',
         data
     })
@@ -135,7 +135,7 @@ export function addMaterialLike(data) {
  */
 export function hasCollection(data) {
     return request({
-        url: '/blog/material/verify/hasCollection',
+        url: 'blog/material/verify/hasCollection',
         method: 'POST',
         data
     })
@@ -150,7 +150,7 @@ export function hasCollection(data) {
  */
 export function getUserMaterialByStatus(data) {
     return request({
-        url: '/blog/material/verify/getUserMaterialByStatus',
+        url: 'blog/material/verify/getUserMaterialByStatus',
         method: 'GET',
         params: data
     })
@@ -165,7 +165,7 @@ export function getUserMaterialByStatus(data) {
  */
 export function userDeleteMaterial(data) {
     return request({
-        url: '/blog/material/verify/userDeleteMaterial',
+        url: 'blog/material/verify/userDeleteMaterial',
         method: 'DELETE',
         data
     })
@@ -181,7 +181,7 @@ export function userDeleteMaterial(data) {
  */
 export function editMaterialRecommend(data) {
     return request({
-        url: '/blog/material/verify/editMaterialRecommend',
+        url: 'blog/material/verify/editMaterialRecommend',
         method: 'PUT',
         data
     })
@@ -196,7 +196,7 @@ export function editMaterialRecommend(data) {
  */
 export function getUserCollectionMaterial(data) {
     return request({
-        url: '/blog/material/verify/getUserCollectionMaterial',
+        url: 'blog/material/verify/getUserCollectionMaterial',
         method: 'GET',
         params: data
     })
@@ -211,7 +211,7 @@ export function getUserCollectionMaterial(data) {
  */
 export function deleteUserCollectionMaterial(data) {
     return request({
-        url: '/blog/material/verify/deleteUserCollectionMaterial',
+        url: 'blog/material/verify/deleteUserCollectionMaterial',
         method: 'DELETE',
         data
     })

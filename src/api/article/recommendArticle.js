@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-15 21:03:24
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-28 20:46:03
+ * @LastEditTime: 2022-02-21 21:38:52
  */
 import { request } from '@/utils/request'
 
@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function getRecommendArticle(data) {
     return request({
-        url: '/blog/article/release/getRecommendArticle',
+        url: 'blog/article/release/getRecommendArticle',
         method: 'POST',
         data
     })
@@ -31,7 +31,7 @@ export function getRecommendArticle(data) {
  */
 export function addArticleBrowse(data) {
     return request({
-        url: '/blog/article/release/addArticleBrowse',
+        url: 'blog/article/release/addArticleBrowse',
         method: 'GET',
         params: data
     })
@@ -46,7 +46,7 @@ export function addArticleBrowse(data) {
  */
 export function changeArticleThumbs(data) {
     return request({
-        url: '/blog/article/verify/changeArticleThumbs',
+        url: 'blog/article/verify/changeArticleThumbs',
         method: 'POST',
         data
     })
@@ -61,7 +61,7 @@ export function changeArticleThumbs(data) {
  */
 export function changArticleCollection(data) {
     return request({
-        url: '/blog/article/verify/changArticleCollection',
+        url: 'blog/article/verify/changArticleCollection',
         method: 'POST',
         data
     })

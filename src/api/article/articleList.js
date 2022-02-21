@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-10 00:01:55
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 11:15:27
+ * @LastEditTime: 2022-02-21 21:38:36
  */
 import { request } from '@/utils/request'
 
@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function getArticleTypeList(data) {
     return request({
-        url: '/blog/article/verify/getArticleTypeList',
+        url: 'blog/article/verify/getArticleTypeList',
         method: 'GET',
         params: data
     })
@@ -31,7 +31,7 @@ export function getArticleTypeList(data) {
  */
 export function readArticleContent(data) {
     return request({
-        url: '/blog/article/release/readArticleContent',
+        url: 'blog/article/release/readArticleContent',
         method: 'GET',
         params: data
     })
@@ -47,7 +47,7 @@ export function readArticleContent(data) {
  */
 export function appealArticle(data) {
     return request({
-        url: '/blog/article/verify/appealArticle',
+        url: 'blog/article/verify/appealArticle',
         method: 'POST',
         data
     })
@@ -62,7 +62,7 @@ export function appealArticle(data) {
  */
 export function getUserArticleCollection(data) {
     return request({
-        url: '/blog/article/verify/getUserArticleCollection',
+        url: 'blog/article/verify/getUserArticleCollection',
         method: 'GET',
         params: data
     })
@@ -77,7 +77,7 @@ export function getUserArticleCollection(data) {
  */
 export function deleteArticle(data) {
     return request({
-        url: '/blog/article/verify/deleteArticle',
+        url: 'blog/article/verify/deleteArticle',
         method: 'DELETE',
         params: data
     })

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-14 14:38:51
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-01 20:57:08
+ * @LastEditTime: 2022-02-21 21:40:22
  */
 
 import { request } from '@/utils/request'
@@ -17,7 +17,7 @@ import { request } from '@/utils/request'
  */
 export function blogUserFollowUser(data) {
     return request({
-        url: '/blog/blogUser/blogUserFollowUser',
+        url: 'blog/blogUser/blogUserFollowUser',
         method: 'POST',
         data
     })
@@ -32,7 +32,7 @@ export function blogUserFollowUser(data) {
  */
 export function getUserFollow(data) {
     return request({
-        url: '/blog/blogUser/getUserFollow',
+        url: 'blog/blogUser/getUserFollow',
         method: 'GET',
         params: data
     })
@@ -47,7 +47,7 @@ export function getUserFollow(data) {
  */
 export function getUserFans(data) {
     return request({
-        url: '/blog/blogUser/getUserFans',
+        url: 'blog/blogUser/getUserFans',
         method: 'GET',
         params: data
     })

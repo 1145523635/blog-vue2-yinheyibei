@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-05 09:53:14
+ * @LastEditTime: 2022-02-21 21:40:13
  */
 import { request } from '@/utils/request'
 
@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function sendMessages() {
     return request({
-        url: '/test/test',
+        url: 'test/test',
         method: 'GET',
     })
 }

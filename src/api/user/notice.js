@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-14 14:38:51
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-09-11 10:45:18
+ * @LastEditTime: 2022-02-21 21:40:29
  */
 
 import { request } from '@/utils/request'
@@ -17,7 +17,7 @@ import { request } from '@/utils/request'
  */
 export function getNoticeList(data) {
     return request({
-        url: '/blog/blogUser/getNoticeList',
+        url: 'blog/blogUser/getNoticeList',
         method: 'GET',
         params: data
     })
@@ -32,7 +32,7 @@ export function getNoticeList(data) {
  */
 export function isReadNotice(data) {
     return request({
-        url: '/blog/blogUser/isReadNotice',
+        url: 'blog/blogUser/isReadNotice',
         method: 'POST',
         data
     })
@@ -47,7 +47,7 @@ export function isReadNotice(data) {
  */
 export function deleteNotice(data) {
     return request({
-        url: '/blog/blogUser/deleteNotice',
+        url: 'blog/blogUser/deleteNotice',
         method: 'DELETE',
         data
     })

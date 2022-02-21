@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 11:14:35
+ * @LastEditTime: 2022-02-21 21:39:01
  */
 import { request } from '@/utils/request'
 
@@ -16,7 +16,7 @@ import { request } from '@/utils/request'
  */
 export function getArticleReleaseOption() {
     return request({
-        url: '/blog/article/release/getArticleReleaseOption',
+        url: 'blog/article/release/getArticleReleaseOption',
         method: 'GET',
     })
 }
@@ -30,7 +30,7 @@ export function getArticleReleaseOption() {
  */
 export function blogUserReleaseContent(data) {
     return request({
-        url: '/blog/article/verify/blogUserReleaseContent',
+        url: 'blog/article/verify/blogUserReleaseContent',
         method: 'POST',
         data
     })
@@ -46,7 +46,7 @@ export function blogUserReleaseContent(data) {
  */
 export function getEditArticle(data) {
     return request({
-        url: '/blog/article/verify/getEditArticle',
+        url: 'blog/article/verify/getEditArticle',
         method: 'GET',
         params: data
     })

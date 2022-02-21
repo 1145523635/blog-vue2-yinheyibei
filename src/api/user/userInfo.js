@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-21 00:23:22
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 19:56:19
+ * @LastEditTime: 2022-02-21 21:41:21
  */
 
 
@@ -18,7 +18,7 @@ import { request } from '@/utils/request'
  */
 export function getBlogUserInfo() {
     return request({
-        url: '/blog/blogUser/getBlogUserInfo',
+        url: 'blog/blogUser/getBlogUserInfo',
         method: 'GET',
     })
 }
@@ -33,7 +33,7 @@ export function getBlogUserInfo() {
  */
 export function updateBlogUserInfo(data) {
     return request({
-        url: '/blog/blogUser/updateBlogUserInfo',
+        url: 'blog/blogUser/updateBlogUserInfo',
         method: 'PUT',
         data
     })
@@ -49,7 +49,7 @@ export function updateBlogUserInfo(data) {
  */
 export function updateBlogUserPassword(data) {
     return request({
-        url: '/blog/blogUser/updateBlogUserPassword',
+        url: 'blog/blogUser/updateBlogUserPassword',
         method: 'PUT',
         data
     })

@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-31 21:24:15
+ * @LastEditTime: 2022-02-21 21:39:13
  */
 import { request } from '@/utils/request'
 
@@ -15,7 +15,7 @@ import { request } from '@/utils/request'
  */
 export function getUpdateRecordList() {
     return request({
-        url: '/blog/common/release/getUpdateRecordList',
+        url: 'blog/common/release/getUpdateRecordList',
         method: 'GET',
     })
 }
@@ -28,7 +28,7 @@ export function getUpdateRecordList() {
  */
 export function getStatement(data) {
     return request({
-        url: '/blog/common/release/getStatement',
+        url: 'blog/common/release/getStatement',
         method: 'GET',
         params: data
     })
