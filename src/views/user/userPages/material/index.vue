@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-10-22 17:00:59
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-29 13:13:21
+ * @LastEditTime: 2022-04-02 22:51:03
 -->
 <template>
   <div class='app-container'>
@@ -21,7 +21,6 @@
             :type="filterForm.status==2?'success':''"
             size="small"
             @click="changeMaterialStatus(2)"
-            :disabled='!isSelf'
           ><i class='el-icon-circle-check'></i> 已审核</el-button>
           <el-button
             type=""
@@ -39,9 +38,9 @@
           <el-button
             size="small"
             @click="changeMaterialStatus(5)"
+            :disabled='!isSelf'
             :class='{"isCollection":filterForm.status==5}'
           ><i class='el-icon-star-off'></i> 收藏</el-button>
-        </el-button-group>
         </el-button-group>
 
       </div>
@@ -192,12 +191,13 @@ export default {
       this.userId = this.$route.params.userId;
       if (this.userId != this.$store.getters.userId) {
         this.isSelf = false;
-        this.filterForm.status = 5;
+        this.filterForm.status = 2;
       } else {
         this.isSelf = true;
       }
 
       const query = Object.assign({}, this.filterForm);
+
       //收藏数据
       if (query.status == 5) {
         query.userId = this.userId;
@@ -206,6 +206,7 @@ export default {
           this.filterForm.total = res.data.total;
         });
       } else {
+        query.userId = this.userId;
         getUserMaterialByStatus(query).then((res) => {
           this.materialList = Object.assign([], res.data.data);
           this.filterForm.total = res.data.total;
