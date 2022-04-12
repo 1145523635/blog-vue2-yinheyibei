@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 19:52:42
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-02-21 21:39:20
+ * @LastEditTime: 2022-04-11 11:30:13
  */
 import { request } from '@/utils/request'
 
@@ -93,5 +93,35 @@ export function getVisitorInfo(data) {
         url: 'blog/getVisitorInfo',
         method: 'GET',
         params: data
+    })
+}
+
+/**
+ * @Description: 用户找回密码验证码code
+ * @Author: 银河以北
+ * @Date: 2021-07-03 22:15:20
+ * @param {*} data 邮箱email
+ * @return {*}
+ */
+ export function retrievePasswordCode(data) {
+    return request({
+        url: 'blog/retrievePasswordCode',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ * @Description: 用户找回密码（重置密码）
+ * @Author: 银河以北
+ * @Date: 2021-07-03 22:15:20
+ * @param {*} data 邮箱email
+ * @return {*}
+ */
+ export function userRetrievePassword(data) {
+    return request({
+        url: 'blog/userRetrievePassword',
+        method: 'POST',
+        data
     })
 }

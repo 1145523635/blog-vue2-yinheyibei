@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:31:23
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-02-17 19:24:12
+ * @LastEditTime: 2022-04-12 10:24:54
 -->
 <template>
   <div class="app-container">
@@ -95,7 +95,7 @@
           :subfield="false"
           :scrollStyle="true"
           :editable="false"
-          style="height: 100%; z-index: -1;width:100%"
+          style="height: 100%; z-index: 9999;width:100%"
         />
       </div>
       <!-- 文章版权 -->
@@ -478,8 +478,7 @@ export default {
 <style lang="less" scoped>
 .app-container {
   width: 100%;
-
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   .container {
     padding: 20px;

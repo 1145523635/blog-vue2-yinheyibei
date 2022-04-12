@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-02-21 21:35:59
+ * @LastEditTime: 2022-04-12 10:16:06
 -->
 <template>
   <el-dialog
@@ -24,26 +24,33 @@
         <span
           :class="{ 'login-title': showLoginFrom }"
           @click="changeTable('login')"
-          >登录</span
-        >
+        >登录</span>
         and
         <span
           :class="{ 'register-form': !showLoginFrom }"
           @click="changeTable('register')"
-          >注册</span
-        >
+        >注册</span>
       </div>
     </div>
     <div class="login-form">
       <div class="form-title">
-        <div class="login" @click="changeTable('login')">
+        <div
+          class="login"
+          @click="changeTable('login')"
+        >
           <span :class="{ 'login-form': showLoginFrom }">登录</span>
         </div>
-        <div class="register" @click="changeTable('register')">
+        <div
+          class="register"
+          @click="changeTable('register')"
+        >
           <span :class="{ 'register-form ': !showLoginFrom }">注册</span>
         </div>
       </div>
-      <div class="form" v-show="showLoginFrom">
+      <div
+        class="form"
+        v-show="showLoginFrom"
+      >
         <el-form
           :model="loginForm"
           :rules="loginRules"
@@ -62,7 +69,10 @@
               size="small "
             ></el-input>
           </el-form-item>
-          <el-form-item prop="password">
+          <el-form-item
+            prop="password"
+            style="margin-bottom:10px;"
+          >
             <el-input
               type="password"
               v-model="loginForm.password"
@@ -73,6 +83,9 @@
               size="small"
             ></el-input>
           </el-form-item>
+          <div class="retrieve-password">
+            <span @click="toRetrievePassword()">找回密码</span>
+          </div>
           <el-form-item>
             <el-button
               type="primary"
@@ -80,13 +93,16 @@
               class="login-btn"
               :loading="loginLoading"
               @click="login"
-              >登录</el-button
-            >
+            >登录</el-button>
           </el-form-item>
         </el-form>
+
       </div>
       <!-- 注册表单 -->
-      <div class="register-form" v-show="!showLoginFrom">
+      <div
+        class="register-form"
+        v-show="!showLoginFrom"
+      >
         <el-form
           :model="registerForm"
           :rules="registerRules"
@@ -120,18 +136,18 @@
               size="small"
               placeholder="请输入验证码"
               v-model="registerForm.code"
-               clearable
+              clearable
             >
-              <template slot="append"
-                ><el-button
+              <template slot="append">
+                <el-button
                   :loading="getCodeLoading"
                   style="cursor: pointer"
                   @click="getCode"
                 >
                   <span v-if="!getCodeLoading">获取验证码</span>
                   <span v-else>获取中...</span>
-                </el-button></template
-              >
+                </el-button>
+              </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
@@ -161,8 +177,7 @@
               class="login-btn"
               :loading="registerLoading"
               @click="registerUser"
-              >注册</el-button
-            >
+            >注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -298,7 +313,7 @@ export default {
               });
               this.show = false;
               // router.push("/");
-              router.go(0)
+              router.go(0);
               this.loginLoading = false;
             }, 1000);
           });
@@ -369,6 +384,12 @@ export default {
         }
       });
     },
+
+    // 找回密码
+    toRetrievePassword() {
+      this.show = false;
+      router.push("/retrievePassword");
+    },
   },
 
   watch: {
@@ -437,6 +458,13 @@ export default {
     width: 100%;
     .login-btn {
       width: 100%;
+    }
+    .retrieve-password {
+      width: 100%;
+      text-align: right;
+      font-size: 12px;
+      cursor: pointer;
+      margin-bottom: 10px;
     }
   }
   .register-form {

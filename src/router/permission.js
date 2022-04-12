@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-11 21:40:45
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-11-30 13:57:46
+ * @LastEditTime: 2022-04-10 23:17:28
  */
 
 //引入element-ui 提示框
@@ -28,12 +28,12 @@ import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 // 白名单重定向
-const whiteList = ['/', '/resources', '/404', '/home', '/readArticle', '/materialDetails', '/blogAbout', '/achievements', '/disclaimers', '/about', '/message']
+const whiteList = ['/', '/resources', '/404', '/home', '/readArticle', '/materialDetails', '/blogAbout', '/achievements', '/disclaimers', '/about', '/message', '/retrievePassword']
 
 
 
 //前置路由钩子
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 
     // 开始进度条
     NProgress.start()
@@ -46,7 +46,7 @@ router.beforeEach(async(to, from, next) => {
     if (token) {
         //用户信息 vuex
         const userInfo = store.getters.userInfo
-            //如果存在用户信息
+        //如果存在用户信息
         if (userInfo) {
             //直接放过页面
             next()
@@ -65,7 +65,7 @@ router.beforeEach(async(to, from, next) => {
                 })
             } catch (err) {
                 Message.error('获取信息发送错误,请刷新页面')
-                    //如果在获取途中发生错误 ，直接跳登录页
+                //如果在获取途中发生错误 ，直接跳登录页
                 console.log(err)
             }
         }

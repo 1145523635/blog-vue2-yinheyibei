@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-10 12:07:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-02-21 21:16:03
+ * @LastEditTime: 2022-04-11 10:30:44
 -->
 <template>
   <div id="app">
@@ -21,8 +21,7 @@
     <aplayer
       :audio="audio"
       @update:volume="onListHide"
-      :autoplay="true"
-     
+      :autoplay="false"
       fixed
       float
     />
