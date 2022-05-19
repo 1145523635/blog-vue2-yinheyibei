@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-02 21:01:17
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-14 14:23:45
+ * @LastEditTime: 2022-05-04 19:59:57
 -->
 <template>
   <div class="app-container">
@@ -15,6 +15,12 @@
             ><span>基本配置</span>
           </router-link>
         </div>
+         <div class="link-item">
+          <router-link tag="div" :to="{ name: 'AddressSetting' }"
+            ><span>收货地址</span>
+          </router-link>
+        </div>
+        
         <div class="link-item">
           <router-link tag="div" :to="{ name: 'SecuritySetting' }"
             ><span>安全配置</span></router-link

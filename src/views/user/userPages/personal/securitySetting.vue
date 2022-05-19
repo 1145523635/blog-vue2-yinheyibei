@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-04-12 10:11:23
+ * @LastEditTime: 2022-05-16 11:19:02
 -->
 <template>
   <div class="app-container">
@@ -53,6 +53,7 @@
               size="small"
               @click="saveData"
               :loading="btnLoading"
+              style="width:200px"
               >保存</el-button
             >
           </el-form-item>

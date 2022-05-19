@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-08-09 14:23:43
+ * @LastEditTime: 2022-05-16 11:19:25
 -->
 <template>
   <div class="app-container">
@@ -39,7 +39,10 @@
               </el-upload>
             </div>
           </el-form-item>
-          <el-form-item label="昵称" prop="nickname">
+          <el-form-item
+            label="昵称"
+            prop="nickname"
+          >
             <el-input
               v-model="userForm.nickname"
               size="small"
@@ -48,7 +51,10 @@
               placeholder="请输入你的昵称 ！"
             ></el-input>
           </el-form-item>
-          <el-form-item label="邮箱" prop="mailbox">
+          <el-form-item
+            label="邮箱"
+            prop="mailbox"
+          >
             <el-input
               v-model="userForm.mailbox"
               size="small"
@@ -57,7 +63,10 @@
               show-word-limit
             ></el-input>
           </el-form-item>
-          <el-form-item label="电话" prop="telephone">
+          <el-form-item
+            label="电话"
+            prop="telephone"
+          >
             <el-input
               v-model="userForm.telephone"
               size="small"
@@ -100,8 +109,8 @@
               size="small"
               @click="saveData"
               :loading="btnLoading"
-              >保存</el-button
-            >
+              style="width:200px"
+            >保存</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -184,7 +193,6 @@ export default {
     async init() {
       const data = await getBlogUserInfo();
       this.userForm = data.data;
-
     },
     /* 保存数据 */
     saveData() {

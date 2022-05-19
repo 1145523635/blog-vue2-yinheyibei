@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-08-11 15:52:19
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-25 22:09:13
+ * @LastEditTime: 2022-05-04 19:59:00
  */
 export const layoutUserMenu = [{
     path: '/userInfo',
@@ -28,6 +28,16 @@ export const layoutUserMenu = [{
                     },
                     component: () =>
                         import ('@/views/user/userPages/personal/baseSetting.vue')
+                },
+                {
+                    path: 'addressSetting',
+                    name: 'AddressSetting',
+                    meta: {
+                        title: '基本配置',
+                        routerParent: "personal" //处理在子级页面渲染时 父级没有动态类名
+                    },
+                    component: () =>
+                        import ('@/views/user/userPages/personal/addressSetting.vue')
                 },
                 {
                     path: 'securitySetting',
