@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-05-19 23:01:46
+ * @LastEditTime: 2022-05-23 10:14:01
 -->
 <template>
   <div class="app-container">
@@ -130,11 +130,20 @@
                   <span class="province">{{getArea(item.province)}}</span>
                   <span class="province">{{getArea(item.city)}}</span>
                   <span class="province">{{getArea(item.district)}}</span>
-                  <span  class="province">{{item.address}}</span>
+                  <span class="province">{{item.address}}</span>
                 </p>
               </div>
-              <div class="item-operation"></div>
-
+              <div class="item-operation">
+                <i class="el-icon-edit"></i>
+              </div>
+              <div class="item-other">
+                <el-radio
+                  v-model="defaultAddressId"
+                  :label="item.id"
+                  @click.native="upDateDefaultAddressId(item.id)"
+                  :disabled="radioDisabled"
+                >默认地址</el-radio>
+              </div>
             </div>
           </el-card>
         </div>
@@ -146,7 +155,11 @@
 <script>
 import { regionData, CodeToText } from "element-china-area-data"; //引入
 
-import { addUserAddress, getSelfAddressList } from "@/api/user/address";
+import {
+  addUserAddress,
+  getSelfAddressList,
+  upDateDefaultAddressId,
+} from "@/api/user/address";
 
 export default {
   name: "AddressSetting",
@@ -159,10 +172,10 @@ export default {
 
       //地址表单
       addressForm: {
-        consignee: "麦当", //收货人
-        mobile: "15581330086", //电话号码
+        consignee: "", //收货人
+        mobile: "", //电话号码
         is_default: false, //是否是默认地址
-        address: "彩虹海", //详细地址
+        address: "", //详细地址
         provinces: [], //省市县code
       },
 
@@ -191,6 +204,12 @@ export default {
       // 地址列表
       addressList: [],
 
+      // 用户默认地址ID
+      defaultAddressId: undefined,
+
+      // 单选禁用
+      radioDisabled: false,
+
       //没有数据图片
       notDataImg: require("@/assets/notData/notData.png"),
     };
@@ -202,7 +221,8 @@ export default {
   methods: {
     async init() {
       getSelfAddressList().then((res) => {
-        this.addressList = Object.assign([], res.data);
+        this.addressList = Object.assign([], res.data.addressList);
+        this.defaultAddressId = res.data.defaultAddressId;
       });
     },
 
@@ -234,6 +254,20 @@ export default {
           return false;
         }
       });
+    },
+
+    //更新默认地址
+    upDateDefaultAddressId(addressId) {
+      this.radioDisabled = true;
+      upDateDefaultAddressId({ addressId }).then((res) => {
+        this.radioDisabled = false;
+        this.defaultAddressId = addressId;
+        this.$notify({
+          title: "修改成功！",
+          message: `默认地址更新成功！`,
+          type: "success",
+        });
+      })
     },
 
     // CodeToText
@@ -299,9 +333,10 @@ export default {
             width: 100%;
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
             align-items: center;
             .item-data {
-              width: 240px;
+              width: 220px;
               text-align: left;
               font-weight: 600;
               .consignee {
@@ -319,7 +354,15 @@ export default {
               }
             }
             .item-operation {
-              width: calc(100% - 240px);
+              width: calc(100% - 220px);
+              cursor: pointer;
+            }
+            .item-other {
+              margin-top: 10px;
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
             }
           }
         }
