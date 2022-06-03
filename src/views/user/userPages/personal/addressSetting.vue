@@ -3,13 +3,37 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-05-23 10:14:01
+ * @LastEditTime: 2022-06-03 23:49:18
 -->
 <template>
   <div class="app-container">
     <div class="container">
+
       <!-- 添加收货地址表单 -->
       <div class="address-form">
+        <!-- 切换添加、修改-->
+        <div class="address-switch">
+          <el-button-group>
+            <el-button
+              :type="isAdd?'primary':''"
+              icon="el-icon-plus"
+              size="small"
+              @click="addAddress()"
+            >新增</el-button>
+
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="请选择右侧已有地址进行修改"
+              placement="bottom-end"
+            >
+              <el-button
+                :type="!isAdd?'success':''"
+                size="small"
+              >编辑 <i class="el-icon-edit"></i></el-button>
+            </el-tooltip>
+          </el-button-group>
+        </div>
         <el-form
           :model="addressForm"
           :rules="addresRules"
@@ -80,7 +104,7 @@
           </el-form-item>
           <el-form-item
             label="设置为默认地址"
-            prop="email"
+            prop="is_default"
           >
             <el-switch
               v-model="addressForm.is_default"
@@ -134,7 +158,10 @@
                 </p>
               </div>
               <div class="item-operation">
-                <i class="el-icon-edit"></i>
+                <i
+                  class="el-icon-edit"
+                  @click="editAddress(item)"
+                ></i>
               </div>
               <div class="item-other">
                 <el-radio
@@ -143,6 +170,22 @@
                   @click.native="upDateDefaultAddressId(item.id)"
                   :disabled="radioDisabled"
                 >默认地址</el-radio>
+
+                <el-popconfirm
+                  confirm-button-text='好的'
+                  cancel-button-text='不用了'
+                  icon="el-icon-info"
+                  icon-color="red"
+                  title="确定删除这个收货地址吗？"
+                  @confirm="deletAddress(item.id)"
+                >
+                  <el-button
+                    slot="reference"
+                    size="mini"
+                    type="danger"
+                    icon="el-icon-delete"
+                  >删除</el-button>
+                </el-popconfirm>
               </div>
             </div>
           </el-card>
@@ -159,6 +202,7 @@ import {
   addUserAddress,
   getSelfAddressList,
   upDateDefaultAddressId,
+  deleteUserAddress,
 } from "@/api/user/address";
 
 export default {
@@ -212,6 +256,9 @@ export default {
 
       //没有数据图片
       notDataImg: require("@/assets/notData/notData.png"),
+
+      // 地址表单状态 true 新增 false 修改
+      isAdd: true,
     };
   },
   created() {
@@ -228,6 +275,8 @@ export default {
 
     //保存数据
     saveData() {
+      console.log(this.addressForm)
+      return 
       this.btnLoading = true;
       this.$refs.addressForm.validate((valid) => {
         if (valid) {
@@ -267,7 +316,42 @@ export default {
           message: `默认地址更新成功！`,
           type: "success",
         });
-      })
+      });
+    },
+
+    // 删除用户收货地址
+    deletAddress(addressId) {
+      deleteUserAddress({ addressId }).then((res) => {
+        if (res.code == 200) {
+          this.init();
+          this.$notify({
+            title: "删除成功！",
+            message: `收货地址删除成功！`,
+            type: "success",
+          });
+        }
+      });
+    },
+
+    // 修改地址
+    editAddress(item) {
+      // 重组数据
+      const data = {
+        consignee: item.consignee,
+        mobile: item.mobile,
+        address: item.address,
+        is_default: item.is_default == 1 ? true : false,
+        provinces: [],
+      };
+      data.provinces.push(item.province, item.city, item.district);
+      this.addressForm = data;
+      this.isAdd = false;
+    },
+
+    // 新增地址
+    addAddress() {
+      this.$refs.addressForm.resetFields();
+      this.isAdd = true;
     },
 
     // CodeToText
@@ -288,11 +372,20 @@ export default {
     height: 100%;
     display: flex;
     justify-content: start;
+    flex-wrap: wrap;
+
     .address-form {
-      width: calc(100% - 320px);
+      width: calc(100% - 330px);
       padding: 10px;
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
+      .address-switch {
+        margin-bottom: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: start;
+      }
     }
     .address-list {
       width: 300px;
