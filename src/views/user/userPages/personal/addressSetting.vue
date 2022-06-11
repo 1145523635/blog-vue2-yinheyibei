@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-06-03 23:49:18
+ * @LastEditTime: 2022-06-11 13:07:55
 -->
 <template>
   <div class="app-container">
@@ -108,7 +108,7 @@
           >
             <el-switch
               v-model="addressForm.is_default"
-              active-color="#13ce66"
+              :active-color="isAdd?'':'#13ce66'"
               inactive-color="#ff4949"
               style="width:100%"
             >
@@ -121,7 +121,8 @@
               style="width:200px"
               :loading="btnLoading"
               @click='saveData()'
-            >确定</el-button>
+              :type="isAdd?'primary':'success'"
+            ><span v-if="isAdd">新增</span><span v-else>更新</span></el-button>
           </el-form-item>
         </el-form>
 
@@ -203,6 +204,7 @@ import {
   getSelfAddressList,
   upDateDefaultAddressId,
   deleteUserAddress,
+  editUserAddress,
 } from "@/api/user/address";
 
 export default {
@@ -259,6 +261,9 @@ export default {
 
       // 地址表单状态 true 新增 false 修改
       isAdd: true,
+
+      // 修改地址id 在提交修改表单时使用
+      eidtAddressId: undefined,
     };
   },
   created() {
@@ -275,8 +280,6 @@ export default {
 
     //保存数据
     saveData() {
-      console.log(this.addressForm)
-      return 
       this.btnLoading = true;
       this.$refs.addressForm.validate((valid) => {
         if (valid) {
@@ -285,18 +288,37 @@ export default {
           data.province = provinces[0] || "";
           data.city = provinces[1] || "";
           data.district = provinces[2] || "";
-          addUserAddress(data).then((res) => {
-            console.log(res);
-            if (res.code == 200) {
-              this.$notify({
-                title: "新增成功",
-                message: `成功添加新地址！`,
-                type: "success",
-              });
-            }
-            this.$refs.addressForm.resetFields();
+
+          // 添加地址
+          if (this.isAdd) {
+            addUserAddress(data).then((res) => {
+              this.init();
+              if (res.code == 200) {
+                this.$notify({
+                  title: "新增成功",
+                  message: `成功添加新地址！`,
+                  type: "success",
+                });
+              }
+              this.$refs.addressForm.resetFields();
+              this.btnLoading = false;
+            });
+          } else {
+            // 修改表单
+            data.id = this.eidtAddressId;
+            editUserAddress(data).then((res) => {
+              console.log(res);
+              this.init();
+              if (res.code == 200) {
+                this.$notify({
+                  title: "修改成功",
+                  message: `成功修改新地址！`,
+                  type: "success",
+                });
+              }
+            });
             this.btnLoading = false;
-          });
+          }
         } else {
           console.log("error submit!!");
           this.btnLoading = false;
@@ -335,6 +357,9 @@ export default {
 
     // 修改地址
     editAddress(item) {
+      // 修改表单id
+      this.eidtAddressId = item.id;
+
       // 重组数据
       const data = {
         consignee: item.consignee,
@@ -380,6 +405,7 @@ export default {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+
       .address-switch {
         margin-bottom: 10px;
         width: 100%;
@@ -390,7 +416,7 @@ export default {
     .address-list {
       width: 300px;
       border-left: 2px solid #5eadff;
-      height: 100%;
+      max-height: 500px;
       overflow-y: auto;
       display: flex;
       justify-content: center;
@@ -415,6 +441,7 @@ export default {
       .not-data-text {
         font-size: 12px;
         color: #b1b1b1;
+        text-align: center;
       }
       .address-data {
         padding: 5px;
