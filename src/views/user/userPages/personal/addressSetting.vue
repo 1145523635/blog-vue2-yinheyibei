@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-07-13 15:40:39
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-06-11 13:07:55
+ * @LastEditTime: 2022-06-11 23:38:00
 -->
 <template>
   <div class="app-container">
@@ -130,7 +130,10 @@
 
       <!-- 收货地址list -->
       <div class="address-list">
-        <div v-if="addressList.length == 0">
+        <div
+          class="not-data"
+          v-if="addressList.length == 0"
+        >
           <div>
             <img
               width="100%"
@@ -267,7 +270,7 @@ export default {
     };
   },
   created() {
-    this.init();
+    // this.init();
   },
 
   methods: {
@@ -307,7 +310,6 @@ export default {
             // 修改表单
             data.id = this.eidtAddressId;
             editUserAddress(data).then((res) => {
-              console.log(res);
               this.init();
               if (res.code == 200) {
                 this.$notify({
@@ -414,13 +416,14 @@ export default {
       }
     }
     .address-list {
-      width: 300px;
+      width: 298px;
       border-left: 2px solid #5eadff;
       max-height: 500px;
       overflow-y: auto;
       display: flex;
       justify-content: center;
       align-items: center;
+
       &::-webkit-scrollbar {
         width: 4px;
       }
@@ -437,12 +440,17 @@ export default {
       &::-webkit-scrollbar-thumb:active {
         background-color: rgba(144, 147, 153, 0.9);
       }
-
-      .not-data-text {
-        font-size: 12px;
-        color: #b1b1b1;
-        text-align: center;
+      .not-data {
+        margin-left: 50px;
+        display: flex;
+        justify-content: center;
+        .not-data-text {
+          font-size: 12px;
+          color: #b1b1b1;
+          text-align: center;
+        }
       }
+
       .address-data {
         padding: 5px;
         width: calc(100% - 10px);
