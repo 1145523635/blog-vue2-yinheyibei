@@ -3,18 +3,16 @@
  * @Author: 银河以北
  * @Date: 2021-07-01 16:34:02
  * @LastEditors: 银河以北
- * @LastEditTime: 2021-10-30 19:39:51
+ * @LastEditTime: 2022-06-30 20:24:17
 -->
 <template>
   <div class="app-container">
     <div class="container">
       <!-- 正上方用户背景图 -->
-      <div class="user-cover">
-        <img
-          class="cover-img"
-          :src="userCover"
-          alt="用户背景图"
-        />
+      <div
+        class="user-cover"
+        ref="vantaRef"
+      >
         <!-- 用户基本信息 -->
         <div class="user-info">
           <div class="user-info-container">
@@ -152,6 +150,8 @@
   </div>
 </template>
 <script>
+import BIRDS from "vanta/src/vanta.birds";
+import CLOUDS from "vanta/src/vanta.clouds";
 import { mapGetters } from "vuex";
 import { getVisitorInfo } from "@/api/login/index";
 export default {
@@ -175,10 +175,25 @@ export default {
 
       //判断是不是用户自己
       isSelf: false,
+
+      // vanta 变量
+      vantaEffect: null,
     };
   },
   created() {
     this.init();
+  },
+  mounted() {
+    this.vantaEffect = BIRDS({
+      el: this.$refs.vantaRef,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      scale: 1.0,
+      scaleMobile: 1.0,
+    });
   },
   methods: {
     //初始化信息 加载访客信息
@@ -211,7 +226,11 @@ export default {
       this.init();
     },
   },
-
+  beforeDestroy() {
+    if (this.vantaEffect) {
+      this.vantaEffect.destroy();
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>

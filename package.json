@@ -18,6 +18,8 @@
         "nprogress": "0.2.0",
         "style-resources-loader": "^1.4.1",
         "swiper": "^3.4.2",
+        "three": "^0.142.0",
+        "vanta": "^0.5.22",
         "vue": "^2.6.11",
         "vue-aplayer": "^1.6.1",
         "vue-clipboard2": "^0.3.3",
