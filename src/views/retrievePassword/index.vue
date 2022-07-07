@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2022-04-10 23:11:10
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-04-12 10:22:14
+ * @LastEditTime: 2022-07-07 11:38:34
 -->
 <template>
   <div class="app-container">
@@ -40,6 +40,8 @@
               placeholder="请输入验证码"
               v-model="retrievePasswordForm.code"
               clearable
+              show-word-limit
+              maxlength="6"
             >
               <template slot="append">
                 <el-button
@@ -60,7 +62,9 @@
               v-model="retrievePasswordForm.password"
               autocomplete="off"
               clearable
-              size="small "
+              size="small"
+              show-word-limit
+              maxlength="12"
             ></el-input>
           </el-form-item>
           <el-form-item prop="againPassword">
@@ -71,6 +75,8 @@
               autocomplete="off"
               clearable
               size="small "
+              show-word-limit
+              maxlength="12"
             ></el-input>
           </el-form-item>
           <el-form-item>
@@ -164,7 +170,7 @@ export default {
           { validator: validateAgainPassword, trigger: "blur" },
           {
             min: 6,
-            max: 10,
+            max: 12,
             message: "密码长度在6到12之间哦~",
             trigger: "blur",
           },
@@ -206,7 +212,6 @@ export default {
           const data = Object.assign({}, this.retrievePasswordForm);
           //密码md5加密
           data.password = this.$utils.md5(data.password);
-          F;
           data.againPassword = this.$utils.md5(data.againPassword);
           userRetrievePassword(data).then((res) => {
             if (res.code == 200) {

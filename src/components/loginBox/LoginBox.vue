@@ -3,7 +3,7 @@
  * @Author: 银河以北
  * @Date: 2021-06-15 14:19:12
  * @LastEditors: 银河以北
- * @LastEditTime: 2022-04-12 10:16:06
+ * @LastEditTime: 2022-07-07 11:40:38
 -->
 <template>
   <el-dialog
@@ -118,7 +118,9 @@
               v-model="registerForm.nickname"
               autocomplete="off"
               clearable
-              size="small "
+              size="small"
+              show-word-limit
+              maxlength="10"
             ></el-input>
           </el-form-item>
           <el-form-item prop="email">
@@ -136,6 +138,8 @@
               size="small"
               placeholder="请输入验证码"
               v-model="registerForm.code"
+              show-word-limit
+              maxlength="6"
               clearable
             >
               <template slot="append">
@@ -157,7 +161,9 @@
               v-model="registerForm.password"
               autocomplete="off"
               clearable
-              size="small "
+              size="small"
+              show-word-limit
+              maxlength="12"
             ></el-input>
           </el-form-item>
           <el-form-item prop="againPassword">
@@ -167,7 +173,9 @@
               v-model="registerForm.againPassword"
               autocomplete="off"
               clearable
-              size="small "
+              size="small"
+              show-word-limit
+              maxlength="12"
             ></el-input>
           </el-form-item>
           <el-form-item>
